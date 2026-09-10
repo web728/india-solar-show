@@ -1,0 +1,277 @@
+@import "tailwindcss";
+
+:root {
+  --color-gold: #f7941d;
+  --color-gold-light: #ffb454;
+  --color-gold-dark: #d97d0a;
+  --color-black: #0a0a0a;
+  --color-black-light: #1a1a1a;
+  --color-dark: #141414;
+  --color-charcoal: #222222;
+  --color-white: #ffffff;
+  --color-gray: #f5f5f5;
+  --color-gray-medium: #e5e5e5;
+
+  /* Legacy aliases for components still referencing old names */
+  --color-carrot: var(--color-gold);
+  --color-carrot-light: var(--color-gold-light);
+  --color-twilight: var(--color-charcoal);
+  --color-twilight-light: #333333;
+  --color-sky: var(--color-gold);
+  --color-navy: var(--color-black);
+  --color-solar-black: var(--color-black);
+  --color-metal: var(--color-gray);
+}
+
+@theme inline {
+  --color-gold: var(--color-gold);
+  --color-gold-light: var(--color-gold-light);
+  --color-gold-dark: var(--color-gold-dark);
+  --color-black: var(--color-black);
+  --color-black-light: var(--color-black-light);
+  --color-dark: var(--color-dark);
+  --color-charcoal: var(--color-charcoal);
+
+  /* Legacy aliases */
+  --color-carrot: var(--color-carrot);
+  --color-carrot-light: var(--color-carrot-light);
+  --color-twilight: var(--color-twilight);
+  --color-twilight-light: var(--color-twilight-light);
+  --color-sky: var(--color-sky);
+  --color-navy: var(--color-navy);
+  --color-solar-black: var(--color-solar-black);
+  --color-metal: var(--color-metal);
+
+  --font-heading: var(--font-montserrat);
+  --font-sans: var(--font-montserrat);
+
+  --animate-fade-up: fade-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-flare-pulse: flare-pulse 4s ease-in-out infinite;
+  --animate-float-slow: float-slow 7s ease-in-out infinite;
+  --animate-float-slower: float-slow 11s ease-in-out infinite;
+  --animate-grid-draw: grid-draw 1.8s ease-out forwards;
+  --animate-loading-bar: loading-bar 1.4s ease-in-out infinite;
+  --animate-spin-slow: spin 18s linear infinite;
+  --animate-marquee: marquee 30s linear infinite;
+  --animate-glow-pulse: glow-pulse 2.6s ease-in-out infinite;
+  --animate-ring-spin: ring-spin 6s linear infinite;
+  --animate-shine-sweep: shine-sweep 2.8s ease-in-out infinite;
+  --animate-beam-sweep: beam-sweep 5s ease-in-out infinite;
+  --animate-dash-flow: dash-flow 2.4s linear infinite;
+  --animate-pulse-soft: pulse-soft 3.2s ease-in-out infinite;
+
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes flare-pulse {
+    0%, 100% { opacity: 0.55; transform: scale(1); }
+    50% { opacity: 0.9; transform: scale(1.08); }
+  }
+  @keyframes float-slow {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-16px) translateX(6px); }
+  }
+  @keyframes grid-draw {
+    from { stroke-dashoffset: 900; opacity: 0; }
+    to { stroke-dashoffset: 0; opacity: 1; }
+  }
+  @keyframes loading-bar {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  @keyframes glow-pulse {
+    0%, 100% { box-shadow: 0 0 0px 0 rgba(247, 148, 29, 0.35); }
+    50% { box-shadow: 0 0 32px 4px rgba(247, 148, 29, 0.35); }
+  }
+  @keyframes ring-spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+  @keyframes shine-sweep {
+    0% { transform: translateX(-150%) skewX(-20deg); opacity: 0; }
+    8% { opacity: 0.55; }
+    35% { opacity: 0; }
+    100% { transform: translateX(220%) skewX(-20deg); opacity: 0; }
+  }
+  @keyframes beam-sweep {
+    0%, 100% { transform: translateX(-8%) translateY(-4%) rotate(8deg); opacity: 0.35; }
+    50% { transform: translateX(8%) translateY(4%) rotate(8deg); opacity: 0.65; }
+  }
+  @keyframes dash-flow {
+    to { stroke-dashoffset: -120; }
+  }
+  @keyframes pulse-soft {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.05); }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-white);
+  color: var(--color-black);
+  font-family: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: var(--color-gold);
+  color: white;
+}
+
+/* Glassmorphism surfaces */
+.glass {
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+.glass-light {
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(10, 10, 10, 0.08);
+}
+
+.glass-strong {
+  background: rgba(10, 10, 10, 0.88);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient border — gold accent */
+.gradient-border {
+  position: relative;
+  background:
+    linear-gradient(var(--color-black), var(--color-black)) padding-box,
+    linear-gradient(135deg, rgba(247, 148, 29, 0.8), rgba(247, 148, 29, 0.3), rgba(247, 148, 29, 0.8)) border-box;
+  border: 1px solid transparent;
+}
+
+/* Conic-gradient rotating ring — gold accent */
+.glow-ring {
+  position: relative;
+  isolation: isolate;
+}
+.glow-ring::before {
+  content: "";
+  position: absolute;
+  inset: -1.5px;
+  z-index: -1;
+  border-radius: inherit;
+  padding: 1.5px;
+  background: conic-gradient(
+    from 0deg,
+    rgba(247, 148, 29, 0.9),
+    rgba(255, 180, 84, 0.7),
+    rgba(247, 148, 29, 0.2),
+    rgba(255, 180, 84, 0.7),
+    rgba(247, 148, 29, 0.9)
+  );
+  animation: var(--animate-ring-spin);
+}
+
+/* Shine sweep overlay for premium CTA buttons */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  width: 40%;
+  background: linear-gradient(115deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  animation: var(--animate-shine-sweep);
+  pointer-events: none;
+}
+
+/* Diagonal energy beam accents */
+.beam-diagonal {
+  position: absolute;
+  width: 140%;
+  height: 220px;
+  background: linear-gradient(90deg, transparent, rgba(247, 148, 29, 0.18), transparent);
+  filter: blur(6px);
+  animation: var(--animate-beam-sweep);
+}
+
+/* Dot-grid pattern */
+.bg-dot-grid {
+  background-image: radial-gradient(rgba(247, 148, 29, 0.2) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+
+.bg-dot-grid-dark {
+  background-image: radial-gradient(rgba(247, 148, 29, 0.25) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* Solar panel grid pattern */
+.bg-solar-grid {
+  background-image:
+    linear-gradient(rgba(247, 148, 29, 0.12) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(247, 148, 29, 0.12) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.bg-solar-grid-light {
+  background-image:
+    linear-gradient(rgba(10, 10, 10, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(10, 10, 10, 0.04) 1px, transparent 1px);
+  background-size: 42px 42px;
+}
+
+.text-gradient-solar {
+  background: linear-gradient(90deg, var(--color-gold) 0%, #ffcf6b 50%, var(--color-gold) 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.radial-glow-carrot,
+.radial-glow-gold {
+  background: radial-gradient(circle at center, rgba(247, 148, 29, 0.35), transparent 70%);
+}
+
+.radial-glow-sky {
+  background: radial-gradient(circle at center, rgba(247, 148, 29, 0.2), transparent 70%);
+}
+
+/* Focus visibility */
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0%); }
+  100% { transform: translateX(-50%); }
+}
+
+.animate-marquee {
+  display: inline-flex;
+  min-width: 200%;
+  animation: marquee 15s linear infinite;
+}
