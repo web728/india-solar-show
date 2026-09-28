@@ -44,7 +44,7 @@ const row2: { label: string; logos: PartnerLogo[] }[] = [
   },
   {
     label: "Battery Partner",
-    logos: [{ src: "/partners/Redon-logo-2.png", url: "https://iievshow.com/", name: "Battery Partner", imgClassName: "max-h-10" }],
+    logos: [{ src: "/partners/Redon-logo-2.png", url: "#", name: "Battery Partner", imgClassName: "max-h-10" }],
   },
   {
     label: "Institutional Partner",
@@ -92,7 +92,7 @@ const knowledgePartners: PartnerLogo[] = [
 // Supporting Associations — 9 logos: row of 5 + row of 4, centered
 const supportingAssociations: PartnerLogo[] = [
   { src: "/partners/logo-1.jpg", url: "https://www.araiindia.com/", name: "Association 1", imgClassName: "max-h-11" },
-  { src: "/partners/ace.png", url: "https://iievshow.com/#", name: "Association 2", imgClassName: "max-h-11" },
+  { src: "/partners/ace.png", url: "#", name: "Association 2", imgClassName: "max-h-11" },
   { src: "/partners/logo-4.jpg", url: "https://indiaesa.info/", name: "Association 3", imgClassName: "max-h-11" },
   { src: "/partners/logo-3.jpg", url: "https://smartemobility.org/", name: "Association 4", imgClassName: "max-h-15" },
   { src: "/partners/aisia.png", url: "https://aisia.org.in/", name: "Association 5", imgClassName: "max-h-11" },
