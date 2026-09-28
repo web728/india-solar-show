@@ -53,6 +53,7 @@
   --animate-loading-bar: loading-bar 1.4s ease-in-out infinite;
   --animate-spin-slow: spin 18s linear infinite;
   --animate-marquee: marquee 30s linear infinite;
+--animate-infinite-scroll: infinite-scroll 35s linear infinite;
   --animate-glow-pulse: glow-pulse 2.6s ease-in-out infinite;
   --animate-ring-spin: ring-spin 6s linear infinite;
   --animate-shine-sweep: shine-sweep 2.8s ease-in-out infinite;
@@ -64,6 +65,7 @@
     from { opacity: 0; transform: translateY(24px); }
     to { opacity: 1; transform: translateY(0); }
   }
+  
   @keyframes flare-pulse {
     0%, 100% { opacity: 0.55; transform: scale(1); }
     50% { opacity: 0.9; transform: scale(1.08); }
@@ -83,6 +85,14 @@
   @keyframes marquee {
     from { transform: translateX(0); }
     to { transform: translateX(-50%); }
+  }
+@keyframes infinite-scroll {
+    0% {
+      transform: translateX(0%);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
   }
   @keyframes glow-pulse {
     0%, 100% { box-shadow: 0 0 0px 0 rgba(247, 148, 29, 0.35); }
@@ -265,13 +275,56 @@ body {
   }
 }
 
-@keyframes marquee {
-  0% { transform: translateX(0%); }
-  100% { transform: translateX(-50%); }
+@keyframes infiniteScrollMarquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
-.animate-marquee {
-  display: inline-flex;
-  min-width: 200%;
-  animation: marquee 15s linear infinite;
+@keyframes infinite-scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-infinite-scroll {
+  display: flex !important;
+  width: max-content !important;
+  will-change: transform;
+  animation: var(--animate-infinite-scroll);
+}
+
+.animate-infinite-scroll:hover {
+  animation-play-state: paused !important;
+}
+
+/* =========================================================
+   INFINITE MARQUEE FIX (PURE CSS)
+   ========================================================= */
+
+@keyframes marquee-scroll {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.marquee-container {
+  display: flex !important;
+  width: max-content !important;
+  flex-wrap: nowrap !important;
+  animation: marquee-scroll 25s linear infinite !important;
+  will-change: transform;
+}
+
+.marquee-container:hover {
+  animation-play-state: paused !important;
 }

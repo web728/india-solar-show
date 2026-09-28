@@ -12,6 +12,7 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Button } from "@/components/ui/Button";
 import { AnimatedCard } from "@/components/ui/AnimatedCard";
 import { Icon } from "@/components/ui/Icon";
+import { CoLocatedShows } from "@/components/co-located-shows";
 
 export const metadata: Metadata = {
   title: "India Solar International Show 2026 | Premier Solar Show in India",
@@ -61,6 +62,7 @@ export default function Home() {
       <EventSnapshot />
       <AboutSection />
       <ShowHighlights />
+      <CoLocatedShows />
 
       {/* Participate CTA Section */}
       <section className="relative overflow-hidden bg-[color:var(--color-black)] py-24 sm:py-32">
