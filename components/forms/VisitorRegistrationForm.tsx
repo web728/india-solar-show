@@ -782,7 +782,7 @@ export function VisitorRegistrationForm() {
 
     try {
       const response = await fetch(
-        "/apihttps://app.warpbay.com/qPMIy6ii",
+        "/api/visitor-registration",
 
         {
           method: "POST",
