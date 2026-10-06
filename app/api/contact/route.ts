@@ -1,49 +1,261 @@
-import { submitForm, formatDate, buildEmailHtml, buildSheetRow } from "@/lib/formService";
+import { NextResponse } from "next/server";
+
 import Contact from "@/models/Contact";
 
-export async function POST(req: Request) {
+import {
+  submitForm,
+  formatDate,
+  buildSheetRow,
+} from "@/lib/formService";
+
+import {
+  contactSchema,
+} from "@/lib/validation";
+
+import {
+  verifyRecaptcha,
+} from "@/lib/verifyRecaptcha";
+
+/* =========================================================
+   ROUTE CONFIG
+========================================================= */
+
+export const runtime =
+  "nodejs";
+
+export const dynamic =
+  "force-dynamic";
+
+/* =========================================================
+   POST
+========================================================= */
+
+export async function POST(
+  req: Request,
+) {
   try {
-    const body = await req.json();
+    /* =====================================================
+       01. READ BODY
+    ===================================================== */
 
-    await submitForm({
-      model: Contact,
-      data: body,
-      emailConfig: (doc) => ({
-        subject: `New Contact Enquiry – India Solar Show – ${doc.subject}`,
-        toAddresses: ["info@futurextrade.com", "admin@futurextrade.com"],
-        html: buildEmailHtml({
-          title: "India Solar Show",
-          subtitle: "New Contact Enquiry",
-          fields: [
-            { label: "Full Name", value: doc.fullName as string },
-            { label: "Email", value: doc.email as string },
-            { label: "Phone", value: doc.phone as string },
-            { label: "Company", value: (doc.company as string) || "" },
-            { label: "Subject", value: doc.subject as string },
-            { label: "Message", value: doc.message as string },
-          ],
-          source: "indiasolarshow.com/contact",
-          date: formatDate(doc.createdAt),
-        }),
-      }),
-      sheetConfig: (doc) =>
-        buildSheetRow({
-          formType: "Contact Enquiry",
-          fullName: doc.fullName as string,
-          company: doc.company as string,
-          email: doc.email as string,
-          phone: doc.phone as string,
-          message: `${doc.subject}: ${doc.message}`,
-          date: formatDate(doc.createdAt),
-        }),
-    });
+    const body =
+      (await req.json()) as Record<
+        string,
+        unknown
+      >;
 
-    return Response.json({ success: true, message: "Your message has been sent successfully." });
-  } catch (error) {
-    console.error("Contact form error:", error);
-    return Response.json(
-      { success: false, message: "Something went wrong. Please try again later." },
-      { status: 500 }
+    /* =====================================================
+       02. RECAPTCHA
+    ===================================================== */
+
+    const recaptchaToken =
+      typeof body.recaptchaToken ===
+      "string"
+        ? body.recaptchaToken
+        : "";
+
+    if (!recaptchaToken) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Please complete the security verification.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const captchaValid =
+      await verifyRecaptcha(
+        recaptchaToken,
+      );
+
+    if (!captchaValid) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Security verification failed. Please try again.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    /* =====================================================
+       03. REMOVE INTERNAL FIELDS
+    ===================================================== */
+
+    const {
+      recaptchaToken:
+        _recaptchaToken,
+
+      captchaToken:
+        _captchaToken,
+
+      ...formData
+    } = body;
+
+    /* =====================================================
+       04. VALIDATE
+    ===================================================== */
+
+    const validationResult =
+      contactSchema.safeParse(
+        formData,
+      );
+
+    if (
+      !validationResult.success
+    ) {
+      const firstIssue =
+        validationResult
+          .error
+          .issues[0];
+
+      return NextResponse.json(
+        {
+          success: false,
+
+          message:
+            firstIssue
+              ?.message ??
+            "Please check the submitted information.",
+
+          errors:
+            validationResult
+              .error
+              .flatten()
+              .fieldErrors,
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    /* =====================================================
+       05. CLEAN DATA
+    ===================================================== */
+
+    const data =
+      validationResult.data;
+
+    /* =====================================================
+       06. SUBMIT
+    ===================================================== */
+
+    const result =
+      await submitForm({
+        model:
+          Contact,
+
+        data,
+
+        emailConfig:
+          (doc) => ({
+            subject:
+              `New Contact Enquiry – ${doc.subject}`,
+
+            html:
+              "",
+
+            replyTo:
+              doc.email,
+          }),
+
+        sheetConfig:
+          (doc) =>
+            buildSheetRow({
+              formType:
+                "Contact Enquiry",
+
+              fullName:
+                doc.fullName,
+
+              company:
+                doc.company ??
+                "",
+
+              designation:
+                "",
+
+              email:
+                doc.email,
+
+              phone:
+                doc.phone,
+
+              website:
+                "",
+
+              address:
+                "",
+
+              country:
+                "",
+
+              productProfile:
+                "",
+
+              interestFor:
+                doc.subject,
+
+              message:
+                doc.message ??
+                "",
+
+              date:
+                formatDate(
+                  doc.createdAt,
+                ),
+            }),
+      });
+
+    /* =====================================================
+       07. SUCCESS
+    ===================================================== */
+
+    return NextResponse.json(
+      {
+        success: true,
+
+        message:
+          "Thank you! Your message has been sent successfully.",
+
+        id:
+          result.doc._id
+            ?.toString?.() ??
+          null,
+
+        integrations:
+          result.integrations,
+      },
+      {
+        status: 201,
+      },
+    );
+  } catch (
+    error
+  ) {
+    console.error(
+      "[Contact Form] Error:",
+      error,
+    );
+
+    return NextResponse.json(
+      {
+        success: false,
+
+        message:
+          "Something went wrong while sending your message. Please try again.",
+      },
+      {
+        status: 500,
+      },
     );
   }
 }

@@ -10,7 +10,7 @@ import { MediaPartnerForm } from "@/components/forms/MediaPartnerForm";
 export const metadata: Metadata = {
   title: "Media Partners",
   description:
-    "Become a media partner of the India Solar International Show 2026. Collaborate on content, gain press access, conduct interviews, and co-brand with India's premier solar and renewable energy exhibition.",
+    "Become a media partner of the India International Solar Show 2026. Collaborate on content, gain press access, conduct interviews, and co-brand with India's premier solar and renewable energy exhibition.",
 };
 
 const MEDIA_BENEFITS = [
@@ -52,7 +52,7 @@ export default function MediaPartnersPage() {
       <PageHero
         eyebrow="Media Partnership"
         title="Partner with India's Premier Solar & Storage Exhibition"
-        subtitle="Collaborate with the India Solar International Show to deliver impactful content, gain exclusive access, and reach the renewable energy industry's most engaged audience."
+        subtitle="Collaborate with the India International Solar Show to deliver impactful content, gain exclusive access, and reach the renewable energy industry's most engaged audience."
       />
 
       {/* Benefits */}
@@ -61,7 +61,7 @@ export default function MediaPartnersPage() {
           <SectionHeading
             eyebrow="Why Partner"
             heading="Media Partnership Benefits"
-            intro="Join us as a media partner and leverage the India Solar International Show's platform to amplify your brand and content reach."
+            intro="Join us as a media partner and leverage the India International Solar Show's platform to amplify your brand and content reach."
             align="center"
           />
           <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -70,8 +70,12 @@ export default function MediaPartnersPage() {
                 <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--color-gold)]/20 to-[color:var(--color-gold)]/5 text-[color:var(--color-gold)] transition-transform duration-300 group-hover:-translate-y-1">
                   <Icon name={item.icon} size={24} aria-hidden="true" />
                 </span>
-                <h3 className="mt-5 text-base font-bold text-[color:var(--color-black)]">{item.title}</h3>
-                <p className="mt-2 text-sm leading-relaxed text-slate-500">{item.desc}</p>
+                <h3 className="mt-5 text-base font-bold text-[color:var(--color-black)]">
+                  {item.title}
+                </h3>
+                <p className="mt-2 text-sm leading-relaxed text-slate-500">
+                  {item.desc}
+                </p>
               </AnimatedCard>
             ))}
           </div>

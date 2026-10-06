@@ -1,14 +1,17 @@
-# dependencies
+# Dependencies
 /node_modules
 /.pnp
 .pnp.js
 
 # Next.js
-/.next/
-/out/
+/.next
+/out
 
 # Production
 /build
+
+# Turbopack
+/.turbo
 
 # Logs
 npm-debug.log*
@@ -16,18 +19,23 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 
-# Environment variables
+# Environment Variables
 .env
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
+.env.*.local
 
 # Vercel
 .vercel
 
 # TypeScript
 *.tsbuildinfo
+next-env.d.ts
+
+# Coverage
+/coverage
 
 # IDE
 .vscode/
@@ -37,24 +45,13 @@ pnpm-debug.log*
 .DS_Store
 Thumbs.db
 
-# Coverage
-/coverage
-
-# Turbopack
-.turbo
-
-# Misc
+# Certificates / Keys
 *.pem
 
-
-# Environment variables
-.env
-.env.local
-.env.*.local
-
-# Google service account credentials
+# Google Service Account
 service-account.json
+*service-account*.json
+*credentials*.json
 
-# Next.js
-.next/
-node_modules/
+# Misc
+*.log

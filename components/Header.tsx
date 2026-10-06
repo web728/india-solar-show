@@ -1,348 +1,1252 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { usePathname } from "next/navigation";
+
 import Image from "next/image";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowRight, ChevronDown } from "lucide-react";
-import { NAV_ITEMS, EVENT } from "@/data/siteData";
+import { usePathname } from "next/navigation";
+
+import {
+  AnimatePresence,
+  motion,
+  useMotionValueEvent,
+  useScroll,
+} from "framer-motion";
+
+import {
+  ArrowUpRight,
+  BookOpen,
+  Building2,
+  ChevronDown,
+  ClipboardCheck,
+  Download,
+  Handshake,
+  Images,
+  Menu,
+  Presentation,
+  UserCheck,
+  X,
+} from "lucide-react";
+
 import { Button } from "@/components/ui/Button";
+import { Container } from "@/components/ui/Container";
 import { cn } from "@/lib/utils";
 
-type NavChild = { label: string; href: string };
-type NavItem = { label: string; href: string; children?: readonly NavChild[] };
+/* =========================================================
+   Types
+   ========================================================= */
+
+type NavChild = {
+  label: string;
+  href: string;
+  icon?: React.ElementType;
+  description?: string;
+};
+
+type NavItem = {
+  label: string;
+  href?: string;
+  children?: readonly NavChild[];
+};
+
+/* =========================================================
+   URLs
+   ========================================================= */
+
+const STALL_URL = "https://app.warpbay.com/E2yy0Klq";
+const VISITOR_URL = "https://app.warpbay.com/qPMIy6ii";
+
+/* =========================================================
+   Main Navigation
+   ========================================================= */
+
+const HEADER_NAV: NavItem[] = [
+  {
+    label: "Home",
+    href: "/",
+  },
+
+  {
+    label: "About",
+    href: "/about",
+    children: [
+      {
+        label: "About the Show",
+        href: "/about",
+        icon: BookOpen,
+        description: "Discover India International Solar Show 2026.",
+      },
+      {
+        label: "Venue",
+        href: "/venue",
+        icon: Building2,
+        description: "Auto Cluster Exhibition Center, Pune.",
+      },
+    ],
+  },
+
+  {
+    label: "Exhibit",
+    href: "/exhibitor",
+    children: [
+      {
+        label: "Exhibitor Information",
+        href: "/exhibitor",
+        icon: Building2,
+        description: "Explore exhibiting benefits, opportunities and show details.",
+      },
+      {
+        label: "Exhibitor Registration",
+        href: "/exhibitor-registration",
+        icon: ClipboardCheck,
+        description: "Register your interest and request stall options and pricing.",
+      },
+    ],
+  },
+
+  {
+    label: "Visit",
+    href: "/visitor",
+    children: [
+      {
+        label: "Visitor Information",
+        href: "/visitor",
+        icon: BookOpen,
+        description: "Plan your visit and discover what to expect at the show.",
+      },
+      {
+        label: "Visitor Registration",
+        href: "/visitor-registration",
+        icon: UserCheck,
+        description: "Register as a visitor for India International Solar Show 2026.",
+      },
+    ],
+  },
+
+  {
+    label: "Participate",
+    children: [
+      {
+        label: "Sponsors & Partners",
+        href: "/sponsors",
+        icon: Handshake,
+        description: "Explore sponsorship and partnership opportunities.",
+      },
+      {
+        label: "Conference",
+        href: "https://bharatemmsummit.com/",
+        icon: Presentation,
+        description: "Explore conference sessions and industry dialogue.",
+      },
+    ],
+  },
+
+  {
+    label: "Media",
+    children: [
+      {
+        label: "Gallery",
+        href: "/gallery",
+        icon: Images,
+        description: "Explore event moments, highlights and show visuals.",
+      },
+      {
+        label: "Download Brochure",
+        href: "/brochure",
+        icon: Download,
+        description: "Access the official event brochure and downloads.",
+      },
+    ],
+  },
+
+  {
+    label: "Contact",
+    href: "/contact",
+  },
+];
+
+/* =========================================================
+   Top Strip
+   ========================================================= */
+
+const TICKER = [
+  "India International Solar Show 2026",
+  "02–04 October 2026",
+  "Auto Cluster, Pune",
+  "3-Day B2B Expo",
+  "Solar + Storage + EV Ecosystem",
+];
+
+/* =========================================================
+   Motion
+   ========================================================= */
+
+const EASE = [0.16, 1, 0.3, 1] as const;
+
+/* =========================================================
+   Desktop Dropdown
+   ========================================================= */
+
+function DesktopDropdown({
+  item,
+  pathname,
+}: {
+  item: NavItem;
+  pathname: string;
+}) {
+  if (!item.children?.length) {
+    return null;
+  }
+
+  return (
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 8,
+        scale: 0.985,
+      }}
+      animate={{
+        opacity: 1,
+        y: 0,
+        scale: 1,
+      }}
+      exit={{
+        opacity: 0,
+        y: 6,
+        scale: 0.985,
+      }}
+      transition={{
+        duration: 0.22,
+        ease: EASE,
+      }}
+      className="
+        absolute
+        left-1/2
+        top-full
+        w-[340px]
+        -translate-x-1/2
+        pt-3
+      "
+    >
+      <div
+        className="
+          relative
+          overflow-hidden
+          rounded-2xl
+          border
+          border-ink/[0.08]
+          bg-paper/[0.98]
+          p-2
+          shadow-[0_24px_65px_rgba(25,25,25,0.14)]
+          backdrop-blur-xl
+        "
+      >
+        <div
+          aria-hidden="true"
+          className="
+            absolute
+            inset-x-0
+            top-0
+            h-[2px]
+            bg-gradient-to-r
+            from-solar
+            via-solar/70
+            to-transparent
+          "
+        />
+
+        <motion.div
+          aria-hidden="true"
+          className="
+            pointer-events-none
+            absolute
+            -right-14
+            -top-14
+            size-36
+            rounded-full
+            bg-solar/[0.08]
+            blur-3xl
+          "
+          animate={{
+            scale: [1, 1.08, 1],
+            opacity: [0.7, 1, 0.7],
+          }}
+          transition={{
+            duration: 4.5,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+
+        <div className="relative">
+          {item.children.map((child) => {
+            const Icon = child.icon;
+
+            const childActive =
+              pathname === child.href ||
+              (!child.href.includes("#") &&
+                child.href !== "/" &&
+                pathname.startsWith(child.href));
+
+            return (
+              <Link
+                key={child.href}
+                href={child.href}
+                className={cn(
+                  `
+                    group/drop
+                    flex
+                    items-start
+                    gap-3.5
+                    rounded-xl
+                    px-3.5
+                    py-3
+                    transition-colors
+                    duration-200
+                  `,
+                  childActive
+                    ? "bg-blue/[0.065]"
+                    : "hover:bg-solar/[0.07]",
+                )}
+              >
+                {Icon ? (
+                  <div
+                    className={cn(
+                      `
+                        mt-0.5
+                        flex
+                        size-9
+                        shrink-0
+                        items-center
+                        justify-center
+                        rounded-full
+                        border
+                        transition-[background-color,border-color,color,transform]
+                        duration-300
+                      `,
+                      childActive
+                        ? "border-blue/15 bg-blue text-paper"
+                        : `
+                          border-ink/[0.08]
+                          bg-paper
+                          text-blue
+                          group-hover/drop:scale-[1.04]
+                          group-hover/drop:border-solar
+                          group-hover/drop:bg-solar
+                          group-hover/drop:text-ink
+                        `,
+                    )}
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      className="size-4"
+                      strokeWidth={1.75}
+                    />
+                  </div>
+                ) : null}
+
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center justify-between gap-3">
+                    <span
+                      className={cn(
+                        "text-[13px] font-semibold",
+                        childActive ? "text-blue" : "text-ink",
+                      )}
+                    >
+                      {child.label}
+                    </span>
+
+                    <ArrowUpRight
+                      aria-hidden="true"
+                      className="
+                        size-3.5
+                        shrink-0
+                        text-ink/20
+                        transition-[transform,color]
+                        duration-300
+                        group-hover/drop:translate-x-0.5
+                        group-hover/drop:-translate-y-0.5
+                        group-hover/drop:text-blue
+                      "
+                      strokeWidth={1.8}
+                    />
+                  </div>
+
+                  {child.description ? (
+                    <p
+                      className="
+                        mt-1
+                        text-[11px]
+                        leading-[1.55]
+                        text-ink/42
+                      "
+                    >
+                      {child.description}
+                    </p>
+                  ) : null}
+                </div>
+              </Link>
+            );
+          })}
+        </div>
+      </div>
+    </motion.div>
+  );
+}
+
+/* =========================================================
+   Header
+   ========================================================= */
 
 export function Header() {
+  const pathname = usePathname();
+  const { scrollY } = useScroll();
+
   const [scrolled, setScrolled] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
-  const [openMobileGroup, setOpenMobileGroup] = useState<string | null>(null);
-  const pathname = usePathname();
+  const [desktopDropdown, setDesktopDropdown] = useState<string | null>(null);
+  const [mobileDropdown, setMobileDropdown] = useState<string | null>(null);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    setScrolled(latest > 16);
+  });
 
   useEffect(() => {
-    function onScroll() {
-      setScrolled(window.scrollY > 24);
+    setMenuOpen(false);
+    setDesktopDropdown(null);
+    setMobileDropdown(null);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!menuOpen) {
+      document.body.style.overflow = "";
+      return;
     }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
 
-  useEffect(() => {
-    document.body.style.overflow = menuOpen ? "hidden" : "";
+    document.body.style.overflow = "hidden";
+
     return () => {
       document.body.style.overflow = "";
     };
   }, [menuOpen]);
 
-  useEffect(() => {
-    setMenuOpen(false);
-    setOpenMobileGroup(null);
-  }, [pathname]);
+  function isItemActive(item: NavItem) {
+    const parentActive =
+      item.href &&
+      (pathname === item.href ||
+        (item.href !== "/" && pathname.startsWith(item.href)));
 
-  const items = NAV_ITEMS as unknown as NavItem[];
+    const childActive = item.children?.some((child) => {
+      if (child.href.includes("#")) {
+        return false;
+      }
+
+      return (
+        pathname === child.href ||
+        (child.href !== "/" && pathname.startsWith(child.href))
+      );
+    });
+
+    return Boolean(parentActive || childActive);
+  }
 
   return (
     <header
-      className={cn(
-        "fixed top-0 inset-x-0 z-50 transition-all duration-300",
-        scrolled ? "py-0" : "py-0 sm:py-0",
-      )}
+      className="
+        fixed
+        inset-x-0
+        top-0
+        z-50
+      "
     >
-      <div className="w-full overflow-hidden bg-[color:var(--color-black)] border-b border-white/10">
-        <div className="flex w-max animate-marquee">
-          {[...Array(6)].map((_, i) => (
-            <span
-              key={i}
-              className="shrink-0 px-10 py-2 text-lg sm:text-xl lg:text-xl font-bold tracking-wide uppercase text-[color:var(--color-gold)]"
+      {/* ===================================================
+          Premium top ticker
+          =================================================== */}
+
+      <div
+        className="
+          relative
+          overflow-hidden
+          border-b
+          border-paper/10
+          bg-ink
+          text-paper
+        "
+      >
+        <div
+          aria-hidden="true"
+          className="
+            pointer-events-none
+            absolute
+            right-0
+            top-1/2
+            size-40
+            -translate-y-1/2
+            rounded-full
+            bg-solar/10
+            blur-3xl
+          "
+        />
+
+        <motion.div
+          className="
+            relative
+            flex
+            w-max
+            min-w-max
+            flex-nowrap
+            items-center
+            will-change-transform
+          "
+          animate={{
+            x: ["0%", "-50%"],
+          }}
+          transition={{
+            duration: 36,
+            repeat: Infinity,
+            ease: "linear",
+          }}
+        >
+          {[...TICKER, ...TICKER].map((item, index) => (
+            <div
+              key={`${item}-${index}`}
+              className="
+                flex
+                h-8
+                shrink-0
+                items-center
+                gap-3
+                px-5
+                sm:px-7
+              "
             >
-              {EVENT.tagline} &bull; {EVENT.dates.display}
-            </span>
+              <span
+                aria-hidden="true"
+                className="size-1.5 rounded-full bg-solar"
+              />
+
+              <span
+                className="
+                  whitespace-nowrap
+                  text-[9px]
+                  font-semibold
+                  uppercase
+                  tracking-[0.14em]
+                  text-paper/65
+                  sm:text-[10px]
+                "
+              >
+                {item}
+              </span>
+            </div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
-      <div className="mx-auto max-w-7xl px-3 py-2 sm:px-6 lg:px-8">
-        <div
-          className={cn(
-            "flex items-center justify-between rounded-2xl px-2.5 sm:px-4 py-2 transition-all duration-300 border",
-            scrolled
-              ? "glass-strong shadow-[0_12px_40px_-12px_rgba(0,0,0,0.65)] border-white/10"
-              : "bg-transparent border-transparent",
-          )}
-        >
-          <Link
-            href="/"
-            className="flex items-center gap-2.5 sm:gap-3 rounded-xl bg-white px-3 py-1.5 sm:py-2 shadow-[0_6px_20px_-6px_rgba(0,0,0,0.35)] ring-1 ring-black/5 transition-transform duration-300 hover:scale-[1.02]"
-          >
-            <Image
-              src="/logos/india-solar-logo.png"
-              alt="India Solar International Show"
-              width={220}
-              height={52}
-              priority
-              className="h-8 sm:h-10 lg:h-11 w-auto"
-            />
-          </Link>
+      {/* ===================================================
+          Main navigation
+          =================================================== */}
 
-          <nav
-            aria-label="Primary"
-            className="hidden lg:flex items-center gap-0.5"
+      <motion.div
+        animate={{
+          boxShadow: scrolled
+            ? "0 14px 42px rgba(25,25,25,0.09)"
+            : "0 0 0 rgba(25,25,25,0)",
+        }}
+        transition={{
+          duration: 0.3,
+          ease: EASE,
+        }}
+        className="
+          border-b
+          border-ink/[0.08]
+          bg-paper/[0.94]
+          backdrop-blur-xl
+        "
+      >
+        <Container>
+          <div
+            className="
+              flex
+              h-[68px]
+              items-center
+              justify-between
+              gap-4
+              sm:h-[72px]
+              lg:h-[76px]
+              lg:gap-4
+            "
           >
-            {items.map((item) => {
-              const isActive =
-                pathname === item.href ||
-                (item.href !== "/" && pathname.startsWith(item.href)) ||
-                (item.children?.some(
-                  (c) => pathname === c.href || pathname.startsWith(c.href),
-                ) ??
-                  false);
+            {/* Logo */}
 
-              if (item.children && item.children.length > 0) {
-                const isOpen = openDropdown === item.label;
+            <Link
+              href="/"
+              aria-label="India International Solar Show home"
+              className="relative z-10 shrink-0"
+            >
+              <Image
+                src="/logos/india-solar-logo.png"
+                alt="India International Solar Show 2026"
+                width={230}
+                height={60}
+                priority
+                className="
+                  h-auto
+                  w-auto
+                  max-w-[158px]
+                  object-contain
+                  sm:max-w-[178px]
+                  lg:max-w-[185px]
+                  xl:max-w-[195px]
+                "
+              />
+            </Link>
+
+            {/* Desktop Navigation */}
+
+            <nav
+              aria-label="Primary navigation"
+              className="
+                hidden
+                h-full
+                min-w-0
+                flex-1
+                justify-center
+                lg:flex
+              "
+            >
+              {HEADER_NAV.map((item) => {
+                const hasChildren = Boolean(item.children?.length);
+                const open = desktopDropdown === item.label;
+                const active = isItemActive(item);
+
                 return (
                   <div
                     key={item.label}
-                    className="relative"
-                    onMouseEnter={() => setOpenDropdown(item.label)}
-                    onMouseLeave={() => setOpenDropdown(null)}
+                    className="relative flex h-full items-center"
+                    onMouseEnter={() => {
+                      if (hasChildren) {
+                        setDesktopDropdown(item.label);
+                      }
+                    }}
+                    onMouseLeave={() => {
+                      if (hasChildren) {
+                        setDesktopDropdown(null);
+                      }
+                    }}
                   >
-                    <Link
-                      href={item.href}
-                      className={cn(
-                        "relative flex items-center gap-1 px-4 py-2.5 text-[15px] font-semibold transition-colors rounded-full",
-                        isActive
-                          ? "text-[color:var(--color-gold)]"
-                          : "text-white/85 hover:text-white",
-                      )}
-                    >
-                      {item.label}
-                      <ChevronDown
-                        size={14}
+                    {item.href ? (
+                      <Link
+                        href={item.href}
                         className={cn(
-                          "transition-transform duration-200",
-                          isOpen && "rotate-180",
-                        )}
-                        aria-hidden="true"
-                      />
-                      {isActive && (
-                        <motion.span
-                          layoutId="nav-underline"
-                          className="absolute left-4 right-4 -bottom-0.5 h-[2.5px] rounded-full bg-[color:var(--color-gold)] shadow-[0_0_10px_2px_rgba(247,148,29,0.7)]"
-                          transition={{
-                            type: "spring",
-                            stiffness: 400,
-                            damping: 32,
-                          }}
-                        />
-                      )}
-                    </Link>
-
-                    <AnimatePresence>
-                      {isOpen && (
-                        <motion.div
-                          initial={{ opacity: 0, y: -6 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          exit={{ opacity: 0, y: -6 }}
-                          transition={{
-                            duration: 0.18,
-                            ease: [0.16, 1, 0.3, 1],
-                          }}
-                          className="absolute left-0 top-full pt-2 min-w-[220px]"
-                        >
-                          <div className="overflow-hidden rounded-xl border border-white/10 bg-[color:var(--color-black)] shadow-[0_20px_50px_-15px_rgba(0,0,0,0.6)]">
-                            {item.children.map((child) => {
-                              const childActive = pathname === child.href;
-                              return (
-                                <Link
-                                  key={child.href}
-                                  href={child.href}
-                                  className={cn(
-                                    "block px-4 py-3 text-sm font-medium transition-colors",
-                                    childActive
-                                      ? "bg-white/5 text-[color:var(--color-gold)]"
-                                      : "text-white/85 hover:bg-white/5 hover:text-white",
-                                  )}
-                                >
-                                  {child.label}
-                                </Link>
-                              );
-                            })}
-                          </div>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
-                );
-              }
-
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className={cn(
-                    "relative px-4 py-2.5 text-[15px] font-semibold transition-colors rounded-full",
-                    isActive
-                      ? "text-[color:var(--color-gold)]"
-                      : "text-white/85 hover:text-white",
-                  )}
-                >
-                  {item.label}
-                  {isActive && (
-                    <motion.span
-                      layoutId="nav-underline"
-                      className="absolute left-4 right-4 -bottom-0.5 h-[2.5px] rounded-full bg-[color:var(--color-gold)] shadow-[0_0_10px_2px_rgba(247,148,29,0.7)]"
-                      transition={{
-                        type: "spring",
-                        stiffness: 400,
-                        damping: 32,
-                      }}
-                    />
-                  )}
-                </Link>
-              );
-            })}
-          </nav>
-
-          <div className="hidden lg:block">
-            <Button
-              href="https://app.warpbay.com/E2yy0Klq"
-              size="md"
-              glow
-              className="btn-shine"
-            >
-              Book Your Stall
-              <ArrowRight size={16} aria-hidden="true" />
-            </Button>
-          </div>
-
-          <button
-            type="button"
-            onClick={() => setMenuOpen((v) => !v)}
-            aria-expanded={menuOpen}
-            aria-controls="mobile-menu"
-            aria-label={menuOpen ? "Close menu" : "Open menu"}
-            className="lg:hidden inline-flex items-center justify-center h-11 w-11 rounded-full transition-colors text-white bg-white/10"
-          >
-            {menuOpen ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            id="mobile-menu"
-            initial={{ opacity: 0, y: -12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.25, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:hidden mx-3 mt-2 overflow-hidden rounded-2xl border border-white/10 bg-[color:var(--color-black)] shadow-2xl"
-          >
-            <div className="h-1 w-full bg-gradient-to-r from-[color:var(--color-gold)] via-[color:var(--color-gold-light)] to-[color:var(--color-gold)]" />
-            <nav aria-label="Mobile" className="flex flex-col p-3">
-              {items.map((item, i) => {
-                const isLast = i === items.length - 1;
-
-                if (item.children && item.children.length > 0) {
-                  const isGroupOpen = openMobileGroup === item.label;
-                  const groupActive = item.children.some(
-                    (c) => pathname === c.href,
-                  );
-                  return (
-                    <div
-                      key={item.label}
-                      className={cn(!isLast && "border-b border-white/5")}
-                    >
-                      <button
-                        type="button"
-                        onClick={() =>
-                          setOpenMobileGroup(isGroupOpen ? null : item.label)
-                        }
-                        aria-expanded={isGroupOpen}
-                        className={cn(
-                          "flex w-full items-center justify-between px-4 py-4 text-base font-semibold transition-colors",
-                          groupActive
-                            ? "text-[color:var(--color-gold)]"
-                            : "text-white/90 hover:bg-white/5 hover:text-[color:var(--color-gold)]",
+                          `
+                            group/nav
+                            relative
+                            flex
+                            h-full
+                            items-center
+                            gap-1.5
+                            px-2.5
+                            text-[12px]
+                            font-semibold
+                            tracking-[-0.005em]
+                            transition-colors
+                            duration-300
+                            xl:px-3.5
+                            xl:text-[13px]
+                          `,
+                          active
+                            ? "text-blue"
+                            : "text-ink/58 hover:text-ink",
                         )}
                       >
                         {item.label}
-                        <ChevronDown
-                          size={18}
-                          className={cn(
-                            "transition-transform duration-200",
-                            isGroupOpen && "rotate-180",
-                          )}
-                          aria-hidden="true"
-                        />
-                      </button>
-                      <AnimatePresence>
-                        {isGroupOpen && (
-                          <motion.div
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: "auto", opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                            className="overflow-hidden bg-white/[0.03]"
-                          >
-                            {item.children.map((child) => (
-                              <Link
-                                key={child.href}
-                                href={child.href}
-                                className={cn(
-                                  "block px-8 py-3 text-sm font-medium transition-colors",
-                                  pathname === child.href
-                                    ? "text-[color:var(--color-gold)]"
-                                    : "text-white/75 hover:text-white",
-                                )}
-                              >
-                                {child.label}
-                              </Link>
-                            ))}
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
-                    </div>
-                  );
-                }
 
-                return (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className={cn(
-                      "px-4 py-4 text-base font-semibold transition-colors",
-                      pathname === item.href
-                        ? "text-[color:var(--color-gold)]"
-                        : "text-white/90 hover:bg-white/5 hover:text-[color:var(--color-gold)]",
-                      !isLast && "border-b border-white/5",
+                        {hasChildren ? (
+                          <ChevronDown
+                            aria-hidden="true"
+                            className={cn(
+                              `
+                                size-3.5
+                                text-ink/30
+                                transition-transform
+                                duration-300
+                              `,
+                              open && "rotate-180 text-blue",
+                            )}
+                            strokeWidth={1.8}
+                          />
+                        ) : null}
+
+                        {active ? (
+                          <motion.span
+                            layoutId="header-active-link"
+                            aria-hidden="true"
+                            transition={{
+                              duration: 0.3,
+                              ease: EASE,
+                            }}
+                            className="
+                              absolute
+                              inset-x-2.5
+                              bottom-0
+                              h-[2px]
+                              bg-solar
+                              xl:inset-x-3.5
+                            "
+                          />
+                        ) : null}
+                      </Link>
+                    ) : (
+                      <button
+                        type="button"
+                        className={cn(
+                          `
+                            group/nav
+                            relative
+                            flex
+                            h-full
+                            items-center
+                            gap-1.5
+                            px-2.5
+                            text-[12px]
+                            font-semibold
+                            tracking-[-0.005em]
+                            transition-colors
+                            duration-300
+                            xl:px-3.5
+                            xl:text-[13px]
+                          `,
+                          active || open
+                            ? "text-blue"
+                            : "text-ink/58 hover:text-ink",
+                        )}
+                      >
+                        {item.label}
+
+                        <ChevronDown
+                          aria-hidden="true"
+                          className={cn(
+                            `
+                              size-3.5
+                              text-ink/30
+                              transition-transform
+                              duration-300
+                            `,
+                            open && "rotate-180 text-blue",
+                          )}
+                          strokeWidth={1.8}
+                        />
+
+                        {active ? (
+                          <motion.span
+                            layoutId="header-active-link"
+                            aria-hidden="true"
+                            className="
+                              absolute
+                              inset-x-2.5
+                              bottom-0
+                              h-[2px]
+                              bg-solar
+                            "
+                          />
+                        ) : null}
+                      </button>
                     )}
-                  >
-                    {item.label}
-                  </Link>
+
+                    <AnimatePresence>
+                      {hasChildren && open ? (
+                        <DesktopDropdown
+                          item={item}
+                          pathname={pathname}
+                        />
+                      ) : null}
+                    </AnimatePresence>
+                  </div>
                 );
               })}
-              <div className="mt-3 grid grid-cols-1 gap-2.5 p-1">
-                <Button
-                  href="https://app.warpbay.com/E2yy0Klq"
-                  className="w-full"
-                  glow
-                >
-                  Book Your Stall
-                </Button>
-                <Button
-                  href="https://app.warpbay.com/qPMIy6ii"
-                  variant="outline"
-                  className="w-full"
-                >
-                  Register as Visitor
-                </Button>
-              </div>
             </nav>
-          </motion.div>
-        )}
+
+            {/* Desktop CTA */}
+
+            <div className="hidden shrink-0 items-center gap-2 lg:flex">
+              <Button
+                href={STALL_URL}
+                external
+                size="md"
+                className="group/stall whitespace-nowrap"
+              >
+                Book Your Stall
+
+                <ArrowUpRight
+                  aria-hidden="true"
+                  className="
+                    size-3.5
+                    transition-transform
+                    duration-300
+                    group-hover/stall:translate-x-0.5
+                    group-hover/stall:-translate-y-0.5
+                  "
+                  strokeWidth={1.8}
+                />
+              </Button>
+            </div>
+
+            {/* Mobile trigger */}
+
+            <button
+              type="button"
+              onClick={() => setMenuOpen((current) => !current)}
+              aria-expanded={menuOpen}
+              aria-controls="mobile-navigation"
+              aria-label={
+                menuOpen ? "Close navigation menu" : "Open navigation menu"
+              }
+              className="
+                relative
+                flex
+                size-10
+                shrink-0
+                items-center
+                justify-center
+                rounded-xl
+                border
+                border-ink/[0.08]
+                bg-paper
+                text-ink
+                shadow-[0_5px_18px_rgba(25,25,25,0.035)]
+                transition-[border-color,background-color]
+                duration-300
+                hover:border-blue/20
+                hover:bg-blue/[0.05]
+                lg:hidden
+              "
+            >
+              <AnimatePresence initial={false} mode="wait">
+                {menuOpen ? (
+                  <motion.span
+                    key="close"
+                    initial={{
+                      opacity: 0,
+                      scale: 0.8,
+                      rotate: -40,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      rotate: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.8,
+                      rotate: 40,
+                    }}
+                    transition={{
+                      duration: 0.18,
+                    }}
+                  >
+                    <X className="size-5" strokeWidth={1.8} />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="menu"
+                    initial={{
+                      opacity: 0,
+                      scale: 0.8,
+                      rotate: 40,
+                    }}
+                    animate={{
+                      opacity: 1,
+                      scale: 1,
+                      rotate: 0,
+                    }}
+                    exit={{
+                      opacity: 0,
+                      scale: 0.8,
+                      rotate: -40,
+                    }}
+                    transition={{
+                      duration: 0.18,
+                    }}
+                  >
+                    <Menu className="size-5" strokeWidth={1.8} />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+          </div>
+        </Container>
+      </motion.div>
+
+      {/* ===================================================
+          Mobile menu
+          =================================================== */}
+
+      <AnimatePresence>
+        {menuOpen ? (
+          <>
+            <motion.button
+              type="button"
+              aria-label="Close menu"
+              onClick={() => setMenuOpen(false)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="
+                fixed
+                inset-0
+                -z-10
+                bg-ink/25
+                backdrop-blur-[2px]
+                lg:hidden
+              "
+            />
+
+            <motion.div
+              id="mobile-navigation"
+              initial={{
+                opacity: 0,
+                y: -10,
+              }}
+              animate={{
+                opacity: 1,
+                y: 0,
+              }}
+              exit={{
+                opacity: 0,
+                y: -8,
+              }}
+              transition={{
+                duration: 0.25,
+                ease: EASE,
+              }}
+              className="
+                absolute
+                inset-x-0
+                top-full
+                max-h-[calc(100svh-100px)]
+                overflow-y-auto
+                border-t
+                border-ink/[0.08]
+                bg-paper
+                shadow-[0_25px_60px_rgba(25,25,25,0.14)]
+                lg:hidden
+              "
+            >
+              <Container>
+                <nav aria-label="Mobile navigation" className="py-3">
+                  <div
+                    className="
+                      overflow-hidden
+                      rounded-2xl
+                      border
+                      border-ink/[0.08]
+                      bg-paper
+                    "
+                  >
+                    {HEADER_NAV.map((item) => {
+                      const hasChildren = Boolean(item.children?.length);
+                      const open = mobileDropdown === item.label;
+                      const active = isItemActive(item);
+
+                      return (
+                        <div
+                          key={item.label}
+                          className="
+                            border-b
+                            border-ink/[0.07]
+                            last:border-b-0
+                          "
+                        >
+                          <div className="flex items-center">
+                            {item.href ? (
+                              <Link
+                                href={item.href}
+                                className={cn(
+                                  `
+                                    relative
+                                    flex
+                                    min-h-[52px]
+                                    flex-1
+                                    items-center
+                                    px-4
+                                    text-[14px]
+                                    font-semibold
+                                    transition-colors
+                                  `,
+                                  active
+                                    ? "bg-blue/[0.045] text-blue"
+                                    : "text-ink/70",
+                                )}
+                              >
+                                {item.label}
+
+                                {active ? (
+                                  <span
+                                    aria-hidden="true"
+                                    className="
+                                      absolute
+                                      bottom-0
+                                      left-4
+                                      h-[2px]
+                                      w-7
+                                      bg-solar
+                                    "
+                                  />
+                                ) : null}
+                              </Link>
+                            ) : (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setMobileDropdown(
+                                    open ? null : item.label,
+                                  )
+                                }
+                                className={cn(
+                                  `
+                                    relative
+                                    flex
+                                    min-h-[52px]
+                                    flex-1
+                                    items-center
+                                    px-4
+                                    text-left
+                                    text-[14px]
+                                    font-semibold
+                                  `,
+                                  active
+                                    ? "bg-blue/[0.045] text-blue"
+                                    : "text-ink/70",
+                                )}
+                              >
+                                {item.label}
+                              </button>
+                            )}
+
+                            {hasChildren ? (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setMobileDropdown(
+                                    open ? null : item.label,
+                                  )
+                                }
+                                aria-expanded={open}
+                                aria-label={`Toggle ${item.label} menu`}
+                                className="
+                                  flex
+                                  size-[52px]
+                                  shrink-0
+                                  items-center
+                                  justify-center
+                                  border-l
+                                  border-ink/[0.07]
+                                  text-ink/45
+                                "
+                              >
+                                <ChevronDown
+                                  aria-hidden="true"
+                                  className={cn(
+                                    `
+                                      size-4
+                                      transition-transform
+                                      duration-300
+                                    `,
+                                    open && "rotate-180 text-blue",
+                                  )}
+                                  strokeWidth={1.8}
+                                />
+                              </button>
+                            ) : null}
+                          </div>
+
+                          <AnimatePresence initial={false}>
+                            {hasChildren && open ? (
+                              <motion.div
+                                initial={{
+                                  height: 0,
+                                  opacity: 0,
+                                }}
+                                animate={{
+                                  height: "auto",
+                                  opacity: 1,
+                                }}
+                                exit={{
+                                  height: 0,
+                                  opacity: 0,
+                                }}
+                                transition={{
+                                  duration: 0.25,
+                                  ease: EASE,
+                                }}
+                                className="overflow-hidden"
+                              >
+                                <div
+                                  className="
+                                    border-t
+                                    border-ink/[0.06]
+                                    bg-blue/[0.025]
+                                    p-2
+                                  "
+                                >
+                                  {item.children?.map((child) => {
+                                    const Icon = child.icon;
+                                    const childActive =
+                                      pathname === child.href ||
+                                      pathname.startsWith(child.href);
+
+                                    return (
+                                      <Link
+                                        key={child.href}
+                                        href={child.href}
+                                        className={cn(
+                                          `
+                                            group/mobile-child
+                                            flex
+                                            items-center
+                                            gap-3
+                                            rounded-xl
+                                            px-3
+                                            py-2.5
+                                            transition-colors
+                                          `,
+                                          childActive
+                                            ? "bg-paper text-blue"
+                                            : "hover:bg-paper",
+                                        )}
+                                      >
+                                        {Icon ? (
+                                          <div
+                                            className={cn(
+                                              `
+                                                flex
+                                                size-8
+                                                shrink-0
+                                                items-center
+                                                justify-center
+                                                rounded-full
+                                                border
+                                              `,
+                                              childActive
+                                                ? "border-blue/15 bg-blue text-paper"
+                                                : "border-ink/[0.07] bg-paper text-blue",
+                                            )}
+                                          >
+                                            <Icon
+                                              aria-hidden="true"
+                                              className="size-3.5"
+                                              strokeWidth={1.8}
+                                            />
+                                          </div>
+                                        ) : null}
+
+                                        <div className="min-w-0 flex-1">
+                                          <div className="flex items-center justify-between gap-3">
+                                            <span
+                                              className={cn(
+                                                "text-[13px] font-semibold",
+                                                childActive
+                                                  ? "text-blue"
+                                                  : "text-ink/70",
+                                              )}
+                                            >
+                                              {child.label}
+                                            </span>
+
+                                            <ArrowUpRight
+                                              aria-hidden="true"
+                                              className="
+                                                size-3
+                                                text-ink/20
+                                              "
+                                              strokeWidth={1.8}
+                                            />
+                                          </div>
+
+                                          {child.description ? (
+                                            <p
+                                              className="
+                                                mt-0.5
+                                                text-[10px]
+                                                leading-4
+                                                text-ink/38
+                                              "
+                                            >
+                                              {child.description}
+                                            </p>
+                                          ) : null}
+                                        </div>
+                                      </Link>
+                                    );
+                                  })}
+                                </div>
+                              </motion.div>
+                            ) : null}
+                          </AnimatePresence>
+                        </div>
+                      );
+                    })}
+                  </div>
+
+                  {/* Mobile CTA */}
+
+                  <div
+                    className="
+                      grid
+                      gap-2.5
+                      py-4
+                      sm:grid-cols-2
+                    "
+                  >
+                    <Button
+                      href={STALL_URL}
+                      external
+                      fullWidth
+                      size="lg"
+                      className="
+                        group/stall-mobile
+                        justify-between
+                      "
+                    >
+                      Book Your Stall
+
+                      <ArrowUpRight
+                        aria-hidden="true"
+                        className="
+                          size-4
+                          transition-transform
+                          duration-300
+                          group-hover/stall-mobile:translate-x-0.5
+                          group-hover/stall-mobile:-translate-y-0.5
+                        "
+                        strokeWidth={1.8}
+                      />
+                    </Button>
+
+                    <Button
+                      href={VISITOR_URL}
+                      external
+                      fullWidth
+                      size="lg"
+                      variant="outline"
+                      className="
+                        border-blue/20
+                        bg-blue/[0.05]
+                        text-blue
+                        hover:border-blue
+                        hover:bg-blue
+                        hover:text-paper
+                      "
+                    >
+                      Register as Visitor
+                    </Button>
+                  </div>
+                </nav>
+              </Container>
+            </motion.div>
+          </>
+        ) : null}
       </AnimatePresence>
     </header>
   );

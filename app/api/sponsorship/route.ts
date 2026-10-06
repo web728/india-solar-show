@@ -1,53 +1,274 @@
-import { submitForm, formatDate, buildEmailHtml, buildSheetRow } from "@/lib/formService";
+import { NextResponse } from "next/server";
+
 import Sponsorship from "@/models/Sponsorship";
 
-export async function POST(req: Request) {
+import {
+  submitForm,
+  formatDate,
+  buildSheetRow,
+} from "@/lib/formService";
+
+import {
+  sponsorshipSchema,
+} from "@/lib/validation";
+
+import {
+  verifyRecaptcha,
+} from "@/lib/verifyRecaptcha";
+
+/* =========================================================
+   ROUTE CONFIG
+========================================================= */
+
+export const runtime =
+  "nodejs";
+
+export const dynamic =
+  "force-dynamic";
+
+/* =========================================================
+   POST
+========================================================= */
+
+export async function POST(
+  req: Request,
+) {
   try {
-    const body = await req.json();
+    /* =====================================================
+       01. READ BODY
+    ===================================================== */
 
-    await submitForm({
-      model: Sponsorship,
-      data: body,
-      emailConfig: (doc) => ({
-        subject: `New Sponsorship Enquiry – India Solar Show – ${doc.company}`,
-        toAddresses: ["info@futurextrade.com", "admin@futurextrade.com"],
-        html: buildEmailHtml({
-          title: "India Solar Show",
-          subtitle: "New Sponsorship Enquiry",
-          fields: [
-            { label: "Full Name", value: doc.fullName as string },
-            { label: "Company", value: doc.company as string },
-            { label: "Email", value: doc.email as string },
-            { label: "Phone", value: doc.phone as string },
-            { label: "Designation", value: (doc.designation as string) || "" },
-            { label: "Country", value: (doc.country as string) || "" },
-            { label: "Sponsorship Tier", value: (doc.sponsorshipTier as string) || "" },
-            { label: "Message", value: (doc.message as string) || "" },
-          ],
-          source: "indiasolarshow.com/sponsors",
-          date: formatDate(doc.createdAt),
-        }),
-      }),
-      sheetConfig: (doc) =>
-        buildSheetRow({
-          formType: "Sponsorship Enquiry",
-          fullName: doc.fullName as string,
-          company: doc.company as string,
-          designation: doc.designation as string,
-          email: doc.email as string,
-          phone: doc.phone as string,
-          country: doc.country as string,
-          message: `Tier: ${doc.sponsorshipTier || "-"} | ${doc.message || "-"}`,
-          date: formatDate(doc.createdAt),
-        }),
-    });
+    const body =
+      (await req.json()) as Record<
+        string,
+        unknown
+      >;
 
-    return Response.json({ success: true, message: "Sponsorship enquiry submitted successfully." });
-  } catch (error) {
-    console.error("Sponsorship enquiry error:", error);
-    return Response.json(
-      { success: false, message: "Something went wrong. Please try again later." },
-      { status: 500 }
+    /* =====================================================
+       02. RECAPTCHA
+    ===================================================== */
+
+    const recaptchaToken =
+      typeof body.recaptchaToken ===
+      "string"
+        ? body.recaptchaToken
+        : "";
+
+    if (!recaptchaToken) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Please complete the security verification.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    const captchaValid =
+      await verifyRecaptcha(
+        recaptchaToken,
+      );
+
+    if (!captchaValid) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Security verification failed. Please try again.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    /* =====================================================
+       03. REMOVE INTERNAL FIELDS
+    ===================================================== */
+
+    const {
+      recaptchaToken:
+        _recaptchaToken,
+
+      captchaToken:
+        _captchaToken,
+
+      ...formData
+    } = body;
+
+    /* =====================================================
+       04. VALIDATE
+    ===================================================== */
+
+    const validationResult =
+      sponsorshipSchema.safeParse(
+        formData,
+      );
+
+    if (
+      !validationResult.success
+    ) {
+      const firstIssue =
+        validationResult
+          .error
+          .issues[0];
+
+      return NextResponse.json(
+        {
+          success: false,
+
+          message:
+            firstIssue
+              ?.message ??
+            "Please check the submitted information.",
+
+          errors:
+            validationResult
+              .error
+              .flatten()
+              .fieldErrors,
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    /* =====================================================
+       05. CLEAN VALIDATED DATA
+    ===================================================== */
+
+    const data =
+      validationResult.data;
+
+    /* =====================================================
+       06. SUBMIT
+    ===================================================== */
+
+    const result =
+      await submitForm({
+        model:
+          Sponsorship,
+
+        data,
+
+        /* =================================================
+           EMAIL
+        ================================================= */
+
+        emailConfig:
+          (doc) => ({
+            subject:
+              doc.company
+                ? `New Sponsorship Enquiry – ${doc.company}`
+                : `New Sponsorship Enquiry – ${doc.fullName}`,
+
+            html:
+              "",
+
+            replyTo:
+              doc.email,
+          }),
+
+        /* =================================================
+           GOOGLE SHEET
+        ================================================= */
+
+        sheetConfig:
+          (doc) =>
+            buildSheetRow({
+              formType:
+                "Sponsorship Enquiry",
+
+              fullName:
+                doc.fullName,
+
+              company:
+                doc.company ??
+                "",
+
+              designation:
+                doc.designation ??
+                "",
+
+              email:
+                doc.email,
+
+              phone:
+                doc.phone,
+
+              website:
+                "",
+
+              address:
+                "",
+
+              country:
+                doc.country ??
+                "",
+
+              productProfile:
+                "",
+
+              interestFor:
+                doc.sponsorshipTier ??
+                "Sponsorship",
+
+              message:
+                doc.message ??
+                "",
+
+              date:
+                formatDate(
+                  doc.createdAt,
+                ),
+            }),
+      });
+
+    /* =====================================================
+       07. SUCCESS
+    ===================================================== */
+
+    return NextResponse.json(
+      {
+        success: true,
+
+        message:
+          "Thank you! Your sponsorship enquiry has been submitted successfully.",
+
+        id:
+          result.doc._id
+            ?.toString?.() ??
+          null,
+
+        integrations:
+          result.integrations,
+      },
+      {
+        status: 201,
+      },
+    );
+  } catch (
+    error
+  ) {
+    console.error(
+      "[Sponsorship Enquiry] Error:",
+      error,
+    );
+
+    return NextResponse.json(
+      {
+        success: false,
+
+        message:
+          "Something went wrong while submitting your sponsorship enquiry. Please try again.",
+      },
+      {
+        status: 500,
+      },
     );
   }
 }

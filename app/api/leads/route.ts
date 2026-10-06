@@ -1,142 +1,271 @@
-import { connectDB } from "@/lib/db";
+import { NextResponse } from "next/server";
+
 import Lead from "@/models/Lead";
-import { transporter } from "@/lib/email";
-import { appendToExcel } from "@/lib/excelSheet";
 
-// Google Sheet ID (browser URL me sheet kholne pe /d/ aur /edit ke beech wala part)
-const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID as string;
+import {
+  submitForm,
+  formatDate,
+  buildSheetRow,
+} from "@/lib/formService";
 
-export async function POST(req: Request) {
+import {
+  leadSchema,
+} from "@/lib/validation";
+
+import {
+  verifyRecaptcha,
+} from "@/lib/verifyRecaptcha";
+
+/* =========================================================
+   ROUTE CONFIG
+========================================================= */
+
+export const runtime =
+  "nodejs";
+
+export const dynamic =
+  "force-dynamic";
+
+/* =========================================================
+   POST
+========================================================= */
+
+export async function POST(
+  req: Request,
+) {
   try {
-    const body = await req.json();
+    /* =====================================================
+       01. READ BODY
+    ===================================================== */
 
-    await connectDB();
+    const body =
+      (await req.json()) as Record<
+        string,
+        unknown
+      >;
 
-    const lead = await Lead.create(body);
+    /* =====================================================
+       02. RECAPTCHA
+    ===================================================== */
 
-    const html = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <div style="background: #0a2540; padding: 20px; text-align: center;">
-          <h2 style="color: #ffffff; margin: 0;">India Solar Show</h2>
-          <p style="color: #ffb703; margin: 4px 0 0;">New Enquiry Received</p>
-        </div>
+    const recaptchaToken =
+      typeof body.recaptchaToken ===
+      "string"
+        ? body.recaptchaToken
+        : "";
 
-        <div style="padding: 20px; border: 1px solid #e2e8f0; border-top: none;">
-          <table style="width: 100%; border-collapse: collapse;">
-            <tr>
-              <td style="padding: 8px 0; color: #64748b; width: 140px;"><strong>Full Name</strong></td>
-              <td style="padding: 8px 0;">${lead.fullName}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0; color: #64748b;"><strong>Company</strong></td>
-              <td style="padding: 8px 0;">${lead.company || "—"}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0; color: #64748b;"><strong>Email</strong></td>
-              <td style="padding: 8px 0;">${lead.email}</td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0; color: #64748b;"><strong>Phone</strong></td>
-              <td style="padding: 8px 0;">${lead.phone}</td>
-            </tr>
-            <tr>
-  <td style="padding: 8px 0; color: #64748b;">
-    <strong>Designation</strong>
-  </td>
-  <td style="padding: 8px 0;">
-    ${lead.designation || "—"}
-  </td>
-</tr>
-
-<tr>
-  <td style="padding: 8px 0; color: #64748b;">
-    <strong>Country</strong>
-  </td>
-  <td style="padding: 8px 0;">
-    ${lead.country || "—"}
-  </td>
-</tr>
-            <tr>
-              <td style="padding: 8px 0; color: #64748b;"><strong>Interest Type</strong></td>
-              <td style="padding: 8px 0;"><strong>${lead.interestType}</strong></td>
-            </tr>
-            <tr>
-              <td style="padding: 8px 0; color: #64748b; vertical-align: top;"><strong>Message</strong></td>
-              <td style="padding: 8px 0;">${lead.message || "—"}</td>
-            </tr>
-          </table>
-        </div>
-
-        <div style="padding: 12px 20px; background: #f8fafc; border: 1px solid #e2e8f0; border-top: none; font-size: 12px; color: #94a3b8;">
-          Source: indiasolarshow.com &nbsp;|&nbsp; Submitted: ${new Date(lead.createdAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })}
-        </div>
-      </div>
-    `;
-
-    await transporter.sendMail({
-      from: `"India Solar Show Website" <${process.env.EMAIL_USER}>`,
-      to: ["info@futurextrade.com", "admin@futurextrade.com"],
-      subject: `New Lead – India Solar Show – ${lead.interestType} – ${lead.fullName}`,
-      html,
-    });
-
-    // --- Google Sheet me row add karo ---
-    // Sheet "Website Enquiries" tab me columns A-N is order me hain:
-    // Date & Time | Platform | Register As | Product Profile | Company Name | Contact Person |
-    // Designation | Email Id | Mobile No. | (J,K,L blank) | Interest For | Message
-    // Note: Lead form me abhi "Product Profile" naam ka alag field nahi hai, isliye wo column
-    // khaali ja raha hai. "message" field ko "Interest For" column me daal rahe hain.
-  if (SPREADSHEET_ID) {
-      await appendToExcel(
-        SPREADSHEET_ID,
-        "Website Enquiries",
-        [
-          "Date & Time",
-          "Platform",
-          "Register As",
-          "Product Profile",
-          "Company Name",
-          "Contact Person",
-          "Designation",
-          "Email Id",
-          "Mobile No.",
-          "Website",
-          "Address",
-          "Country",
-          "Interest For",
-          "Message",
-        ],
-        [
-          new Date(lead.createdAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" }),
-          "Enquiry Form",
-          lead.interestType,
-          "-",
-          lead.company || "-",
-          lead.fullName,
-          lead.designation || "-",
-          lead.email,
-          lead.phone,
-          "-",
-          "-",
-          lead.country || "-",
-          lead.message || "-",
-          "-",
-        ]
+    if (!recaptchaToken) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Please complete the security verification.",
+        },
+        {
+          status: 400,
+        },
       );
     }
 
-    return Response.json({
-      success: true,
-      message: "Lead saved + emails sent",
-    });
-  } catch (error) {
-    console.error("Lead submission error:", error);
-    return Response.json(
+    const captchaValid =
+      await verifyRecaptcha(
+        recaptchaToken,
+      );
+
+    if (!captchaValid) {
+      return NextResponse.json(
+        {
+          success: false,
+          message:
+            "Security verification failed. Please try again.",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    /* =====================================================
+       03. REMOVE INTERNAL FIELDS
+    ===================================================== */
+
+    const {
+      recaptchaToken:
+        _recaptchaToken,
+
+      captchaToken:
+        _captchaToken,
+
+      ...formData
+    } = body;
+
+    /* =====================================================
+       04. VALIDATE
+    ===================================================== */
+
+    const validationResult =
+      leadSchema.safeParse(
+        formData,
+      );
+
+    if (
+      !validationResult.success
+    ) {
+      const firstIssue =
+        validationResult
+          .error
+          .issues[0];
+
+      return NextResponse.json(
+        {
+          success: false,
+
+          message:
+            firstIssue
+              ?.message ??
+            "Please check the submitted information.",
+
+          errors:
+            validationResult
+              .error
+              .flatten()
+              .fieldErrors,
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    /* =====================================================
+       05. CLEAN DATA
+    ===================================================== */
+
+    const data =
+      validationResult.data;
+
+    /* =====================================================
+       06. SUBMIT
+    ===================================================== */
+
+    const result =
+      await submitForm({
+        model:
+          Lead,
+
+        data,
+
+        /* =================================================
+           EMAIL
+        ================================================= */
+
+        emailConfig:
+          (doc) => ({
+            subject:
+              `New Lead Enquiry – ${doc.interestType} – ${doc.fullName}`,
+
+            html:
+              "",
+
+            replyTo:
+              doc.email,
+          }),
+
+        /* =================================================
+           GOOGLE SHEET
+        ================================================= */
+
+        sheetConfig:
+          (doc) =>
+            buildSheetRow({
+              formType:
+                "Lead Enquiry",
+
+              fullName:
+                doc.fullName,
+
+              company:
+                doc.company ??
+                "",
+
+              designation:
+                doc.designation ??
+                "",
+
+              email:
+                doc.email,
+
+              phone:
+                doc.phone,
+
+              website:
+                "",
+
+              address:
+                "",
+
+              country:
+                doc.country ??
+                "",
+
+              productProfile:
+                "",
+
+              interestFor:
+                doc.interestType,
+
+              message:
+                doc.message ??
+                "",
+
+              date:
+                formatDate(
+                  doc.createdAt,
+                ),
+            }),
+      });
+
+    /* =====================================================
+       07. SUCCESS
+    ===================================================== */
+
+    return NextResponse.json(
+      {
+        success: true,
+
+        message:
+          "Thank you! Your enquiry has been submitted successfully.",
+
+        id:
+          result.doc._id
+            ?.toString?.() ??
+          null,
+
+        integrations:
+          result.integrations,
+      },
+      {
+        status: 201,
+      },
+    );
+  } catch (
+    error
+  ) {
+    console.error(
+      "[Lead Enquiry] Error:",
+      error,
+    );
+
+    return NextResponse.json(
       {
         success: false,
-        message: "Something went wrong. Please try again later.",
+
+        message:
+          "Something went wrong while submitting your enquiry. Please try again.",
       },
-      { status: 500 }
+      {
+        status: 500,
+      },
     );
   }
 }

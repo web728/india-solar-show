@@ -1,128 +1,196 @@
 import type { Metadata } from "next";
+
+import { EVENT } from "@/data/siteData";
+
 import { HeroSection } from "@/components/HeroSection";
+import { StatsSection } from "@/components/StatsSection";
 import { EventSnapshot } from "@/components/EventSnapshot";
 import { AboutSection } from "@/components/AboutSection";
 import { ShowHighlights } from "@/components/ShowHighlights";
-import { WhyParticipate } from "@/components/WhyParticipate";
+import { CoLocatedShows } from "@/components/co-located-shows";
 import { EcosystemSection } from "@/components/EcosystemSection";
+import { ParticipationSection } from "@/components/ParticipationSection";
+import { WhyParticipate } from "@/components/WhyParticipate";
 import { VenueSection } from "@/components/VenueSection";
 import { BrochureCTA } from "@/components/BrochureCTA";
-import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
-import { Button } from "@/components/ui/Button";
-import { AnimatedCard } from "@/components/ui/AnimatedCard";
-import { Icon } from "@/components/ui/Icon";
-import { CoLocatedShows } from "@/components/co-located-shows";
+import { FinalCTA } from "@/components/FinalCTA";
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "https://www.indiasolarshow.com";
+
+const SITE_NAME = "India International Solar Show";
+
+const HOME_TITLE =
+  "India International Solar Show 2026 | Solar Expo Pune";
+
+const HOME_DESCRIPTION =
+  "India International Solar Show 2026 takes place 2–4 October in Pune, bringing together solar manufacturers, energy storage companies, EPC firms, technology providers, buyers, developers, investors and clean-energy professionals.";
 
 export const metadata: Metadata = {
-  title: "India Solar International Show 2026 | Premier Solar Show in India",
-  description:
-    "India Solar International Show 2026 is India's leading solar energy & battery storage exhibition in Pune. Meet top B2B solar technology buyers, EPC contractors & manufacturers.",
+  title: HOME_TITLE,
+  description: HOME_DESCRIPTION,
+
   keywords: [
-    "solar show in india",
-    "solar exhibition pune",
-    "India Solar International Show 2026",
-    "renewable energy expo india",
-    "solar energy trade show",
-    "battery storage exhibition india"
+    "India International Solar Show",
+    "India International Solar Show 2026",
+    "India Solar Show",
+    "Solar Expo Pune",
+    "Solar Exhibition Pune",
+    "Solar Exhibition India",
+    "Solar Energy Expo India",
+    "Solar Trade Show India",
+    "Energy Storage Exhibition",
+    "Renewable Energy Expo India",
+    "Clean Energy Expo",
+    "Solar Manufacturers India",
+    "Solar EPC Exhibition",
+    "Solar Technology Expo",
+    "Solar Conference India",
   ],
+
   alternates: {
-    canonical: "https://indiasolarshow.com",
+    canonical: "/",
+  },
+
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} 2026 — Solar Expo Pune`,
+      },
+    ],
+  },
+
+  twitter: {
+    card: "summary_large_image",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: ["/opengraph-image.png"],
   },
 };
 
-const CTA_LINKS = [
-  {
-    title: "Exhibit at the Show",
-    desc: "Showcase your solar PV, battery storage, and renewable energy solutions to qualified B2B buyers and industry leaders at India's top solar expo.",
-    href: "https://indiasolarshow.com/exhibitor",
-    btnLabel: "Exhibitor Info",
-    icon: "LayoutGrid",
-  },
-  {
-    title: "Visit the Show",
-    desc: "Explore cutting-edge solar technologies, network with renewable energy pioneers, and discover new B2B business opportunities.",
-    href: "https://indiasolarshow.com/visitor",
-    btnLabel: "Visitor Info",
-    icon: "Users",
-  },
-  {
-    title: "Become a Sponsor",
-    desc: "Position your brand at the forefront of India's clean energy growth story at the premier solar exhibition in Pune.",
-    href: "/sponsors",
-    btnLabel: "Sponsorship Options",
-    icon: "Award",
-  },
-];
+function safeJsonLd(data: unknown) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
 
-export default function Home() {
+function EventJsonLd() {
+  const organizationId = `${SITE_URL}/#organization`;
+  const eventId = `${SITE_URL}/#event`;
+
+  const eventSchema = {
+    "@context": "https://schema.org",
+    "@type": "Event",
+    "@id": eventId,
+
+    name: "India International Solar Show 2026",
+
+    alternateName: [
+      "India Solar Show 2026",
+      "India International Solar Expo 2026",
+    ],
+
+    description: HOME_DESCRIPTION,
+
+    url: SITE_URL,
+
+    startDate: EVENT.dates.start,
+    endDate: EVENT.dates.end,
+
+    eventStatus:
+      "https://schema.org/EventScheduled",
+
+    eventAttendanceMode:
+      "https://schema.org/OfflineEventAttendanceMode",
+
+    image: [
+      `${SITE_URL}/opengraph-image.png`,
+    ],
+
+    location: {
+      "@type": "Place",
+
+      name: EVENT.venue.name,
+
+      address: {
+        "@type": "PostalAddress",
+
+        streetAddress: EVENT.venue.line,
+        addressLocality: EVENT.venue.city,
+        addressRegion: EVENT.venue.state,
+        addressCountry: "IN",
+      },
+    },
+
+    organizer: {
+      "@type": "Organization",
+      "@id": organizationId,
+      name: EVENT.organizer.fullName,
+      url: SITE_URL,
+    },
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: safeJsonLd(eventSchema),
+      }}
+    />
+  );
+}
+
+function HomeBreadcrumbJsonLd() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "India International Solar Show",
+        item: SITE_URL,
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: safeJsonLd(breadcrumbSchema),
+      }}
+    />
+  );
+}
+
+export default function HomePage() {
   return (
     <>
+      <EventJsonLd />
+      <HomeBreadcrumbJsonLd />
+
       <HeroSection />
+      <StatsSection />
       <EventSnapshot />
       <AboutSection />
       <ShowHighlights />
       <CoLocatedShows />
-
-      {/* Participate CTA Section */}
-      <section className="relative overflow-hidden bg-[color:var(--color-black)] py-24 sm:py-32">
-        <div className="absolute inset-0 bg-solar-grid opacity-[0.08]" aria-hidden="true" />
-        <div
-          className="absolute -top-32 right-[-10%] h-[400px] w-[400px] rounded-full radial-glow-gold animate-flare-pulse"
-          aria-hidden="true"
-        />
-        <Container className="relative">
-          <SectionHeading
-            eyebrow="Participate"
-            heading="Be Part of India's Premier Solar Industry Show 2026"
-            intro="Whether you are an exhibitor, visitor, B2B delegate, or sponsor — connect with the clean energy ecosystem at the India Solar International Show in Pune."
-            tone="light"
-            align="center"
-          />
-          <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {CTA_LINKS.map((item, i) => (
-              <AnimatedCard key={item.title} tone="dark" delay={i * 0.08} className="flex flex-col p-6">
-                <span className="flex h-14 w-14 items-center justify-center rounded-2xl bg-[color:var(--color-gold)]/15 text-[color:var(--color-gold)] transition-transform duration-300 group-hover:-translate-y-1">
-                  <Icon name={item.icon} size={24} aria-hidden="true" />
-                </span>
-                <h3 className="mt-5 text-lg font-bold text-white">{item.title}</h3>
-                <p className="mt-2 flex-1 text-sm leading-relaxed text-white/60">{item.desc}</p>
-                <div className="mt-5">
-                  <Button href={item.href} size="sm">
-                    {item.btnLabel}
-                  </Button>
-                </div>
-              </AnimatedCard>
-            ))}
-          </div>
-        </Container>
-      </section>
-
-      <WhyParticipate />
       <EcosystemSection />
+      <ParticipationSection />
+      <WhyParticipate />
       <VenueSection />
       <BrochureCTA />
-
-      {/* Contact CTA Section */}
-      <section className="relative overflow-hidden bg-white py-20 sm:py-28">
-        <div className="absolute inset-0 bg-dot-grid opacity-30" aria-hidden="true" />
-        <Container className="relative text-center">
-          <SectionHeading
-            eyebrow="Get in Touch"
-            heading="Have Questions About India's Top Solar Exhibition?"
-            intro="Reach out to our team for stall bookings, visitor registrations, sponsorship enquiries, or venue details for India Solar International Show 2026."
-            align="center"
-          />
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
-            <Button href="/contact" size="lg" glow className="btn-shine">
-              Contact Us
-            </Button>
-            <Button href="/faq" variant="ghost" size="lg">
-              View FAQ
-            </Button>
-          </div>
-        </Container>
-      </section>
+      <FinalCTA />
     </>
   );
 }
