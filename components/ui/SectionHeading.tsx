@@ -11,6 +11,7 @@ interface SectionHeadingProps {
   tone?: "light" | "dark";
   as?: "h1" | "h2";
   className?: string;
+  id?: string;
 }
 
 export function SectionHeading({

@@ -1,75 +1,140 @@
-import type { Metadata } from "next";
-import { Montserrat } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Archivo, DM_Sans } from "next/font/google";
 import { GoogleTagManager } from "@next/third-parties/google";
+
 import "./globals.css";
+
 import { EVENT } from "@/data/siteData";
+import { MotionProvider } from "@/components/providers/MotionProvider";
 import { ScrollProgress } from "@/components/ScrollProgress";
 import { Preloader } from "@/components/Preloader";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { StickyMobileCTA } from "@/components/StickyMobileCTA";
 
-const montserrat = Montserrat({
+/* =========================================================
+   FONTS
+========================================================= */
+
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  variable: "--font-montserrat",
+  variable: "--font-body",
   display: "swap",
-  weight: ["400", "500", "600", "700", "800", "900"],
+  preload: true,
 });
 
-const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://indiasolarshow.com";
-const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID || "GTM-XXXXXXX";
+const archivo = Archivo({
+  subsets: ["latin"],
+  variable: "--font-display",
+  display: "swap",
+  preload: true,
+});
+
+/* =========================================================
+   SITE CONFIG
+========================================================= */
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "https://www.indiasolarshow.com";
+
+const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
+
+const SITE_NAME = "India International Solar Show";
+
+const SITE_TITLE =
+  "India International Solar Show 2026 | Solar Expo Pune";
+
+const SITE_DESCRIPTION =
+  "India International Solar Show 2026 in Pune brings together solar manufacturers, energy storage companies, clean-energy technology providers, buyers, developers, investors and industry leaders.";
+
+const ORGANIZER_NAME =
+  EVENT.organizer?.fullName ||
+  "India International Solar Show";
+
+/* =========================================================
+   VIEWPORT
+========================================================= */
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+
+  themeColor: [
+    {
+      media: "(prefers-color-scheme: light)",
+      color: "#fffdf8",
+    },
+    {
+      media: "(prefers-color-scheme: dark)",
+      color: "#191919",
+    },
+  ],
+
+  colorScheme: "light dark",
+};
+
+/* =========================================================
+   METADATA
+========================================================= */
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
+
+  applicationName: SITE_NAME,
+
   title: {
-    default: "India Solar International Show 2026 | Solar Expo in India & Pune",
-    template: `%s | ${EVENT.nameWithYear}`,
+    default: SITE_TITLE,
+    template: `%s | ${SITE_NAME}`,
   },
-  description:
-    "India Solar International Show 2026 is India's premier solar energy & renewable storage exhibition in Pune. Connect with solar manufacturers, EPC suppliers, and B2B buyers.",
+
+  description: SITE_DESCRIPTION,
+
   keywords: [
-    "solar expo in india",
-    "solar exhibition in india 2026",
-    "solar expo in pune",
-    "India Solar International Show",
-    "renewable energy exhibition india",
-    "solar energy trade fair pune",
-    "energy storage expo india",
-    "rooftop solar exhibition",
-    "book stall solar expo",
-    "solar pv manufacturers expo",
-    "EV charging infrastructure exhibition",
-    "Futurex solar show"
+    "India International Solar Show",
+    "India International Solar Show 2026",
+    "India Solar Show",
+    "Solar Expo Pune",
+    "Solar Exhibition India",
+    "Solar Energy Exhibition",
+    "Solar Trade Show India",
+    "Renewable Energy Expo India",
+    "Energy Storage Exhibition India",
+    "Clean Energy Expo India",
+    "Solar Industry Exhibition",
+    "Solar Manufacturers India",
+    "Solar Technology Expo",
+    "Solar Conference India",
+    "Solar Business Expo",
   ],
-  authors: [{ name: EVENT.organizer.fullName }],
-  alternates: { 
-    canonical: SITE_URL 
+
+  authors: [
+    {
+      name: ORGANIZER_NAME,
+    },
+  ],
+
+  creator: ORGANIZER_NAME,
+  publisher: ORGANIZER_NAME,
+
+  category: "Business Event",
+
+  referrer: "origin-when-cross-origin",
+
+  alternates: {
+    canonical: SITE_URL,
   },
-  openGraph: {
-    type: "website",
-    locale: "en_IN",
-    siteName: EVENT.nameWithYear,
-    title: "India Solar International Show 2026 | Premier Solar Expo in India",
-    description: "Join India's leading solar, energy storage & renewable energy trade fair in Pune. Book stalls or register as a visitor.",
-    url: SITE_URL,
-    images: [
-      {
-        url: `${SITE_URL}/opengraph-image.png`,
-        width: 1200,
-        height: 630,
-        alt: `${EVENT.nameWithYear} Banner`,
-      },
-    ],
+
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "India Solar International Show 2026 | Solar Expo Pune",
-    description: "Join India's premier solar energy & storage exhibition at Auto Cluster, Pune.",
-    images: [`${SITE_URL}/opengraph-image.png`],
-  },
+
   robots: {
     index: true,
     follow: true,
+
     googleBot: {
       index: true,
       follow: true,
@@ -78,133 +143,168 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
-  icons: {
-    icon: [
-      { url: "/favicon.ico" },
-      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
-      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
-    ],
-    apple: [
-      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+
+  openGraph: {
+    type: "website",
+    locale: "en_IN",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+
+    images: [
+      {
+        url: "/opengraph-image.png",
+        width: 1200,
+        height: 630,
+        alt: `${SITE_NAME} 2026 — Solar Expo Pune`,
+      },
     ],
   },
+
+  twitter: {
+    card: "summary_large_image",
+    title: SITE_TITLE,
+    description: SITE_DESCRIPTION,
+    images: ["/opengraph-image.png"],
+  },
+
+  icons: {
+    icon: [
+      {
+        url: "/favicon.ico",
+      },
+      {
+        url: "/favicon-32x32.png",
+        sizes: "32x32",
+        type: "image/png",
+      },
+      {
+        url: "/favicon-16x16.png",
+        sizes: "16x16",
+        type: "image/png",
+      },
+    ],
+
+    apple: [
+      {
+        url: "/apple-touch-icon.png",
+        sizes: "180x180",
+        type: "image/png",
+      },
+    ],
+
+    shortcut: "/favicon.ico",
+  },
+
   manifest: "/site.webmanifest",
 };
 
-// SEO Schemas Component
-function JsonLdSchemas() {
-  const eventSchema = {
-    "@context": "https://schema.org",
-    "@type": "Event",
-    name: EVENT.nameWithYear,
-    description: EVENT.positioning || "Premier Solar and Renewable Energy Exhibition in India",
-    startDate: EVENT.dates.start,
-    endDate: EVENT.dates.end,
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    eventStatus: "https://schema.org/EventScheduled",
-    image: [`${SITE_URL}/opengraph-image.png`],
-    location: {
-      "@type": "Place",
-      name: EVENT.venue.name,
-      address: {
-        "@type": "PostalAddress",
-        streetAddress: EVENT.venue.line,
-        addressLocality: EVENT.venue.city,
-        addressRegion: EVENT.venue.state,
-        addressCountry: "IN",
-      },
-    },
-    offers: {
-      "@type": "Offer",
-      url: `${SITE_URL}/visitor-registration`,
-      price: "0",
-      priceCurrency: "INR",
-      availability: "https://schema.org/InStock",
-      validFrom: "2026-01-01",
-    },
-    organizer: {
-      "@type": "Organization",
-      name: EVENT.organizer.fullName,
-      url: SITE_URL,
-    },
-  };
+/* =========================================================
+   JSON-LD
+========================================================= */
 
-  // Google Sitelinks Navigation Schema (Key for sub-headings in search)
-  const siteNavigationSchema = {
-    "@context": "https://schema.org",
-    "@type": "ItemList",
-    "itemListElement": [
-      {
-        "@type": "SiteNavigationElement",
-        "position": 1,
-        "name": "About Show",
-        "url": `${SITE_URL}/about`
-      },
-      {
-        "@type": "SiteNavigationElement",
-        "position": 2,
-        "name": "Exhibitor Profile",
-        "url": `${SITE_URL}/exhibitor-profile`
-      },
-      {
-        "@type": "SiteNavigationElement",
-        "position": 3,
-        "name": "Visitor Profile",
-        "url": `${SITE_URL}/visitor-profile`
-      },
-      {
-        "@type": "SiteNavigationElement",
-        "position": 4,
-        "name": "Book A Stall",
-        "url": `${SITE_URL}/exhibitor-registration`
-      },
-      {
-        "@type": "SiteNavigationElement",
-        "position": 5,
-        "name": "Contact Us",
-        "url": `${SITE_URL}/contact`
-      }
-    ]
-  };
+function safeJsonLd(data: unknown) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
 
-  const webSiteSchema = {
+function GlobalJsonLd() {
+  const organizationId = `${SITE_URL}/#organization`;
+  const websiteId = `${SITE_URL}/#website`;
+
+  const graph = {
     "@context": "https://schema.org",
-    "@type": "WebSite",
-    "name": EVENT.nameWithYear,
-    "url": SITE_URL,
+
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": organizationId,
+
+        name: ORGANIZER_NAME,
+
+        url: SITE_URL,
+
+        logo: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/logo.png`,
+        },
+      },
+
+      {
+        "@type": "WebSite",
+        "@id": websiteId,
+
+        url: SITE_URL,
+
+        name: SITE_NAME,
+
+        alternateName: [
+          "India Solar Show",
+          "India International Solar Show 2026",
+        ],
+
+        description: SITE_DESCRIPTION,
+
+        publisher: {
+          "@id": organizationId,
+        },
+
+        inLanguage: "en-IN",
+      },
+    ],
   };
 
   return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(eventSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(siteNavigationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
-      />
-    </>
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: safeJsonLd(graph),
+      }}
+    />
   );
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+/* =========================================================
+   ROOT LAYOUT
+========================================================= */
+
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html lang="en" className={montserrat.variable} suppressHydrationWarning>
-      <body className="bg-white text-[color:var(--color-black)] antialiased">
-        <JsonLdSchemas />
-        <Preloader />
-        <ScrollProgress />
-        <Header />
-        <main id="main-content">{children}</main>
-        <Footer />
-        <StickyMobileCTA />
+    <html
+      lang="en-IN"
+      className={`${dmSans.variable} ${archivo.variable}`}
+      suppressHydrationWarning
+    >
+      <body
+        suppressHydrationWarning
+        className="min-h-dvh overflow-x-clip bg-paper font-body text-ink antialiased"
+      >
+        <GlobalJsonLd />
+
+        <MotionProvider>
+          <Preloader />
+          <ScrollProgress />
+          <Header />
+
+          <main
+            id="main-content"
+            className="min-h-[60vh] pt-24 lg:pt-28"
+          >
+            {children}
+          </main>
+
+          <Footer />
+          <StickyMobileCTA />
+        </MotionProvider>
+
+        {GTM_ID ? (
+          <GoogleTagManager gtmId={GTM_ID} />
+        ) : null}
       </body>
-      <GoogleTagManager gtmId={GTM_ID} />
     </html>
   );
 }

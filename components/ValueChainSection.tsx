@@ -1,125 +1,285 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+
 import { VALUE_CHAIN } from "@/data/siteData";
 import { Container } from "@/components/ui/Container";
-import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Icon } from "@/components/ui/Icon";
 import { cn } from "@/lib/utils";
-import Image from "next/image";
 
-// Gentle arc offset per node index — turns the flat row into a memorable curved flow.
-function arcOffset(i: number, total: number) {
-  return Math.sin((i / (total - 1)) * Math.PI) * -26;
+function arcOffset(index: number, total: number) {
+  return Math.sin((index / (total - 1)) * Math.PI) * -18;
 }
 
 export function ValueChainSection() {
   const [active, setActive] = useState(0);
+  const reduceMotion = useReducedMotion();
+
   const activeItem = VALUE_CHAIN[active];
   const total = VALUE_CHAIN.length;
 
+  function previousStage() {
+    setActive((current) => (current - 1 + total) % total);
+  }
+
+  function nextStage() {
+    setActive((current) => (current + 1) % total);
+  }
+
   return (
-    <section className="relative overflow-hidden bg-[color:var(--color-navy)] py-24 sm:py-32">
-      <div className="absolute inset-0 bg-solar-grid opacity-[0.15]" aria-hidden="true" />
-      <div className="absolute top-0 right-0 h-[480px] w-[480px] rounded-full radial-glow-carrot opacity-60" aria-hidden="true" />
-      <div className="absolute bottom-0 left-0 h-[420px] w-[420px] rounded-full radial-glow-sky opacity-50" aria-hidden="true" />
+    <section
+      id="value-chain"
+      className="relative overflow-hidden border-b border-white/10 bg-ink py-10 text-white sm:py-12 lg:py-14"
+      aria-labelledby="value-chain-heading"
+    >
+      {/* subtle background */}
+      <motion.svg
+        viewBox="0 0 760 760"
+        fill="none"
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-56 -top-56 h-[620px] w-[620px] text-solar opacity-[0.035]"
+        animate={
+          reduceMotion
+            ? undefined
+            : {
+                rotate: [0, 2, 0],
+                y: [0, 7, 0],
+              }
+        }
+        transition={{
+          duration: 20,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <circle cx="380" cy="380" r="145" stroke="currentColor" />
+        <circle cx="380" cy="380" r="235" stroke="currentColor" />
+        <circle cx="380" cy="380" r="325" stroke="currentColor" />
+      </motion.svg>
 
       <Container className="relative">
-        <div className="grid items-center gap-10 lg:grid-cols-[1.2fr_0.8fr]">
-          {/* Left Content */}
-          <div>
-            <p className="text-sm font-semibold uppercase tracking-[0.25em] text-[color:var(--color-carrot)]">
-              The Solar &amp; Clean Energy Ecosystem
-            </p>
+        {/* Intro */}
+        <div className="grid items-center gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:gap-8">
+          <motion.div
+            initial={
+              reduceMotion
+                ? false
+                : {
+                    opacity: 0,
+                    y: 18,
+                  }
+            }
+            whileInView={{
+              opacity: 1,
+              y: 0,
+            }}
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
+            transition={{
+              duration: 0.55,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+          >
+            <div className="flex items-center gap-2.5">
+              <span className="h-[2px] w-7 bg-solar" />
 
-            <h2 className="mt-3 text-4xl font-bold leading-tight text-white lg:text-5xl">
-              Uniting India's Renewable Energy &amp; Solar Value Chain
+              <span className="text-[10px] font-bold uppercase leading-none tracking-[0.16em] text-white/45 sm:text-[11px]">
+                Solar &amp; Clean Energy Ecosystem
+              </span>
+            </div>
+
+            <h2
+              id="value-chain-heading"
+              className="
+                mt-3 max-w-[760px]
+                font-display
+                text-[clamp(1.8rem,2.45vw,2.45rem)]
+                font-bold uppercase
+                leading-[1.08]
+                tracking-[0.005em]
+                text-white
+              "
+            >
+              Connecting India&apos;s
+              <span className="block text-solar">
+                Renewable Energy Value Chain
+              </span>
             </h2>
 
-            <p className="mt-5 max-w-2xl text-lg leading-8 text-white/70">
-              From solar PV generation and battery energy storage (BESS) to smart grid integration, E-Mobility, clean-tech financing, and industrial adoption — explore how every segment connects at India Solar International Show 2026.
+            <p
+              className="
+                mt-3 max-w-[680px]
+                text-[13px]
+                leading-[1.68]
+                tracking-[0.005em]
+                text-white/55
+                sm:text-sm
+              "
+            >
+              From solar PV generation and battery energy storage to smart
+              grids, E-Mobility, financing, and industrial adoption, each
+              segment connects at India International Solar Show 2026.
             </p>
-          </div>
+          </motion.div>
 
-          {/* Right Image */}
-          <div className="hidden lg:block">
-            <div className="overflow-hidden rounded-3xl border border-white/10 shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)]">
-              <Image
-                src="https://iievshow.com/wp-content/uploads/2024/04/energy-car-concept-vehicle-ev-charge-battery-electric-on-station-blur-cityscape-on-panoramic-banner-blue-background-with-icon-illustration-environment-earth-friendly-idea-green-eco-energy-technology-photo-scaled.jpg"
-                alt="Solar Energy, Battery Storage, and EV Infrastructure Ecosystem in Pune India"
-                width={900}
-                height={550}
-                className="h-[260px] w-full object-cover transition-transform duration-500 hover:scale-105"
-              />
-            </div>
-          </div>
-        </div>
-
-        {/* Hidden Semantic List for Search Engine Crawlers */}
-        <div className="sr-only">
-          <h3>Solar &amp; Renewable Energy Value Chain Stages</h3>
-          <ul>
-            {VALUE_CHAIN.map((stage) => (
-              <li key={stage.title}>
-                <h4>{stage.title}</h4>
-                <p>{stage.desc}</p>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* Desktop arc flow */}
-        <div className="mt-24 hidden lg:block">
-          <div className="relative h-32">
-            <div className="absolute left-0 right-0 top-16 h-[2px] rounded-full bg-white/10" aria-hidden="true" />
+          {/* Image */}
+          <motion.div
+            initial={
+              reduceMotion
+                ? false
+                : {
+                    opacity: 0,
+                    x: 18,
+                  }
+            }
+            whileInView={{
+              opacity: 1,
+              x: 0,
+            }}
+            whileHover={
+              reduceMotion
+                ? undefined
+                : {
+                    y: -4,
+                  }
+            }
+            viewport={{
+              once: true,
+              amount: 0.2,
+            }}
+            transition={{
+              duration: 0.55,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="hidden overflow-hidden border border-white/10 bg-white/[0.025] lg:block"
+          >
             <motion.div
-              className="absolute left-0 top-16 h-[2px] rounded-full bg-gradient-to-r from-[color:var(--color-carrot)] via-[color:var(--color-sky)] to-[color:var(--color-carrot)]"
-              initial={false}
-              animate={{ width: `${((active + 1) / total) * 100}%` }}
-              transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-              style={{ boxShadow: "0 0 18px 3px rgba(90,200,242,0.65)" }}
+              className="relative aspect-[16/7.5] overflow-hidden"
+              whileHover={
+                reduceMotion
+                  ? undefined
+                  : {
+                      scale: 1.025,
+                    }
+              }
+              transition={{
+                duration: 0.4,
+              }}
+            >
+              <Image
+                src="/images/about.webp"
+                alt="Solar, battery storage and electric mobility value chain"
+                fill
+                sizes="38vw"
+                className="object-cover"
+              />
+
+              <div
+                className="absolute inset-0 bg-gradient-to-t from-black/55 via-black/5 to-transparent"
+                aria-hidden="true"
+              />
+
+              <div className="absolute inset-x-0 bottom-0 p-4">
+                <span className="text-[9px] font-bold uppercase tracking-[0.15em] text-solar">
+                  Integrated Ecosystem
+                </span>
+
+                <p className="mt-1 font-display text-base font-semibold uppercase leading-[1.1] tracking-[0.01em] text-white">
+                  Solar · Storage · Grid · Mobility
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* Desktop flow */}
+        <div className="mt-9 hidden lg:block">
+          <div className="relative h-[110px]">
+            <div
+              className="absolute inset-x-0 top-[50px] h-px bg-white/10"
+              aria-hidden="true"
             />
-            <div className="absolute inset-x-0 top-16 grid grid-cols-9">
-              {VALUE_CHAIN.map((item, i) => {
-                const isActive = active === i;
+
+            <motion.div
+              initial={false}
+              animate={{
+                width: `${((active + 1) / total) * 100}%`,
+              }}
+              transition={{
+                duration: 0.42,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className="absolute left-0 top-[50px] h-[2px] bg-solar"
+            />
+
+            <div
+              className="absolute inset-x-0 top-[50px] grid"
+              style={{
+                gridTemplateColumns: `repeat(${total}, minmax(0, 1fr))`,
+              }}
+            >
+              {VALUE_CHAIN.map((item, index) => {
+                const isActive = active === index;
+
                 return (
                   <button
                     key={item.title}
                     type="button"
-                    onClick={() => setActive(i)}
-                    onMouseEnter={() => setActive(i)}
+                    onClick={() => setActive(index)}
+                    onMouseEnter={() => setActive(index)}
                     aria-pressed={isActive}
                     aria-label={`${item.title} stage`}
-                    style={{ transform: `translateY(${arcOffset(i, total)}px)` }}
+                    style={{
+                      transform: `translateY(${arcOffset(index, total)}px)`,
+                    }}
                     className="group relative -translate-y-1/2 justify-self-center focus-visible:outline-none"
                   >
-                    <span
+                    <motion.span
+                      animate={{
+                        y: isActive ? -3 : 0,
+                        scale: isActive ? 1.06 : 1,
+                      }}
+                      whileHover={{
+                        y: -4,
+                        scale: 1.07,
+                      }}
+                      transition={{
+                        duration: 0.22,
+                      }}
                       className={cn(
-                        "relative z-10 flex h-16 w-16 items-center justify-center rounded-2xl border-2 transition-all duration-300",
+                        "relative z-10 flex h-12 w-12 items-center justify-center border text-white transition-colors",
                         isActive
-                          ? "border-[color:var(--color-carrot)] bg-gradient-to-br from-[color:var(--color-carrot)] to-[color:var(--color-carrot-light)] text-white scale-110 shadow-[0_0_30px_6px_rgba(247,148,29,0.55)]"
-                          : "border-white/15 bg-[color:var(--color-navy)] text-white/55 group-hover:border-white/40 group-hover:text-white/80"
+                          ? "border-solar bg-solar text-ink"
+                          : "border-white/15 bg-ink text-white/55 group-hover:border-solar/60 group-hover:text-solar",
                       )}
                     >
-                      <Icon name={item.icon} size={26} aria-hidden="true" />
-                      <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-white/10 text-[9px] font-bold text-white/60">
-                        {i + 1}
-                      </span>
-                    </span>
+                      <Icon name={item.icon} size={19} aria-hidden="true" />
+                    </motion.span>
                   </button>
                 );
               })}
             </div>
-            <div className="absolute inset-x-0 top-16 grid grid-cols-9">
-              {VALUE_CHAIN.map((item, i) => (
+
+            <div
+              className="absolute inset-x-0 top-[50px] grid"
+              style={{
+                gridTemplateColumns: `repeat(${total}, minmax(0, 1fr))`,
+              }}
+            >
+              {VALUE_CHAIN.map((item, index) => (
                 <span
                   key={item.title}
-                  style={{ transform: `translateY(${arcOffset(i, total) + 46}px)` }}
+                  style={{
+                    transform: `translateY(${arcOffset(index, total) + 36}px)`,
+                  }}
                   className={cn(
-                    "justify-self-center px-1 text-center text-[11px] font-semibold leading-tight transition-colors",
-                    active === i ? "text-white" : "text-white/45"
+                    "justify-self-center px-1 text-center text-[9px] font-semibold uppercase leading-[1.25] tracking-[0.04em] transition-colors xl:text-[10px]",
+                    active === index ? "text-white" : "text-white/38",
                   )}
                 >
                   {item.title}
@@ -128,100 +288,190 @@ export function ValueChainSection() {
             </div>
           </div>
 
-          <div className="mx-auto mt-16 flex max-w-3xl items-center gap-4">
+          {/* Active stage */}
+          <div className="mx-auto mt-8 flex max-w-[820px] items-center gap-3">
             <button
               type="button"
-              onClick={() => setActive((a) => (a - 1 + total) % total)}
+              onClick={previousStage}
               aria-label="Previous stage"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/60 transition-colors hover:border-[color:var(--color-carrot)] hover:text-[color:var(--color-carrot)] focus-visible:outline-none"
+              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/15 text-white/55 transition-colors hover:border-solar hover:text-solar focus-visible:outline-none"
             >
-              <ChevronLeft size={20} aria-hidden="true" />
+              <ChevronLeft size={17} strokeWidth={1.8} aria-hidden="true" />
             </button>
 
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeItem.title}
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.35 }}
-                className="gradient-border flex flex-1 items-center gap-6 rounded-3xl bg-[color:var(--color-navy)] p-7 text-left shadow-[0_20px_60px_-20px_rgba(0,0,0,0.6)]"
+                initial={
+                  reduceMotion
+                    ? false
+                    : {
+                        opacity: 0,
+                        y: 10,
+                      }
+                }
+                animate={{
+                  opacity: 1,
+                  y: 0,
+                }}
+                exit={{
+                  opacity: 0,
+                  y: -8,
+                }}
+                transition={{
+                  duration: 0.28,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className="relative flex min-h-[120px] flex-1 items-center gap-5 overflow-hidden border border-white/10 bg-white/[0.025] p-5"
               >
-                <span className="flex h-16 w-16 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-[color:var(--color-carrot)]/25 to-[color:var(--color-sky)]/15 text-[color:var(--color-carrot)]">
-                  <Icon name={activeItem.icon} size={30} aria-hidden="true" />
-                </span>
+                <motion.div
+                  initial={false}
+                  animate={{
+                    rotate: 0,
+                    scale: 1,
+                  }}
+                  whileHover={{
+                    rotate: -4,
+                    scale: 1.08,
+                  }}
+                  className="flex h-11 w-11 shrink-0 items-center justify-center bg-solar text-ink"
+                >
+                  <Icon name={activeItem.icon} size={19} aria-hidden="true" />
+                </motion.div>
+
                 <div>
-                  <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-[color:var(--color-sky)]">
+                  <p className="text-[9px] font-bold uppercase leading-none tracking-[0.16em] text-solar">
                     Stage {active + 1} of {total}
                   </p>
-                  <h3 className="mt-1 text-xl font-bold text-white">{activeItem.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-white/65">{activeItem.desc}</p>
+
+                  <h3 className="mt-2 font-display text-[1.15rem] font-semibold uppercase leading-[1.08] tracking-[0.012em] text-white">
+                    {activeItem.title}
+                  </h3>
+
+                  <p className="mt-2 max-w-2xl text-[13px] leading-[1.65] tracking-[0.004em] text-white/55">
+                    {activeItem.desc}
+                  </p>
                 </div>
+
+                <motion.div
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  className="absolute inset-x-0 bottom-0 h-[2px] origin-left bg-solar"
+                />
               </motion.div>
             </AnimatePresence>
 
             <button
               type="button"
-              onClick={() => setActive((a) => (a + 1) % total)}
+              onClick={nextStage}
               aria-label="Next stage"
-              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/15 text-white/60 transition-colors hover:border-[color:var(--color-carrot)] hover:text-[color:var(--color-carrot)] focus-visible:outline-none"
+              className="flex h-9 w-9 shrink-0 items-center justify-center border border-white/15 text-white/55 transition-colors hover:border-solar hover:text-solar focus-visible:outline-none"
             >
-              <ChevronRight size={20} aria-hidden="true" />
+              <ChevronRight size={17} strokeWidth={1.8} aria-hidden="true" />
             </button>
           </div>
         </div>
 
-        {/* Mobile / tablet vertical timeline */}
-        <div className="mt-14 space-y-1 lg:hidden">
-          {VALUE_CHAIN.map((item, i) => {
-            const isActive = active === i;
+        {/* Mobile / tablet */}
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{
+            once: true,
+            amount: 0.08,
+          }}
+          variants={{
+            hidden: {},
+            show: {
+              transition: {
+                staggerChildren: 0.055,
+              },
+            },
+          }}
+          className="mt-7 grid gap-2.5 lg:hidden"
+        >
+          {VALUE_CHAIN.map((item, index) => {
+            const isActive = active === index;
+
             return (
-              <div key={item.title} className="relative flex gap-4 pb-7 last:pb-0">
-                <div className="flex flex-col items-center">
-                  <button
-                    type="button"
-                    onClick={() => setActive(isActive ? -1 : i)}
-                    aria-expanded={isActive}
+              <motion.div
+                key={item.title}
+                variants={{
+                  hidden: {
+                    opacity: 0,
+                    y: 14,
+                  },
+                  show: {
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      duration: 0.4,
+                    },
+                  },
+                }}
+                className="overflow-hidden border border-white/10 bg-white/[0.025]"
+              >
+                <button
+                  type="button"
+                  onClick={() => setActive(isActive ? 0 : index)}
+                  aria-expanded={isActive}
+                  className="flex w-full items-center gap-3 p-3.5 text-left"
+                >
+                  <motion.span
+                    animate={{
+                      scale: isActive ? 1.06 : 1,
+                      rotate: isActive ? -3 : 0,
+                    }}
                     className={cn(
-                      "flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border-2 transition-all duration-300",
+                      "flex h-9 w-9 shrink-0 items-center justify-center border",
                       isActive
-                        ? "border-[color:var(--color-carrot)] bg-gradient-to-br from-[color:var(--color-carrot)] to-[color:var(--color-carrot-light)] text-white shadow-[0_0_20px_4px_rgba(247,148,29,0.45)]"
-                        : "border-white/15 text-white/60"
+                        ? "border-solar bg-solar text-ink"
+                        : "border-white/15 text-white/55",
                     )}
                   >
-                    <Icon name={item.icon} size={20} aria-hidden="true" />
-                  </button>
-                  {i < total - 1 && (
-                    <span
-                      className={cn(
-                        "mt-1 w-0.5 flex-1 rounded-full transition-colors",
-                        isActive ? "bg-[color:var(--color-carrot)]" : "bg-white/10"
-                      )}
-                    />
-                  )}
-                </div>
-                <button type="button" onClick={() => setActive(isActive ? -1 : i)} className="flex-1 pt-2 text-left">
-                  <p className={cn("text-base font-bold", isActive ? "text-white" : "text-white/75")}>
-                    {item.title}
-                  </p>
-                  <AnimatePresence>
-                    {isActive && (
-                      <motion.p
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.25 }}
-                        className="mt-1.5 text-sm leading-relaxed text-white/60"
-                      >
-                        {item.desc}
-                      </motion.p>
-                    )}
-                  </AnimatePresence>
+                    <Icon name={item.icon} size={17} aria-hidden="true" />
+                  </motion.span>
+
+                  <span className="flex-1">
+                    <span className="text-[9px] font-bold uppercase tracking-[0.13em] text-solar/70">
+                      Stage {index + 1}
+                    </span>
+
+                    <span className="mt-1 block font-display text-[1rem] font-semibold uppercase leading-[1.12] tracking-[0.012em] text-white">
+                      {item.title}
+                    </span>
+                  </span>
                 </button>
-              </div>
+
+                <AnimatePresence initial={false}>
+                  {isActive && (
+                    <motion.div
+                      initial={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      animate={{
+                        height: "auto",
+                        opacity: 1,
+                      }}
+                      exit={{
+                        height: 0,
+                        opacity: 0,
+                      }}
+                      transition={{
+                        duration: 0.25,
+                      }}
+                    >
+                      <p className="border-t border-white/10 px-3.5 py-3 text-[13px] leading-[1.65] text-white/55">
+                        {item.desc}
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
             );
           })}
-        </div>
+        </motion.div>
       </Container>
     </section>
   );

@@ -2,8 +2,8 @@
 // Do not hardcode event facts, contacts, or repeated card copy inside components.
 
 export const EVENT = {
-  name: "India Solar International Show",
-  nameWithYear: "India Solar International Show 2026",
+  name: "India International Solar Show",
+  nameWithYear: "India International Solar Show 2026",
   altName: "India International Solar Show",
   tagline: "Connecting Solar Industry",
   positioning:
@@ -37,6 +37,7 @@ export const CO_LOCATED = [
     name: "India Battery International Show",
     edition: "",
     logo: "/logos/india-battery-logo.png",
+    website: "https://www.indiabatteryshow.com/",
     blurb:
       "Battery manufacturing, energy storage, LFP, lithium-ion, lead-acid, ESS integration.",
   },
@@ -44,6 +45,7 @@ export const CO_LOCATED = [
     name: "India EV International Show",
     edition: "8th Edition",
     logo: "/logos/india-ev-logo.png",
+    website: "https://iievshow.com/",
     blurb:
       "EV technology, charging infrastructure, mobility ecosystem, e-mobility innovation.",
   },
@@ -119,9 +121,9 @@ export const FOOTER_LINKS = [
 
 export const FAQ_ITEMS = [
   {
-    question: "What is the India Solar International Show?",
+    question: "What is the India International Solar Show?",
     answer:
-      "The India Solar International Show is a premier B2B exhibition and conference connecting the renewable energy value chain — solar, energy storage, microgrids, EV charging infrastructure, and more. It brings together manufacturers, developers, investors, policymakers, and buyers.",
+      "The India International Solar Show is a premier B2B exhibition and conference connecting the renewable energy value chain — solar, energy storage, microgrids, EV charging infrastructure, and more. It brings together manufacturers, developers, investors, policymakers, and buyers.",
   },
   {
     question: "When and where is the event?",
@@ -161,7 +163,7 @@ export const FAQ_ITEMS = [
   {
     question: "What are the co-located shows?",
     answer:
-      "The India Solar International Show is co-located with the India Battery International Show (8th Edition) and the India EV International Show (8th Edition), creating an integrated clean-energy marketplace.",
+      "The India International Solar Show is co-located with the India Battery International Show (8th Edition) and the India EV International Show (8th Edition), creating an integrated clean-energy marketplace.",
   },
   {
     question: "Where can I download the event brochure?",

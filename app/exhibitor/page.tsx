@@ -1,98 +1,205 @@
 import type { Metadata } from "next";
+
 import { PageHero } from "@/components/ui/PageHero";
 import { ExhibitorProfile } from "@/components/ExhibitorProfile";
 import { WhyParticipate } from "@/components/WhyParticipate";
+import { ExhibitorOpportunityStrip } from "@/components/ExhibitorOpportunityStrip";
+
+const SITE_URL =
+  process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
+  "https://www.indiasolarshow.com";
+
+const PAGE_URL = `${SITE_URL}/exhibitor`;
+const SITE_NAME = "India International Solar Show";
+
+const PAGE_TITLE =
+  "Exhibit at India International Solar Show 2026 | Solar Expo Pune";
+
+const PAGE_DESCRIPTION =
+  "Exhibit at India International Solar Show 2026 in Pune. Showcase solar PV, BESS, energy storage and clean-energy technologies to EPCs, developers, buyers, investors and industry decision-makers.";
 
 export const metadata: Metadata = {
-  title: "Exhibit at India Solar International Show 2026 | Solar & BESS Expo Pune",
-  description:
-    "Book your stall at India Solar International Show 2026 in Pune. Showcase your solar PV, battery energy storage (BESS), and green energy solutions to 10,000+ qualified buyers, EPCs, and investors.",
-  keywords: [
-    "Exhibit Solar India 2026",
-    "Solar Exhibition Pune Stall Booking",
-    "Solar PV Manufacturer Trade Show",
-    "BESS Energy Storage Expo India",
-    "Renewable Energy Trade Show Pune",
-    "Solar B2B Expo Stall Registration",
-  ],
-  alternates: {
-    canonical: "https://indiasolarshow.com/exhibitors",
+  title: {
+    absolute: PAGE_TITLE,
   },
+
+  description: PAGE_DESCRIPTION,
+
+  keywords: [
+    "Exhibit at India International Solar Show",
+    "India International Solar Show 2026",
+    "Solar Expo Pune Exhibitor",
+    "Solar Exhibition Stall Booking",
+    "Solar Trade Show India",
+    "Solar PV Exhibition India",
+    "BESS Expo India",
+    "Energy Storage Exhibition India",
+    "Renewable Energy Exhibition Pune",
+    "Solar EPC Exhibition",
+    "Solar Manufacturer Exhibition",
+    "Solar Stall Booking Pune",
+  ],
+
+  alternates: {
+    canonical: PAGE_URL,
+  },
+
   openGraph: {
-    title: "Exhibit at India Solar International Show 2026 | Pune, India",
-    description:
-      "Showcase your solar & energy storage technologies to leading developers, EPCs, utilities, and industrial buyers in Pune.",
-    url: "https://indiasolarshow.com/exhibitors",
-    siteName: "India Solar International Show",
+    type: "website",
+    locale: "en_IN",
+    url: PAGE_URL,
+    siteName: SITE_NAME,
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+
     images: [
       {
-        url: "https://indiasolarshow.com/og-exhibitor.jpg",
+        url: "/og-exhibitor.jpg",
         width: 1200,
         height: 630,
-        alt: "Exhibit at India Solar International Show 2026 Pune",
+        alt: "Exhibit at India International Solar Show 2026 in Pune",
       },
     ],
-    locale: "en_IN",
-    type: "website",
   },
+
   twitter: {
     card: "summary_large_image",
-    title: "Exhibit at India Solar International Show 2026",
-    description:
-      "Connect with 10,000+ solar industry decision-makers in Pune. Book your exhibitor booth today.",
-    images: ["https://indiasolarshow.com/og-exhibitor.jpg"],
+    title: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+    images: ["/og-exhibitor.jpg"],
+  },
+
+  robots: {
+    index: true,
+    follow: true,
+
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
-export default function ExhibitorPage() {
-  // Event Schema JSON-LD for Search Engines Rich Snippets
-  const jsonLd = {
+function safeJsonLd(data: unknown) {
+  return JSON.stringify(data).replace(/</g, "\\u003c");
+}
+
+function ExhibitorPageJsonLd() {
+  const schema = {
     "@context": "https://schema.org",
-    "@type": "BusinessEvent",
-    "name": "India Solar International Show 2026 - Exhibitor Opportunities",
-    "description":
-      "India's leading B2B trade exhibition for solar PV manufacturing, battery energy storage systems (BESS), and renewable energy technology.",
-    "url": "https://indiasolarshow.com/exhibitors",
-    "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
-    "eventStatus": "https://schema.org/EventScheduled",
-    "location": {
-      "@type": "Place",
-      "name": "Auto Cluster Exhibition Centre",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Pune",
-        "addressRegion": "Maharashtra",
-        "addressCountry": "IN",
-      },
+    "@type": "WebPage",
+    "@id": `${PAGE_URL}/#webpage`,
+
+    url: PAGE_URL,
+    name: PAGE_TITLE,
+    description: PAGE_DESCRIPTION,
+
+    isPartOf: {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: SITE_URL,
     },
-    "organizer": {
-      "@type": "Organization",
-      "name": "India Solar Show Team",
-      "url": "https://indiasolarshow.com",
+
+    about: {
+      "@type": "Event",
+      "@id": `${SITE_URL}/#event`,
+      name: "India International Solar Show 2026",
+      url: SITE_URL,
     },
+
+    primaryImageOfPage: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/og-exhibitor.jpg`,
+    },
+
+    inLanguage: "en-IN",
   };
 
   return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: safeJsonLd(schema),
+      }}
+    />
+  );
+}
+
+function BreadcrumbJsonLd() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: SITE_URL,
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Exhibit With Us",
+        item: PAGE_URL,
+      },
+    ],
+  };
+
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{
+        __html: safeJsonLd(schema),
+      }}
+    />
+  );
+}
+
+export default function ExhibitorPage() {
+  return (
     <>
-      {/* Inject Structured Data for Google Rich Snippets */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
-      />
+      <ExhibitorPageJsonLd />
+      <BreadcrumbJsonLd />
 
-      <PageHero
-        eyebrow="Exhibitor Registration 2026"
-        title="Showcase Your Innovations to India's Solar & Storage Market"
-        subtitle="Connect face-to-face with top-tier solar developers, EPC contractors, utilities, industrial energy buyers, and investors at India's premier clean-tech exhibition in Pune."
-      />
-      
-      {/* Hidden H1 for SEO Crawler Priority */}
-      <h1 className="sr-only">
-        Exhibit at India Solar International Show 2026 Pune - B2B Solar &amp; Battery Storage Trade Fair
-      </h1>
+      <div className="overflow-hidden bg-paper text-ink">
+        <PageHero
+          eyebrow="Exhibit With Us"
+          title="Showcase Your Innovations at India International Solar Show 2026"
+          subtitle="Connect with solar developers, EPC companies, industrial buyers, technology partners, investors and clean-energy decision-makers in Pune."
+          breadcrumbs={[
+            {
+              label: "Home",
+              href: "/",
+            },
+            {
+              label: "Exhibit With Us",
+            },
+          ]}
+          meta={[
+            {
+              label: "Show Dates",
+              value: "02–04 October 2026",
+            },
+            {
+              label: "Venue",
+              value: "Auto Cluster, Pune",
+            },
+            {
+              label: "Format",
+              value: "3-Day B2B Exhibition",
+            },
+          ]}
+        />
 
-      <ExhibitorProfile />
-      <WhyParticipate />
+        <ExhibitorOpportunityStrip />
+        <ExhibitorProfile />
+        <WhyParticipate />
+      </div>
     </>
   );
 }

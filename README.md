@@ -1,6 +1,6 @@
-# India Solar International Show 2026 — Website
+# India International Solar Show 2026 — Website
 
-A single-page, animated marketing site for the **India Solar International Show 2026**
+A single-page, animated marketing site for the **India International Solar Show 2026**
 (02–04 Oct 2026, Auto Cluster Exhibition Center, Pune). Built with Next.js (App
 Router), React, TypeScript, Tailwind CSS v4, and Framer Motion.
 
@@ -62,16 +62,16 @@ route needs a Node server to run.
 Almost everything on the page is data-driven — you should rarely need to
 touch component files just to change text.
 
-| What you want to change | Where |
-|---|---|
-| Event dates, venue, tagline, contacts, organiser, brochure path | `data/siteData.ts` → `EVENT`, `CONTACTS` |
-| Nav menu items | `data/siteData.ts` → `NAV_ITEMS` |
-| Any card content (market scope, exhibitor/visitor segments, show highlights, why-participate, workshop themes, value chain) | `data/siteData.ts` — each section has its own exported array |
-| Logos (India Solar / Battery / EV / Futurex) | `public/logos/` — replace the PNG files, keep the same filenames referenced in `data/siteData.ts` |
-| Downloadable brochure PDF | `public/india-solar-brochure.pdf` — replace with an updated PDF, same filename |
-| Colors / fonts / animations | `app/globals.css` (`:root` custom properties at the top hold the brand palette) |
-| Page layout / which sections appear and in what order | `app/page.tsx` |
-| SEO title/description/OG image | `app/layout.tsx` and `app/opengraph-image.tsx` |
+| What you want to change                                                                                                     | Where                                                                                             |
+| --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| Event dates, venue, tagline, contacts, organiser, brochure path                                                             | `data/siteData.ts` → `EVENT`, `CONTACTS`                                                          |
+| Nav menu items                                                                                                              | `data/siteData.ts` → `NAV_ITEMS`                                                                  |
+| Any card content (market scope, exhibitor/visitor segments, show highlights, why-participate, workshop themes, value chain) | `data/siteData.ts` — each section has its own exported array                                      |
+| Logos (India Solar / Battery / EV / Futurex)                                                                                | `public/logos/` — replace the PNG files, keep the same filenames referenced in `data/siteData.ts` |
+| Downloadable brochure PDF                                                                                                   | `public/india-solar-brochure.pdf` — replace with an updated PDF, same filename                    |
+| Colors / fonts / animations                                                                                                 | `app/globals.css` (`:root` custom properties at the top hold the brand palette)                   |
+| Page layout / which sections appear and in what order                                                                       | `app/page.tsx`                                                                                    |
+| SEO title/description/OG image                                                                                              | `app/layout.tsx` and `app/opengraph-image.tsx`                                                    |
 
 Icons throughout the site are referenced by name (e.g. `"BatteryCharging"`)
 and rendered via `components/ui/Icon.tsx`, which maps the string to a
@@ -127,5 +127,5 @@ public/              Logos, brochure PDF, static assets
   media query at the bottom of `app/globals.css`).
 - No fake/placeholder statistics are used anywhere on the site by design —
   if you add new stat-style content, keep that policy.
-- Event name is used consistently as **India Solar International Show**;
+- Event name is used consistently as **India International Solar Show**;
   "India International Solar Show" only appears as an SEO keyword variant.

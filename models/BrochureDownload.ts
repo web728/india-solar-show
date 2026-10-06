@@ -1,13 +1,91 @@
-import mongoose from "mongoose";
+import mongoose, {
+  Schema,
+  type Model,
+} from "mongoose";
 
-const BrochureDownloadSchema = new mongoose.Schema({
-  fullName: String,
-  email: String,
-  phone: String,
-  company: String,
-  designation: String,
-  country: String,
-  createdAt: { type: Date, default: Date.now },
-});
+/* =========================================================
+   TYPES
+========================================================= */
 
-export default mongoose.models.BrochureDownload || mongoose.model("BrochureDownload", BrochureDownloadSchema);
+export interface BrochureDownloadDocument {
+  fullName: string;
+
+  email: string;
+
+  phone: string;
+
+  company?: string;
+
+  designation?: string;
+
+  country?: string;
+
+  createdAt: Date;
+
+  updatedAt: Date;
+}
+
+/* =========================================================
+   SCHEMA
+========================================================= */
+
+const BrochureDownloadSchema =
+  new Schema<BrochureDownloadDocument>(
+    {
+      fullName: {
+        type: String,
+        required: true,
+        trim: true,
+      },
+
+      email: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true,
+        index: true,
+      },
+
+      phone: {
+        type: String,
+        required: true,
+        trim: true,
+        index: true,
+      },
+
+      company: {
+        type: String,
+        trim: true,
+        default: "",
+      },
+
+      designation: {
+        type: String,
+        trim: true,
+        default: "",
+      },
+
+      country: {
+        type: String,
+        trim: true,
+        default: "",
+      },
+    },
+    {
+      timestamps: true,
+      versionKey: false,
+    },
+  );
+
+/* =========================================================
+   MODEL
+========================================================= */
+
+const BrochureDownload: Model<BrochureDownloadDocument> =
+  mongoose.models.BrochureDownload ||
+  mongoose.model<BrochureDownloadDocument>(
+    "BrochureDownload",
+    BrochureDownloadSchema,
+  );
+
+export default BrochureDownload;
