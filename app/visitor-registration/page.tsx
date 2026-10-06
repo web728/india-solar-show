@@ -9,7 +9,7 @@ const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL?.replace(/\/$/, "") ||
   "https://www.indiasolarshow.com";
 
-const PAGE_URL = `${SITE_URL}/visitor-registration`;
+const PAGE_URL = `${SITE_URL}https://app.warpbay.com/qPMIy6ii`;
 const SITE_NAME = "India International Solar Show";
 
 const PAGE_TITLE =

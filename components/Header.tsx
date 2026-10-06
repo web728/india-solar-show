@@ -93,13 +93,15 @@ const HEADER_NAV: NavItem[] = [
         label: "Exhibitor Information",
         href: "/exhibitor",
         icon: Building2,
-        description: "Explore exhibiting benefits, opportunities and show details.",
+        description:
+          "Explore exhibiting benefits, opportunities and show details.",
       },
       {
         label: "Exhibitor Registration",
-        href: "/exhibitor-registration",
+        href: "https://app.warpbay.com/E2yy0Klq",
         icon: ClipboardCheck,
-        description: "Register your interest and request stall options and pricing.",
+        description:
+          "Register your interest and request stall options and pricing.",
       },
     ],
   },
@@ -116,9 +118,10 @@ const HEADER_NAV: NavItem[] = [
       },
       {
         label: "Visitor Registration",
-        href: "/visitor-registration",
+        href: "https://app.warpbay.com/qPMIy6ii",
         icon: UserCheck,
-        description: "Register as a visitor for India International Solar Show 2026.",
+        description:
+          "Register as a visitor for India International Solar Show 2026.",
       },
     ],
   },
@@ -304,9 +307,7 @@ function DesktopDropdown({
                     transition-colors
                     duration-200
                   `,
-                  childActive
-                    ? "bg-blue/[0.065]"
-                    : "hover:bg-solar/[0.07]",
+                  childActive ? "bg-blue/[0.065]" : "hover:bg-solar/[0.07]",
                 )}
               >
                 {Icon ? (
@@ -655,9 +656,7 @@ export function Header() {
                             xl:px-3.5
                             xl:text-[13px]
                           `,
-                          active
-                            ? "text-blue"
-                            : "text-ink/58 hover:text-ink",
+                          active ? "text-blue" : "text-ink/58 hover:text-ink",
                         )}
                       >
                         {item.label}
@@ -756,10 +755,7 @@ export function Header() {
 
                     <AnimatePresence>
                       {hasChildren && open ? (
-                        <DesktopDropdown
-                          item={item}
-                          pathname={pathname}
-                        />
+                        <DesktopDropdown item={item} pathname={pathname} />
                       ) : null}
                     </AnimatePresence>
                   </div>
@@ -777,7 +773,6 @@ export function Header() {
                 className="group/stall whitespace-nowrap"
               >
                 Book Your Stall
-
                 <ArrowUpRight
                   aria-hidden="true"
                   className="
@@ -999,9 +994,7 @@ export function Header() {
                               <button
                                 type="button"
                                 onClick={() =>
-                                  setMobileDropdown(
-                                    open ? null : item.label,
-                                  )
+                                  setMobileDropdown(open ? null : item.label)
                                 }
                                 className={cn(
                                   `
@@ -1028,9 +1021,7 @@ export function Header() {
                               <button
                                 type="button"
                                 onClick={() =>
-                                  setMobileDropdown(
-                                    open ? null : item.label,
-                                  )
+                                  setMobileDropdown(open ? null : item.label)
                                 }
                                 aria-expanded={open}
                                 aria-label={`Toggle ${item.label} menu`}
@@ -1210,7 +1201,6 @@ export function Header() {
                       "
                     >
                       Book Your Stall
-
                       <ArrowUpRight
                         aria-hidden="true"
                         className="

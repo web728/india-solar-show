@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Script from "next/script";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
@@ -22,7 +21,7 @@ import { COUNTRIES } from "@/lib/countries";
 import { FormField } from "@/components/ui/FormField";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { getRecaptcha } from "@/lib/recaptcha";
+import { getRecaptcha, loadRecaptcha } from "@/lib/recaptcha";
 
 const BROCHURE_URL = "/India-Solar-International-Show-Brochure.pdf";
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "";
@@ -85,8 +84,7 @@ function SuccessModal({
             </h3>
 
             <p className="mx-auto mt-4 max-w-[410px] text-[12px] leading-6 text-ink/48 sm:text-[13px]">
-              Your details have been submitted successfully. Download the
-              official India International Solar Show brochure below.
+              Your details have been submitted successfully. Download the official India International Solar Show brochure below.
             </p>
 
             <a
@@ -106,13 +104,11 @@ function SuccessModal({
 }
 
 export function BrochureDownloadForm() {
-  const [status, setStatus] = useState<
-    "idle" | "loading" | "success" | "error"
-  >("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [apiError, setApiError] = useState("");
-  const [captchaReady, setCaptchaReady] = useState(false);
   const [captchaToken, setCaptchaToken] = useState("");
   const [captchaError, setCaptchaError] = useState("");
+  const [captchaLoading, setCaptchaLoading] = useState(true);
 
   const captchaRef = useRef<HTMLDivElement | null>(null);
   const captchaWidgetId = useRef<number | null>(null);
@@ -135,29 +131,26 @@ export function BrochureDownloadForm() {
   });
 
   useEffect(() => {
-    if (
-      !captchaReady ||
-      !RECAPTCHA_SITE_KEY ||
-      !captchaRef.current ||
-      captchaWidgetId.current !== null
-    )
+    if (!RECAPTCHA_SITE_KEY || !captchaRef.current || captchaWidgetId.current !== null) {
+      setCaptchaLoading(false);
       return;
+    }
 
     let cancelled = false;
-    let timer: ReturnType<typeof setTimeout> | null = null;
 
-    const renderCaptcha = () => {
-      if (cancelled) return;
-
-      const grecaptcha = getRecaptcha();
-      if (!grecaptcha?.render) {
-        timer = setTimeout(renderCaptcha, 150);
-        return;
-      }
-
-      if (!captchaRef.current || captchaWidgetId.current !== null) return;
-
+    async function renderCaptcha() {
       try {
+        const grecaptcha = await loadRecaptcha();
+
+        if (
+          cancelled ||
+          !captchaRef.current ||
+          captchaWidgetId.current !== null ||
+          !grecaptcha.render
+        ) {
+          return;
+        }
+
         captchaWidgetId.current = grecaptcha.render(captchaRef.current, {
           sitekey: RECAPTCHA_SITE_KEY,
           theme: "light",
@@ -175,25 +168,32 @@ export function BrochureDownloadForm() {
             setCaptchaError("reCAPTCHA could not be loaded. Please try again.");
           },
         });
-      } catch (error) {
-        console.error("[Brochure Form] reCAPTCHA render failed:", error);
-        setCaptchaError(
-          "Verification could not be initialized. Please refresh the page.",
-        );
-      }
-    };
 
-    renderCaptcha();
+        setCaptchaLoading(false);
+      } catch (error) {
+        console.error("[Brochure Form] reCAPTCHA load/render failed:", error);
+
+        if (!cancelled) {
+          setCaptchaLoading(false);
+          setCaptchaError(
+            "reCAPTCHA failed to load. Please check your connection.",
+          );
+        }
+      }
+    }
+
+    void renderCaptcha();
 
     return () => {
       cancelled = true;
-      if (timer) clearTimeout(timer);
     };
-  }, [captchaReady]);
+  }, []);
 
   function resetCaptcha() {
     setCaptchaToken("");
+
     const grecaptcha = getRecaptcha();
+
     if (grecaptcha?.reset && captchaWidgetId.current !== null) {
       grecaptcha.reset(captchaWidgetId.current);
     }
@@ -221,7 +221,10 @@ export function BrochureDownloadForm() {
       const response = await fetch("/api/brochure-download", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ ...values, recaptchaToken: captchaToken }),
+        body: JSON.stringify({
+          ...values,
+          recaptchaToken: captchaToken,
+        }),
       });
 
       const data = (await response.json()) as {
@@ -231,7 +234,8 @@ export function BrochureDownloadForm() {
 
       if (!response.ok || !data.success) {
         throw new Error(
-          data.message || "Something went wrong while processing your request.",
+          data.message ||
+            "Something went wrong while processing your request.",
         );
       }
 
@@ -251,19 +255,6 @@ export function BrochureDownloadForm() {
 
   return (
     <>
-      <Script
-        id="google-recaptcha-brochure"
-        src="https://www.google.com/recaptcha/api.js?render=explicit"
-        strategy="afterInteractive"
-        onReady={() => setCaptchaReady(true)}
-        onError={() => {
-          setCaptchaReady(false);
-          setCaptchaError(
-            "reCAPTCHA failed to load. Please check your connection.",
-          );
-        }}
-      />
-
       <SuccessModal
         open={status === "success"}
         onClose={() => setStatus("idle")}
@@ -284,20 +275,23 @@ export function BrochureDownloadForm() {
             className="absolute -right-20 -top-24 size-56 rounded-full bg-blue/25 blur-[85px]"
             aria-hidden="true"
           />
+
           <div className="relative z-10 flex items-start gap-4">
             <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl border border-paper/10 bg-paper/[0.05] text-solar">
               <FileText className="size-[18px]" />
             </span>
+
             <div>
               <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-solar">
                 Official Event Brochure
               </span>
+
               <h2 className="mt-1.5 font-display text-[22px] font-semibold leading-[1.08] tracking-[-0.035em] sm:text-[27px]">
                 Download the Show Brochure
               </h2>
+
               <p className="mt-3 max-w-[650px] text-[11px] leading-5 text-paper/48 sm:text-[12px]">
-                Share your details to access the official India International
-                Solar Show brochure and event information.
+                Share your details to access the official India International Solar Show brochure and event information.
               </p>
             </div>
           </div>
@@ -308,10 +302,12 @@ export function BrochureDownloadForm() {
             <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-blue/10 bg-blue/[0.055] text-blue">
               <Download className="size-4" />
             </span>
+
             <div>
               <h3 className="font-display text-[15px] font-semibold tracking-[-0.02em] text-ink sm:text-[17px]">
                 Your Details
               </h3>
+
               <p className="mt-1 text-[10px] leading-5 text-ink/40 sm:text-[11px]">
                 Complete the form below to unlock the brochure download.
               </p>
@@ -406,6 +402,7 @@ export function BrochureDownloadForm() {
                 {...register("country")}
               >
                 <option value="">Select country (optional)</option>
+
                 {COUNTRIES.map((country) => (
                   <option key={country} value={country}>
                     {country}
@@ -421,10 +418,12 @@ export function BrochureDownloadForm() {
             <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-blue/10 bg-blue/[0.055] text-blue">
               <ShieldCheck className="size-4" />
             </span>
+
             <div>
               <h3 className="font-display text-[15px] font-semibold tracking-[-0.02em] text-ink sm:text-[17px]">
                 Human Verification
               </h3>
+
               <p className="mt-1 text-[10px] leading-5 text-ink/40 sm:text-[11px]">
                 Complete the security check before accessing the brochure.
               </p>
@@ -432,12 +431,24 @@ export function BrochureDownloadForm() {
           </div>
 
           <div className="max-w-full overflow-x-auto rounded-xl border border-ink/[0.08] bg-paper p-3 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {RECAPTCHA_SITE_KEY ? (
-              <div ref={captchaRef} className="min-h-[78px] min-w-[304px]" />
-            ) : (
+            {!RECAPTCHA_SITE_KEY ? (
               <div className="flex min-h-[78px] items-center gap-2 text-[11px] text-red-600">
                 <AlertCircle className="size-4" />
                 reCAPTCHA key is missing.
+              </div>
+            ) : (
+              <div className="relative min-h-[78px] min-w-[304px]">
+                {captchaLoading && (
+                  <div className="absolute inset-0 flex items-center gap-2 text-[11px] text-ink/40">
+                    <Loader2 className="size-4 animate-spin" />
+                    Loading verification...
+                  </div>
+                )}
+
+                <div
+                  ref={captchaRef}
+                  className="min-h-[78px] min-w-[304px]"
+                />
               </div>
             )}
           </div>
@@ -473,8 +484,7 @@ export function BrochureDownloadForm() {
             <div className="flex max-w-[420px] items-start gap-2.5">
               <Sparkles className="mt-0.5 size-4 shrink-0 text-solar" />
               <p className="text-[9px] leading-4 text-ink/35 sm:text-[10px]">
-                Submit your details once to unlock the official event brochure
-                PDF.
+                Submit your details once to unlock the official event brochure PDF.
               </p>
             </div>
 
