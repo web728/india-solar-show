@@ -1,10 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import Script from "next/script";
+
 import { Controller, useForm } from "react-hook-form";
+
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { AnimatePresence, motion } from "framer-motion";
+
 import {
   AlertCircle,
   ArrowUpRight,
@@ -18,24 +21,36 @@ import {
   Sparkles,
   X,
 } from "lucide-react";
+
 import type { LucideIcon } from "lucide-react";
 
 import { exhibitorSchema, type ExhibitorFormValues } from "@/lib/validation";
+
 import { COUNTRIES } from "@/lib/countries";
-import { getRecaptcha } from "@/lib/recaptcha";
+
+import { getRecaptcha, loadRecaptcha } from "@/lib/recaptcha";
+
 import { FormField } from "@/components/ui/FormField";
+
 import { Button } from "@/components/ui/Button";
+
 import { cn } from "@/lib/utils";
 
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "";
+
 const EASE = [0.16, 1, 0.3, 1] as const;
 
 const BOOTH_SIZE_OPTIONS = [
   "9 Sqmtr",
+
   "18 Sqmtr",
+
   "27 Sqmtr",
+
   "36 Sqmtr",
+
   "45 Sqmtr",
+
   "More than 45 Sqmtr",
 ] as const;
 
@@ -49,15 +64,21 @@ const cardClass =
 
 type SectionTitleProps = {
   number: string;
+
   title: string;
+
   description: string;
+
   icon: LucideIcon;
 };
 
 function SectionTitle({
   number,
+
   title,
+
   description,
+
   icon: Icon,
 }: SectionTitleProps) {
   return (
@@ -66,15 +87,18 @@ function SectionTitle({
         <span className="flex size-9 shrink-0 items-center justify-center rounded-xl border border-blue/10 bg-blue/5 text-blue">
           <Icon className="size-4" strokeWidth={1.8} />
         </span>
+
         <div>
           <h3 className="font-display text-[15px] font-semibold tracking-tight text-ink sm:text-[17px]">
             {title}
           </h3>
+
           <p className="mt-1 max-w-[580px] text-[10px] leading-5 text-ink/40 sm:text-[11px]">
             {description}
           </p>
         </div>
       </div>
+
       <span className="shrink-0 pt-1 text-[9px] font-semibold tracking-[0.16em] text-ink/20">
         {number}
       </span>
@@ -84,9 +108,11 @@ function SectionTitle({
 
 function SuccessModal({
   open,
+
   onClose,
 }: {
   open: boolean;
+
   onClose: () => void;
 }) {
   return (
@@ -120,20 +146,24 @@ function SuccessModal({
             <div className="mx-auto flex size-14 items-center justify-center rounded-full bg-solar text-ink">
               <CheckCircle2 className="size-6" />
             </div>
+
             <span className="mt-5 block text-[9px] font-bold uppercase tracking-[0.16em] text-blue">
               Registration Received
             </span>
+
             <h3
               id="exhibitor-success-title"
               className="mt-2 font-display text-2xl font-semibold tracking-tight text-ink sm:text-[28px]"
             >
               Thank You for Your Exhibitor Interest
             </h3>
+
             <p className="mx-auto mt-4 max-w-[420px] text-[12px] leading-6 text-ink/50 sm:text-[13px]">
               Your exhibitor registration has been submitted successfully. Our
               team will contact you regarding stall availability and
               participation details.
             </p>
+
             <Button
               type="button"
               size="md"
@@ -153,60 +183,88 @@ export function ExhibitorRegistrationForm() {
   const [status, setStatus] = useState<
     "idle" | "loading" | "success" | "error"
   >("idle");
+
   const [apiError, setApiError] = useState("");
-  const [captchaReady, setCaptchaReady] = useState(false);
   const [captchaToken, setCaptchaToken] = useState("");
+
   const [captchaError, setCaptchaError] = useState("");
 
   const captchaElementRef = useRef<HTMLDivElement | null>(null);
+
   const captchaWidgetIdRef = useRef<number | null>(null);
 
   const {
     register,
+
     control,
+
     handleSubmit,
+
     reset,
+
     formState: { errors },
   } = useForm<ExhibitorFormValues>({
     resolver: zodResolver(exhibitorSchema),
+
     defaultValues: {
       fullName: "",
+
       designation: "",
+
       company: "",
+
       website: "",
+
       addressLine1: "",
+
       city: "",
+
       state: "",
+
       postalCode: "",
+
       country: "India",
+
       phone: "",
+
       email: "",
+
       boothSize: "",
+
       productsServices: "",
+
       sponsorshipInterest: "",
+
       termsAgreed: false,
+
       declaration: false,
     },
   });
 
   useEffect(() => {
-    if (!captchaReady || !RECAPTCHA_SITE_KEY || !captchaElementRef.current)
+    if (
+      !RECAPTCHA_SITE_KEY ||
+      !captchaElementRef.current ||
+      captchaWidgetIdRef.current !== null
+    ) {
       return;
-    if (captchaWidgetIdRef.current !== null) return;
+    }
 
     let cancelled = false;
-    let retryTimer: ReturnType<typeof setTimeout> | null = null;
 
-    const renderCaptcha = () => {
-      if (cancelled || !captchaElementRef.current) return;
-
-      const grecaptcha = getRecaptcha();
-      if (!grecaptcha?.render) {
-        retryTimer = setTimeout(renderCaptcha, 150);
-        return;
-      }
-
+    async function renderCaptcha() {
       try {
+        const grecaptcha = await loadRecaptcha();
+
+        if (
+          cancelled ||
+          !captchaElementRef.current ||
+          captchaWidgetIdRef.current !== null ||
+          !grecaptcha.render
+        ) {
+          return;
+        }
+
         captchaWidgetIdRef.current = grecaptcha.render(
           captchaElementRef.current,
           {
@@ -230,23 +288,28 @@ export function ExhibitorRegistrationForm() {
           },
         );
       } catch (error) {
-        console.error("[Exhibitor Form] reCAPTCHA render failed:", error);
-        setCaptchaError(
-          "Verification could not be initialized. Please refresh the page.",
-        );
-      }
-    };
+        console.error("[Exhibitor Form] reCAPTCHA load/render failed:", error);
 
-    renderCaptcha();
+        if (!cancelled) {
+          setCaptchaError(
+            "reCAPTCHA failed to load. Please check your connection.",
+          );
+        }
+      }
+    }
+
+    void renderCaptcha();
+
     return () => {
       cancelled = true;
-      if (retryTimer) clearTimeout(retryTimer);
     };
-  }, [captchaReady]);
+  }, []);
 
   function resetCaptcha() {
     setCaptchaToken("");
+
     const grecaptcha = getRecaptcha();
+
     if (grecaptcha?.reset && captchaWidgetIdRef.current !== null) {
       grecaptcha.reset(captchaWidgetIdRef.current);
     }
@@ -254,32 +317,40 @@ export function ExhibitorRegistrationForm() {
 
   async function onSubmit(values: ExhibitorFormValues) {
     if (status === "loading") return;
+
     setApiError("");
 
     if (!RECAPTCHA_SITE_KEY) {
       setCaptchaError("reCAPTCHA is not configured.");
+
       return;
     }
 
     if (!captchaToken) {
       setCaptchaError("Please confirm that you are not a robot.");
+
       return;
     }
 
     setStatus("loading");
+
     setCaptchaError("");
 
     try {
-      const response = await fetch("/api/exhibitor-registration", {
+      const response = await fetch("/apihttps://app.warpbay.com/E2yy0Klq", {
         method: "POST",
+
         headers: { "Content-Type": "application/json" },
+
         body: JSON.stringify({ ...values, recaptchaToken: captchaToken }),
       });
 
       const data = (await response.json()) as {
         success?: boolean;
+
         message?: string;
       };
+
       if (!response.ok || !data.success) {
         throw new Error(
           data.message ||
@@ -288,7 +359,9 @@ export function ExhibitorRegistrationForm() {
       }
 
       reset();
+
       resetCaptcha();
+
       setStatus("success");
     } catch (error) {
       setApiError(
@@ -296,26 +369,15 @@ export function ExhibitorRegistrationForm() {
           ? error.message
           : "Something went wrong. Please try again.",
       );
+
       setStatus("error");
+
       resetCaptcha();
     }
   }
 
   return (
     <>
-      <Script
-        id="google-recaptcha-exhibitor"
-        src="https://www.google.com/recaptcha/api.js?render=explicit"
-        strategy="afterInteractive"
-        onReady={() => setCaptchaReady(true)}
-        onError={() => {
-          setCaptchaReady(false);
-          setCaptchaError(
-            "reCAPTCHA failed to load. Please check your connection.",
-          );
-        }}
-      />
-
       <SuccessModal
         open={status === "success"}
         onClose={() => setStatus("idle")}
@@ -333,17 +395,21 @@ export function ExhibitorRegistrationForm() {
           className="relative overflow-hidden rounded-[22px] bg-ink px-5 py-6 text-paper shadow-lg sm:px-6 sm:py-7"
         >
           <div className="absolute -right-20 -top-24 size-56 rounded-full bg-blue/25 blur-[85px]" />
+
           <div className="relative z-10 flex items-start gap-4">
             <span className="flex size-11 shrink-0 items-center justify-center rounded-2xl border border-paper/10 bg-paper/5 text-solar">
               <Building2 className="size-[18px]" />
             </span>
+
             <div>
               <span className="text-[9px] font-bold uppercase tracking-[0.16em] text-solar">
                 Exhibitor Registration
               </span>
+
               <h2 className="mt-1.5 font-display text-[22px] font-semibold tracking-tight sm:text-[27px]">
                 Book Your Exhibition Space
               </h2>
+
               <p className="mt-3 max-w-[650px] text-[11px] leading-5 text-paper/50 sm:text-[12px]">
                 Share your company and participation details. Our team will
                 contact you regarding stall availability, positioning and
@@ -360,6 +426,7 @@ export function ExhibitorRegistrationForm() {
             description="Primary contact information for your exhibitor registration."
             icon={Building2}
           />
+
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <FormField
               label="Full Name"
@@ -413,6 +480,7 @@ export function ExhibitorRegistrationForm() {
             >
               <div className="relative">
                 <Globe2 className="absolute left-3.5 top-1/2 size-4 -translate-y-1/2 text-ink/25" />
+
                 <input
                   id="website"
                   autoComplete="url"
@@ -465,6 +533,7 @@ export function ExhibitorRegistrationForm() {
             description="Company location and regional information."
             icon={MapPin}
           />
+
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <div className="sm:col-span-2">
               <FormField
@@ -533,6 +602,7 @@ export function ExhibitorRegistrationForm() {
                 {...register("country")}
               >
                 <option value="">Select country</option>
+
                 {COUNTRIES.map((country) => (
                   <option key={country} value={country}>
                     {country}
@@ -567,11 +637,13 @@ export function ExhibitorRegistrationForm() {
                 >
                   {BOOTH_SIZE_OPTIONS.map((option) => {
                     const active = field.value === option;
+
                     return (
                       <label
                         key={option}
                         className={cn(
                           "relative flex min-h-[46px] cursor-pointer items-center gap-2.5 rounded-xl border px-3 py-2.5 text-[11px] font-medium transition",
+
                           active
                             ? "border-blue bg-blue/5 text-ink"
                             : "border-ink/10 text-ink/50 hover:border-blue/20 hover:text-ink",
@@ -583,9 +655,11 @@ export function ExhibitorRegistrationForm() {
                           checked={active}
                           onChange={() => field.onChange(option)}
                         />
+
                         <span
                           className={cn(
                             "flex size-4 shrink-0 items-center justify-center rounded-full border",
+
                             active ? "border-blue bg-blue" : "border-ink/15",
                           )}
                         >
@@ -593,6 +667,7 @@ export function ExhibitorRegistrationForm() {
                             <span className="size-1.5 rounded-full bg-paper" />
                           )}
                         </span>
+
                         {option}
                       </label>
                     );
@@ -636,11 +711,13 @@ export function ExhibitorRegistrationForm() {
                   >
                     {SPONSORSHIP_OPTIONS.map((option) => {
                       const active = field.value === option;
+
                       return (
                         <label
                           key={option}
                           className={cn(
                             "flex min-h-11 cursor-pointer items-center justify-center gap-2 rounded-xl border px-3 py-2.5 text-[11px] font-semibold transition",
+
                             active
                               ? "border-blue bg-blue text-paper"
                               : "border-ink/10 text-ink/50 hover:border-blue/20 hover:text-blue",
@@ -652,7 +729,9 @@ export function ExhibitorRegistrationForm() {
                             checked={active}
                             onChange={() => field.onChange(option)}
                           />
+
                           {active && <Check className="size-3" />}
+
                           {option}
                         </label>
                       );
@@ -679,11 +758,12 @@ export function ExhibitorRegistrationForm() {
                 className="mt-0.5 size-4 shrink-0 accent-blue"
                 {...register("termsAgreed")}
               />
+
               <span>
                 I agree to the{" "}
                 <a
                   href="/terms-conditions"
-                  target="_blank"
+                  target="\_blank"
                   rel="noopener noreferrer"
                   className="font-semibold text-blue underline underline-offset-2"
                 >
@@ -692,6 +772,7 @@ export function ExhibitorRegistrationForm() {
                 .
               </span>
             </label>
+
             {errors.termsAgreed && (
               <p className="text-[10px] font-medium text-red-600">
                 {errors.termsAgreed.message}
@@ -704,11 +785,13 @@ export function ExhibitorRegistrationForm() {
                 className="mt-0.5 size-4 shrink-0 accent-blue"
                 {...register("declaration")}
               />
+
               <span>
                 I declare that the information provided above is true and
                 accurate to the best of my knowledge.
               </span>
             </label>
+
             {errors.declaration && (
               <p className="text-[10px] font-medium text-red-600">
                 {errors.declaration.message}
@@ -722,10 +805,12 @@ export function ExhibitorRegistrationForm() {
                 <span className="text-[9px] font-bold uppercase tracking-[0.14em] text-blue">
                   Human Verification
                 </span>
+
                 <p className="mt-1 text-[10px] text-ink/40">
                   Complete the security check before submitting.
                 </p>
               </div>
+
               <ShieldCheck className="size-4 text-solar" />
             </div>
 
@@ -749,6 +834,7 @@ export function ExhibitorRegistrationForm() {
                 role="alert"
               >
                 <AlertCircle className="size-3.5" />
+
                 {captchaError}
               </p>
             )}
@@ -765,6 +851,7 @@ export function ExhibitorRegistrationForm() {
               className="flex items-start gap-2.5 overflow-hidden rounded-xl border border-red-500/15 bg-red-500/5 px-4 py-3 text-[11px] font-medium text-red-700"
             >
               <AlertCircle className="mt-0.5 size-4 shrink-0" />
+
               {apiError}
             </motion.div>
           )}
