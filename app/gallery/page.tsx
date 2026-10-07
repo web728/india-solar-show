@@ -108,7 +108,7 @@ export default function GalleryPage() {
         ]}
       />
 
-      <section className="relative isolate overflow-hidden bg-paper py-12 sm:py-16 lg:py-[72px]">
+      <section className="relative overflow-hidden bg-paper py-12 sm:py-16 lg:py-[72px]">
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -right-52 top-10 h-[500px] w-[500px] rounded-full bg-solar/[0.035] blur-[150px]"
