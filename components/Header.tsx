@@ -74,7 +74,7 @@ const HEADER_NAV: NavItem[] = [
         label: "About the Show",
         href: "/about",
         icon: BookOpen,
-        description: "Discover India International Solar Show 2026.",
+        description: "Discover India International Solar Show 2027.",
       },
       {
         label: "Venue",
@@ -121,7 +121,7 @@ const HEADER_NAV: NavItem[] = [
         href: "https://app.warpbay.com/qPMIy6ii",
         icon: UserCheck,
         description:
-          "Register as a visitor for India International Solar Show 2026.",
+          "Register as a visitor for India International Solar Show 2027.",
       },
     ],
   },
@@ -173,8 +173,8 @@ const HEADER_NAV: NavItem[] = [
    ========================================================= */
 
 const TICKER = [
-  "India International Solar Show 2026",
-  "02–04 October 2026",
+  "India International Solar Show 2027",
+  "14–16 October 2027",
   "Auto Cluster, Pune",
   "3-Day B2B Expo",
   "Solar + Storage + EV Ecosystem",
@@ -587,7 +587,7 @@ export function Header() {
             >
               <Image
                 src="/logos/india-solar-logo.png"
-                alt="India International Solar Show 2026"
+                alt="India International Solar Show 2027"
                 width={230}
                 height={60}
                 priority

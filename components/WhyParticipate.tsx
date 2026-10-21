@@ -299,7 +299,7 @@ export function WhyParticipate() {
                   sm:text-[11px]
                 "
               >
-                Why Exhibit in 2026
+                Why Exhibit in 2027
               </span>
             </div>
 
@@ -721,7 +721,7 @@ export function WhyParticipate() {
           text-paper
         "
               >
-                Book Exhibition Stall at India International Solar Show 2026
+                Book Exhibition Stall at India International Solar Show 2027
               </h3>
 
               <p

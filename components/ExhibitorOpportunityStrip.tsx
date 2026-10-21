@@ -8,10 +8,7 @@ import {
   Users,
 } from "lucide-react";
 
-import {
-  motion,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -20,11 +17,9 @@ import { Button } from "@/components/ui/Button";
    Constants
    ========================================================= */
 
-const STALL_URL =
-  "https://app.warpbay.com/E2yy0Klq";
+const STALL_URL = "https://app.warpbay.com/E2yy0Klq";
 
-const EASE =
-  [0.16, 1, 0.3, 1] as const;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 /* =========================================================
    Motion
@@ -90,8 +85,7 @@ const HIGHLIGHTS = [
    ========================================================= */
 
 export function ExhibitorOpportunityStrip() {
-  const reduceMotion =
-    useReducedMotion();
+  const reduceMotion = useReducedMotion();
 
   return (
     <section
@@ -181,12 +175,7 @@ export function ExhibitorOpportunityStrip() {
                 }
           }
         >
-          <circle
-            cx="350"
-            cy="350"
-            r="105"
-            stroke="currentColor"
-          />
+          <circle cx="350" cy="350" r="105" stroke="currentColor" />
 
           <circle
             cx="350"
@@ -196,40 +185,17 @@ export function ExhibitorOpportunityStrip() {
             strokeDasharray="4 15"
           />
 
-          <circle
-            cx="350"
-            cy="350"
-            r="275"
-            stroke="currentColor"
-          />
+          <circle cx="350" cy="350" r="275" stroke="currentColor" />
 
-          <path
-            d="M350 25V675"
-            stroke="currentColor"
-          />
+          <path d="M350 25V675" stroke="currentColor" />
 
-          <path
-            d="M25 350H675"
-            stroke="currentColor"
-          />
+          <path d="M25 350H675" stroke="currentColor" />
 
-          <path
-            d="M120 120L580 580"
-            stroke="currentColor"
-          />
+          <path d="M120 120L580 580" stroke="currentColor" />
 
-          <path
-            d="M580 120L120 580"
-            stroke="currentColor"
-          />
+          <path d="M580 120L120 580" stroke="currentColor" />
 
-          <circle
-            cx="350"
-            cy="75"
-            r="6"
-            fill="#fbb216"
-            stroke="none"
-          />
+          <circle cx="350" cy="75" r="6" fill="#fbb216" stroke="none" />
         </motion.svg>
 
         {/* Secondary orbit */}
@@ -265,12 +231,7 @@ export function ExhibitorOpportunityStrip() {
                 }
           }
         >
-          <circle
-            cx="200"
-            cy="200"
-            r="85"
-            stroke="currentColor"
-          />
+          <circle cx="200" cy="200" r="85" stroke="currentColor" />
 
           <circle
             cx="200"
@@ -280,22 +241,11 @@ export function ExhibitorOpportunityStrip() {
             strokeDasharray="3 13"
           />
 
-          <circle
-            cx="200"
-            cy="200"
-            r="185"
-            stroke="currentColor"
-          />
+          <circle cx="200" cy="200" r="185" stroke="currentColor" />
 
-          <path
-            d="M200 15V385"
-            stroke="currentColor"
-          />
+          <path d="M200 15V385" stroke="currentColor" />
 
-          <path
-            d="M15 200H385"
-            stroke="currentColor"
-          />
+          <path d="M15 200H385" stroke="currentColor" />
         </motion.svg>
       </div>
 
@@ -315,11 +265,7 @@ export function ExhibitorOpportunityStrip() {
       >
         <motion.div
           variants={parentVariants}
-          initial={
-            reduceMotion
-              ? false
-              : "hidden"
-          }
+          initial={reduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{
             once: true,
@@ -370,7 +316,7 @@ export function ExhibitorOpportunityStrip() {
                   sm:text-[11px]
                 "
               >
-                Exhibit in 2026
+                Exhibit in 2027
               </span>
             </motion.div>
 
@@ -406,11 +352,9 @@ export function ExhibitorOpportunityStrip() {
                 sm:text-[15px]
               "
             >
-              Position your products, technologies
-              and solutions directly in front of
-              professionals across solar generation,
-              battery storage, project development
-              and industrial energy adoption.
+              Position your products, technologies and solutions directly in
+              front of professionals across solar generation, battery storage,
+              project development and industrial energy adoption.
             </motion.p>
 
             {/* CTA */}
@@ -438,7 +382,6 @@ export function ExhibitorOpportunityStrip() {
                 "
               >
                 Book Your Stall
-
                 <ArrowUpRight
                   aria-hidden="true"
                   className="
@@ -538,18 +481,10 @@ export function ExhibitorOpportunityStrip() {
             </div>
 
             <div>
-              {HIGHLIGHTS.map(
-                (
-                  {
-                    icon: Icon,
-                    label,
-                    value,
-                  },
-                  index,
-                ) => (
-                  <div
-                    key={label}
-                    className="
+              {HIGHLIGHTS.map(({ icon: Icon, label, value }, index) => (
+                <div
+                  key={label}
+                  className="
                       group/item
                       relative
                       flex
@@ -568,9 +503,9 @@ export function ExhibitorOpportunityStrip() {
 
                       hover:bg-solar/[0.035]
                     "
-                  >
-                    <div
-                      className="
+                >
+                  <div
+                    className="
                         flex
                         size-9
                         shrink-0
@@ -589,22 +524,22 @@ export function ExhibitorOpportunityStrip() {
                         group-hover/item:bg-solar
                         group-hover/item:text-ink
                       "
-                    >
-                      <Icon
-                        aria-hidden="true"
-                        className="size-4"
-                        strokeWidth={1.75}
-                      />
-                    </div>
+                  >
+                    <Icon
+                      aria-hidden="true"
+                      className="size-4"
+                      strokeWidth={1.75}
+                    />
+                  </div>
 
-                    <div
-                      className="
+                  <div
+                    className="
                         min-w-0
                         flex-1
                       "
-                    >
-                      <span
-                        className="
+                  >
+                    <span
+                      className="
                           block
                           text-[8px]
                           font-semibold
@@ -612,40 +547,37 @@ export function ExhibitorOpportunityStrip() {
                           tracking-[0.12em]
                           text-ink/30
                         "
-                      >
-                        {label}
-                      </span>
+                    >
+                      {label}
+                    </span>
 
-                      <span
-                        className="
+                    <span
+                      className="
                           mt-0.5
                           block
                           text-[12px]
                           font-semibold
                           text-ink/70
                         "
-                      >
-                        {value}
-                      </span>
-                    </div>
+                    >
+                      {value}
+                    </span>
+                  </div>
 
-                    <span
-                      aria-hidden="true"
-                      className="
+                  <span
+                    aria-hidden="true"
+                    className="
                         font-display
                         text-[9px]
                         font-semibold
                         tracking-[0.12em]
                         text-ink/16
                       "
-                    >
-                      {String(
-                        index + 1,
-                      ).padStart(2, "0")}
-                    </span>
-                  </div>
-                ),
-              )}
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                </div>
+              ))}
             </div>
           </motion.div>
         </motion.div>

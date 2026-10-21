@@ -4,7 +4,7 @@ import { EVENT } from "@/data/siteData";
 export const runtime = "edge";
 
 export const alt =
-  "India International Solar Show 2026 — Solar, Energy Storage & Clean Energy Expo in Pune";
+  "India International Solar Show 2027 — Solar, Energy Storage & Clean Energy Expo in Pune";
 
 export const size = {
   width: 1200,
@@ -135,7 +135,7 @@ export default async function Image() {
               textTransform: "uppercase",
             }}
           >
-            02–04 October 2026
+            14–16 October 2027
           </div>
 
           <div
@@ -149,7 +149,7 @@ export default async function Image() {
             }}
           >
             <span>India International</span>
-            <span>Solar Show 2026</span>
+            <span>Solar Show 2027</span>
           </div>
 
           <div

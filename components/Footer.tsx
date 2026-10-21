@@ -371,7 +371,7 @@ export function Footer() {
           <EventDetail
             icon={CalendarDays}
             label="Show Dates"
-            value="02–04 October 2026"
+            value="14–16 October 2027"
           />
 
           {/* Venue */}
@@ -469,7 +469,7 @@ export function Footer() {
           >
             <Link
               href="/"
-              aria-label="India International Solar Show 2026 home"
+              aria-label="India International Solar Show 2027 home"
               className="
                 inline-flex
                 rounded-xl
@@ -486,7 +486,7 @@ export function Footer() {
             >
               <Image
                 src="/logos/india-solar-logo.png"
-                alt="India International Solar Show 2026"
+                alt="India International Solar Show 2027"
                 width={230}
                 height={60}
                 className="

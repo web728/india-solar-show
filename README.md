@@ -1,7 +1,7 @@
-# India International Solar Show 2026 — Website
+# India International Solar Show 2027 — Website
 
-A single-page, animated marketing site for the **India International Solar Show 2026**
-(02–04 Oct 2026, Auto Cluster Exhibition Center, Pune). Built with Next.js (App
+A single-page, animated marketing site for the **India International Solar Show 2027**
+(02–04 Oct 2027, Auto Cluster Exhibition Center, Pune). Built with Next.js (App
 Router), React, TypeScript, Tailwind CSS v4, and Framer Motion.
 
 No database, no login, no paid services required. It runs anywhere Node.js runs.

@@ -417,7 +417,7 @@ export function HeroSection() {
                 variants={reveal}
                 className="ml-3 inline-block align-middle font-sans text-[0.18em] font-semibold tracking-[0.08em] text-ink/35 sm:ml-4"
               >
-                2026
+                2027
               </motion.span> */}
             </motion.h1>
 
@@ -425,8 +425,8 @@ export function HeroSection() {
               variants={reveal}
               className="mt-5 max-w-[610px] text-[14px] leading-6 tracking-[-0.01em] text-ink/60 sm:text-[15px] sm:leading-7 xl:text-base"
             >
-              Discover the technologies, partnerships and ideas shaping the next era
-              of solar, energy storage and electric mobility.
+              Discover the technologies, partnerships and ideas shaping the next
+              era of solar, energy storage and electric mobility.
             </motion.p>
 
             <motion.div
@@ -522,7 +522,7 @@ export function HeroSection() {
               <div className="group relative aspect-[16/10] overflow-hidden rounded-[1.25rem] bg-ink lg:h-[clamp(315px,44vh,430px)] lg:aspect-auto">
                 <Image
                   src="/images/hero.webp"
-                  alt="India International Solar Show 2026 exhibition"
+                  alt="India International Solar Show 2027 exhibition"
                   fill
                   priority
                   fetchPriority="high"
@@ -551,7 +551,7 @@ export function HeroSection() {
                     className="size-1.5 rounded-full bg-solar"
                     animate={{
                       opacity: [1, 0.35, 1],
-                      scale: [1, 1.35, 1],  
+                      scale: [1, 1.35, 1],
                     }}
                     transition={{
                       duration: 2.4,
@@ -575,7 +575,7 @@ export function HeroSection() {
                       strokeWidth={1.7}
                     />
                     <span className="text-[10.5px] font-medium tracking-[0.01em]">
-                      02–04 October 2026
+                      14–16 October 2027
                     </span>
                   </div>
                 </div>

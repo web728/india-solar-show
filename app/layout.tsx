@@ -43,10 +43,10 @@ const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 const SITE_NAME = "India International Solar Show";
 
 const SITE_TITLE =
-  "India International Solar Show 2026 | Solar Expo Pune";
+  "India International Solar Show 2027 | Solar Expo Pune";
 
 const SITE_DESCRIPTION =
-  "India International Solar Show 2026 in Pune brings together solar manufacturers, energy storage companies, clean-energy technology providers, buyers, developers, investors and industry leaders.";
+  "India International Solar Show 2027 in Pune brings together solar manufacturers, energy storage companies, clean-energy technology providers, buyers, developers, investors and industry leaders.";
 
 const ORGANIZER_NAME =
   EVENT.organizer?.fullName ||
@@ -92,7 +92,7 @@ export const metadata: Metadata = {
 
   keywords: [
     "India International Solar Show",
-    "India International Solar Show 2026",
+    "India International Solar Show 2027",
     "India Solar Show",
     "Solar Expo Pune",
     "Solar Exhibition India",
@@ -157,7 +157,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} 2026 — Solar Expo Pune`,
+        alt: `${SITE_NAME} 2027 — Solar Expo Pune`,
       },
     ],
   },
@@ -240,7 +240,7 @@ function GlobalJsonLd() {
 
         alternateName: [
           "India Solar Show",
-          "India International Solar Show 2026",
+          "India International Solar Show 2027",
         ],
 
         description: SITE_DESCRIPTION,

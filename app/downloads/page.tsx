@@ -13,7 +13,7 @@ import { BrochureDownloadForm } from "@/components/forms/BrochureDownloadForm";
 export const metadata: Metadata = {
   title: "Downloads",
   description:
-    "Download the official event brochure and event resources for India International Solar Show 2026.",
+    "Download the official event brochure and event resources for India International Solar Show 2027.",
 };
 
 const DOWNLOADS = [
@@ -31,7 +31,7 @@ export default function DownloadsPage() {
       <PageHero
         eyebrow="Downloads"
         title="Event Downloads & Resources"
-        subtitle="Access official event materials for India International Solar Show 2026."
+        subtitle="Access official event materials for India International Solar Show 2027."
       />
 
       <section className="bg-white py-12 sm:py-14 lg:py-16">

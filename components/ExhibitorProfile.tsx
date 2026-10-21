@@ -1327,7 +1327,7 @@ export function ExhibitorProfile() {
               text-ink/22
             "
           >
-            India International Solar Show 2026
+            India International Solar Show 2027
           </span>
 
           <Sparkles

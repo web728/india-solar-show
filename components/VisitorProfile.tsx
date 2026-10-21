@@ -1,15 +1,8 @@
 "use client";
 
-import {
-  ArrowUpRight,
-  BadgeCheck,
-  Users,
-} from "lucide-react";
+import { ArrowUpRight, BadgeCheck, Users } from "lucide-react";
 
-import {
-  motion,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { VISITOR_SEGMENTS } from "@/data/siteData";
 
@@ -21,11 +14,9 @@ import { Button } from "@/components/ui/Button";
    Constants
    ========================================================= */
 
-const VISITOR_URL =
-  "https://app.warpbay.com/qPMIy6ii";
+const VISITOR_URL = "https://app.warpbay.com/qPMIy6ii";
 
-const EASE =
-  [0.16, 1, 0.3, 1] as const;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 /* =========================================================
    Motion
@@ -142,12 +133,7 @@ function VisitorProfileBackground({
               }
         }
       >
-        <circle
-          cx="450"
-          cy="450"
-          r="125"
-          stroke="currentColor"
-        />
+        <circle cx="450" cy="450" r="125" stroke="currentColor" />
 
         <circle
           cx="450"
@@ -157,12 +143,7 @@ function VisitorProfileBackground({
           strokeDasharray="4 16"
         />
 
-        <circle
-          cx="450"
-          cy="450"
-          r="325"
-          stroke="currentColor"
-        />
+        <circle cx="450" cy="450" r="325" stroke="currentColor" />
 
         <circle
           cx="450"
@@ -172,41 +153,17 @@ function VisitorProfileBackground({
           strokeDasharray="2 22"
         />
 
-        <path
-          d="M450 28V872"
-          stroke="currentColor"
-        />
+        <path d="M450 28V872" stroke="currentColor" />
 
-        <path
-          d="M28 450H872"
-          stroke="currentColor"
-        />
+        <path d="M28 450H872" stroke="currentColor" />
 
-        <path
-          d="M152 152L748 748"
-          stroke="currentColor"
-        />
+        <path d="M152 152L748 748" stroke="currentColor" />
 
-        <path
-          d="M748 152L152 748"
-          stroke="currentColor"
-        />
+        <path d="M748 152L152 748" stroke="currentColor" />
 
-        <circle
-          cx="450"
-          cy="125"
-          r="7"
-          fill="#fbb216"
-          stroke="none"
-        />
+        <circle cx="450" cy="125" r="7" fill="#fbb216" stroke="none" />
 
-        <circle
-          cx="775"
-          cy="450"
-          r="4"
-          fill="#fbb216"
-          stroke="none"
-        />
+        <circle cx="775" cy="450" r="4" fill="#fbb216" stroke="none" />
       </motion.svg>
 
       {/* Counter orbit */}
@@ -242,12 +199,7 @@ function VisitorProfileBackground({
               }
         }
       >
-        <circle
-          cx="250"
-          cy="250"
-          r="100"
-          stroke="currentColor"
-        />
+        <circle cx="250" cy="250" r="100" stroke="currentColor" />
 
         <circle
           cx="250"
@@ -257,22 +209,11 @@ function VisitorProfileBackground({
           strokeDasharray="3 14"
         />
 
-        <circle
-          cx="250"
-          cy="250"
-          r="235"
-          stroke="currentColor"
-        />
+        <circle cx="250" cy="250" r="235" stroke="currentColor" />
 
-        <path
-          d="M250 15V485"
-          stroke="currentColor"
-        />
+        <path d="M250 15V485" stroke="currentColor" />
 
-        <path
-          d="M15 250H485"
-          stroke="currentColor"
-        />
+        <path d="M15 250H485" stroke="currentColor" />
       </motion.svg>
     </div>
   );
@@ -283,54 +224,35 @@ function VisitorProfileBackground({
    ========================================================= */
 
 export function VisitorProfile() {
-  const reduceMotion =
-    useReducedMotion();
+  const reduceMotion = useReducedMotion();
 
-  const featuredSegments =
-    VISITOR_SEGMENTS.slice(0, 2);
+  const featuredSegments = VISITOR_SEGMENTS.slice(0, 2);
 
-  const remainingSegments =
-    VISITOR_SEGMENTS.slice(2);
+  const remainingSegments = VISITOR_SEGMENTS.slice(2);
 
   /* =======================================================
      Structured Data
      ======================================================= */
 
   const itemListSchema = {
-    "@context":
-      "https://schema.org",
+    "@context": "https://schema.org",
 
-    "@type":
-      "ItemList",
+    "@type": "ItemList",
 
-    name:
-      "Target Visitor & Stakeholder Segments for India Solar Show 2026",
+    name: "Target Visitor & Stakeholder Segments for India Solar Show 2027",
 
-    itemListElement:
-      VISITOR_SEGMENTS.map(
-        (segment, index) => ({
-          "@type":
-            "ListItem",
+    itemListElement: VISITOR_SEGMENTS.map((segment, index) => ({
+      "@type": "ListItem",
 
-          position:
-            index + 1,
+      position: index + 1,
 
-          name:
-            segment.title,
+      name: segment.title,
 
-          description:
-            segment.desc,
-        }),
-      ),
+      description: segment.desc,
+    })),
   };
 
-  const jsonLd =
-    JSON.stringify(
-      itemListSchema,
-    ).replace(
-      /</g,
-      "\\u003c",
-    );
+  const jsonLd = JSON.stringify(itemListSchema).replace(/</g, "\\u003c");
 
   return (
     <section
@@ -355,11 +277,7 @@ export function VisitorProfile() {
         }}
       />
 
-      <VisitorProfileBackground
-        reduceMotion={
-          reduceMotion
-        }
-      />
+      <VisitorProfileBackground reduceMotion={reduceMotion} />
 
       <Container
         className="
@@ -376,14 +294,8 @@ export function VisitorProfile() {
             ================================================= */}
 
         <motion.div
-          variants={
-            groupVariants
-          }
-          initial={
-            reduceMotion
-              ? false
-              : "hidden"
-          }
+          variants={groupVariants}
+          initial={reduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{
             once: true,
@@ -403,11 +315,7 @@ export function VisitorProfile() {
             lg:pb-11
           "
         >
-          <motion.div
-            variants={
-              revealVariants
-            }
-          >
+          <motion.div variants={revealVariants}>
             <div
               className="
                 flex
@@ -465,9 +373,7 @@ export function VisitorProfile() {
           </motion.div>
 
           <motion.div
-            variants={
-              revealVariants
-            }
+            variants={revealVariants}
             className="
               max-w-[500px]
 
@@ -483,13 +389,9 @@ export function VisitorProfile() {
                 sm:text-[15px]
               "
             >
-              Stakeholder groups from
-              across the clean-energy
-              value chain — including
-              developers, EPC companies,
-              industrial buyers,
-              investors, institutions,
-              media and academia.
+              Stakeholder groups from across the clean-energy value chain —
+              including developers, EPC companies, industrial buyers, investors,
+              institutions, media and academia.
             </p>
 
             <div
@@ -511,10 +413,7 @@ export function VisitorProfile() {
                   text-solar
                 "
               >
-                <Users
-                  className="size-3.5"
-                  strokeWidth={1.8}
-                />
+                <Users className="size-3.5" strokeWidth={1.8} />
               </span>
 
               <span
@@ -537,14 +436,8 @@ export function VisitorProfile() {
             ================================================= */}
 
         <motion.div
-          variants={
-            groupVariants
-          }
-          initial={
-            reduceMotion
-              ? false
-              : "hidden"
-          }
+          variants={groupVariants}
+          initial={reduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{
             once: true,
@@ -561,19 +454,11 @@ export function VisitorProfile() {
             lg:mt-12
           "
         >
-          {featuredSegments.map(
-            (
-              segment,
-              index,
-            ) => (
-              <motion.article
-                key={
-                  segment.title
-                }
-                variants={
-                  revealVariants
-                }
-                className="
+          {featuredSegments.map((segment, index) => (
+            <motion.article
+              key={segment.title}
+              variants={revealVariants}
+              className="
                   group
                   relative
                   min-h-[250px]
@@ -593,12 +478,12 @@ export function VisitorProfile() {
 
                   sm:p-7
                 "
-              >
-                {/* Hover wash */}
+            >
+              {/* Hover wash */}
 
-                <div
-                  aria-hidden="true"
-                  className="
+              <div
+                aria-hidden="true"
+                className="
                     absolute
                     -right-16
                     -top-16
@@ -613,13 +498,13 @@ export function VisitorProfile() {
 
                     group-hover:opacity-100
                   "
-                />
+              />
 
-                {/* top accent */}
+              {/* top accent */}
 
-                <span
-                  aria-hidden="true"
-                  className="
+              <span
+                aria-hidden="true"
+                className="
                     absolute
                     inset-x-0
                     top-0
@@ -633,13 +518,13 @@ export function VisitorProfile() {
 
                     group-hover:scale-x-100
                   "
-                />
+              />
 
-                {/* big number */}
+              {/* big number */}
 
-                <span
-                  aria-hidden="true"
-                  className="
+              <span
+                aria-hidden="true"
+                className="
                     absolute
                     -bottom-8
                     -right-2
@@ -650,34 +535,29 @@ export function VisitorProfile() {
                     tracking-[-0.08em]
                     text-paper/[0.025]
                   "
-                >
-                  {String(
-                    index + 1,
-                  ).padStart(
-                    2,
-                    "0",
-                  )}
-                </span>
+              >
+                {String(index + 1).padStart(2, "0")}
+              </span>
 
-                <div
-                  className="
+              <div
+                className="
                     relative
                     z-10
                     flex
                     h-full
                     flex-col
                   "
-                >
-                  <div
-                    className="
+              >
+                <div
+                  className="
                       flex
                       items-start
                       justify-between
                       gap-5
                     "
-                  >
-                    <div
-                      className="
+                >
+                  <div
+                    className="
                         flex
                         size-11
                         items-center
@@ -695,31 +575,25 @@ export function VisitorProfile() {
                         group-hover:bg-solar
                         group-hover:text-ink
                       "
-                    >
-                      <Icon
-                        name={
-                          segment.icon
-                        }
-                        size={18}
-                        aria-hidden="true"
-                      />
-                    </div>
+                  >
+                    <Icon name={segment.icon} size={18} aria-hidden="true" />
+                  </div>
 
-                    <span
-                      className="
+                  <span
+                    className="
                         text-[9px]
                         font-semibold
                         uppercase
                         tracking-[0.13em]
                         text-paper/22
                       "
-                    >
-                      Core Visitor
-                    </span>
-                  </div>
+                  >
+                    Core Visitor
+                  </span>
+                </div>
 
-                  <h3
-                    className="
+                <h3
+                  className="
                       mt-9
                       max-w-[360px]
                       font-display
@@ -731,14 +605,12 @@ export function VisitorProfile() {
 
                       sm:text-[1.5rem]
                     "
-                  >
-                    {
-                      segment.title
-                    }
-                  </h3>
+                >
+                  {segment.title}
+                </h3>
 
-                  <p
-                    className="
+                <p
+                  className="
                       mt-3
                       max-w-[440px]
                       text-[12px]
@@ -747,42 +619,39 @@ export function VisitorProfile() {
 
                       sm:text-[13px]
                     "
-                  >
-                    {
-                      segment.desc
-                    }
-                  </p>
+                >
+                  {segment.desc}
+                </p>
 
-                  <div
-                    aria-hidden="true"
-                    className="
+                <div
+                  aria-hidden="true"
+                  className="
                       mt-auto
                       flex
                       items-center
                       gap-2
                       pt-7
                     "
-                  >
-                    <span
-                      className="
+                >
+                  <span
+                    className="
                         h-px
                         w-9
                         bg-solar
                       "
-                    />
+                  />
 
-                    <span
-                      className="
+                  <span
+                    className="
                         size-1
                         rounded-full
                         bg-solar
                       "
-                    />
-                  </div>
+                  />
                 </div>
-              </motion.article>
-            ),
-          )}
+              </div>
+            </motion.article>
+          ))}
         </motion.div>
 
         {/* =================================================
@@ -790,14 +659,8 @@ export function VisitorProfile() {
             ================================================= */}
 
         <motion.div
-          variants={
-            groupVariants
-          }
-          initial={
-            reduceMotion
-              ? false
-              : "hidden"
-          }
+          variants={groupVariants}
+          initial={reduceMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{
             once: true,
@@ -816,9 +679,7 @@ export function VisitorProfile() {
           {/* matrix header */}
 
           <motion.div
-            variants={
-              revealVariants
-            }
+            variants={revealVariants}
             className="
               flex
               items-center
@@ -868,13 +729,7 @@ export function VisitorProfile() {
                 sm:block
               "
             >
-              {String(
-                VISITOR_SEGMENTS.length,
-              ).padStart(
-                2,
-                "0",
-              )}{" "}
-              SEGMENTS
+              {String(VISITOR_SEGMENTS.length).padStart(2, "0")} SEGMENTS
             </span>
           </motion.div>
 
@@ -891,23 +746,14 @@ export function VisitorProfile() {
               xl:grid-cols-4
             "
           >
-            {remainingSegments.map(
-              (
-                segment,
-                itemIndex,
-              ) => {
-                const index =
-                  itemIndex + 2;
+            {remainingSegments.map((segment, itemIndex) => {
+              const index = itemIndex + 2;
 
-                return (
-                  <motion.article
-                    key={
-                      segment.title
-                    }
-                    variants={
-                      revealVariants
-                    }
-                    className="
+              return (
+                <motion.article
+                  key={segment.title}
+                  variants={revealVariants}
+                  className="
                       group
                       relative
                       min-h-[190px]
@@ -934,12 +780,12 @@ export function VisitorProfile() {
                       xl:[&:nth-child(3n)]:border-r
                       xl:[&:nth-child(4n)]:border-r-0
                     "
-                  >
-                    {/* side accent */}
+                >
+                  {/* side accent */}
 
-                    <span
-                      aria-hidden="true"
-                      className="
+                  <span
+                    aria-hidden="true"
+                    className="
                         absolute
                         left-0
                         top-0
@@ -952,13 +798,13 @@ export function VisitorProfile() {
 
                         group-hover:h-full
                       "
-                    />
+                  />
 
-                    {/* background number */}
+                  {/* background number */}
 
-                    <span
-                      aria-hidden="true"
-                      className="
+                  <span
+                    aria-hidden="true"
+                    className="
                         absolute
                         -bottom-5
                         -right-1
@@ -969,34 +815,29 @@ export function VisitorProfile() {
                         tracking-[-0.07em]
                         text-paper/[0.02]
                       "
-                    >
-                      {String(
-                        index + 1,
-                      ).padStart(
-                        2,
-                        "0",
-                      )}
-                    </span>
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
 
-                    <div
-                      className="
+                  <div
+                    className="
                         relative
                         z-10
                         flex
                         h-full
                         flex-col
                       "
-                    >
-                      <div
-                        className="
+                  >
+                    <div
+                      className="
                           flex
                           items-start
                           justify-between
                           gap-4
                         "
-                      >
-                        <div
-                          className="
+                    >
+                      <div
+                        className="
                             flex
                             size-9
                             items-center
@@ -1014,36 +855,29 @@ export function VisitorProfile() {
                             group-hover:bg-solar
                             group-hover:text-ink
                           "
-                        >
-                          <Icon
-                            name={
-                              segment.icon
-                            }
-                            size={16}
-                            aria-hidden="true"
-                          />
-                        </div>
+                      >
+                        <Icon
+                          name={segment.icon}
+                          size={16}
+                          aria-hidden="true"
+                        />
+                      </div>
 
-                        <span
-                          className="
+                      <span
+                        className="
                             font-display
                             text-[8px]
                             font-semibold
                             tracking-[0.12em]
                             text-paper/18
                           "
-                        >
-                          {String(
-                            index + 1,
-                          ).padStart(
-                            2,
-                            "0",
-                          )}
-                        </span>
-                      </div>
+                      >
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                    </div>
 
-                      <h3
-                        className="
+                    <h3
+                      className="
                           mt-6
                           max-w-[250px]
                           font-display
@@ -1055,29 +889,25 @@ export function VisitorProfile() {
 
                           sm:text-[1.1rem]
                         "
-                      >
-                        {
-                          segment.title
-                        }
-                      </h3>
+                    >
+                      {segment.title}
+                    </h3>
 
-                      <p
-                        className="
+                    <p
+                      className="
                           mt-2
                           max-w-[270px]
                           text-[11px]
                           leading-5
                           text-paper/38
                         "
-                      >
-                        {
-                          segment.desc
-                        }
-                      </p>
+                    >
+                      {segment.desc}
+                    </p>
 
-                      <span
-                        aria-hidden="true"
-                        className="
+                    <span
+                      aria-hidden="true"
+                      className="
                           mt-auto
                           h-px
                           w-6
@@ -1089,12 +919,11 @@ export function VisitorProfile() {
                           group-hover:w-11
                           group-hover:bg-solar
                         "
-                      />
-                    </div>
-                  </motion.article>
-                );
-              },
-            )}
+                    />
+                  </div>
+                </motion.article>
+              );
+            })}
           </div>
         </motion.div>
 
@@ -1224,8 +1053,7 @@ export function VisitorProfile() {
                   text-paper
                 "
               >
-                See Where You Fit in
-                the Clean-Energy Ecosystem
+                See Where You Fit in the Clean-Energy Ecosystem
               </h3>
 
               <p
@@ -1239,13 +1067,9 @@ export function VisitorProfile() {
                   sm:text-[13px]
                 "
               >
-                Register your interest
-                and join industry buyers,
-                developers, EPCs,
-                investors and technology
-                professionals at India
-                Solar International Show
-                2026 in Pune.
+                Register your interest and join industry buyers, developers,
+                EPCs, investors and technology professionals at India Solar
+                International Show 2027 in Pune.
               </p>
             </div>
 
@@ -1257,9 +1081,7 @@ export function VisitorProfile() {
               "
             >
               <Button
-                href={
-                  VISITOR_URL
-                }
+                href={VISITOR_URL}
                 external
                 size="lg"
                 className="
@@ -1274,7 +1096,6 @@ export function VisitorProfile() {
                 "
               >
                 Register Your Interest
-
                 <ArrowUpRight
                   aria-hidden="true"
                   className="
@@ -1286,9 +1107,7 @@ export function VisitorProfile() {
                     group-hover/register:translate-x-0.5
                     group-hover/register:-translate-y-0.5
                   "
-                  strokeWidth={
-                    1.8
-                  }
+                  strokeWidth={1.8}
                 />
               </Button>
             </div>

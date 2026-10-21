@@ -949,7 +949,7 @@ export function Preloader() {
           key="site-preloader"
           role="status"
           aria-live="polite"
-          aria-label="Loading India International Solar Show 2026"
+          aria-label="Loading India International Solar Show 2027"
           initial={{
             opacity: 1,
           }}
@@ -1266,7 +1266,7 @@ export function Preloader() {
                   text-paper/50
                 "
               >
-                2026
+                2027
               </span>
 
               <motion.span
@@ -1415,7 +1415,7 @@ export function Preloader() {
               lg:top-8
             "
           >
-            ISI / 2026
+            ISI / 2027
           </motion.span>
 
           {/* =================================================
@@ -1470,7 +1470,7 @@ export function Preloader() {
                 text-paper/35
               "
             >
-              Pune · 02–04 October 2026
+              Pune · 14–16 October 2027
             </span>
 
             <span className="h-px w-6 bg-paper/15" />

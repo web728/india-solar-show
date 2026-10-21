@@ -13,11 +13,10 @@ const SITE_URL =
 const PAGE_URL = `${SITE_URL}/sponsors`;
 const SITE_NAME = "India International Solar Show";
 
-const PAGE_TITLE =
-  "Sponsors & Partners | India International Solar Show 2026";
+const PAGE_TITLE = "Sponsors & Partners | India International Solar Show 2027";
 
 const PAGE_DESCRIPTION =
-  "Explore the sponsors, industry partners, associations, knowledge partners and media partners supporting India International Solar Show 2026 in Pune, and enquire about partnership opportunities.";
+  "Explore the sponsors, industry partners, associations, knowledge partners and media partners supporting India International Solar Show 2027 in Pune, and enquire about partnership opportunities.";
 
 export const metadata: Metadata = {
   title: {
@@ -29,7 +28,7 @@ export const metadata: Metadata = {
   keywords: [
     "India International Solar Show Sponsors",
     "India International Solar Show Partners",
-    "India International Solar Show 2026",
+    "India International Solar Show 2027",
     "Solar Exhibition Sponsorship India",
     "Solar Expo Partnership Pune",
     "Solar Industry Partners India",
@@ -56,7 +55,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "Sponsors and Partners of India International Solar Show 2026",
+        alt: "Sponsors and Partners of India International Solar Show 2027",
       },
     ],
   },
@@ -106,7 +105,7 @@ function SponsorsPageJsonLd() {
     about: {
       "@type": "Event",
       "@id": `${SITE_URL}/#event`,
-      name: "India International Solar Show 2026",
+      name: "India International Solar Show 2027",
       url: SITE_URL,
     },
 
@@ -164,7 +163,7 @@ export default function SponsorsPage() {
         <PageHero
           eyebrow="Sponsors & Partners"
           title="Our Event Partners & Industry Ecosystem"
-          subtitle="Meet the organizations, associations, institutions and media platforms supporting India International Solar Show 2026."
+          subtitle="Meet the organizations, associations, institutions and media platforms supporting India International Solar Show 2027."
           breadcrumbs={[
             {
               label: "Home",
@@ -177,7 +176,7 @@ export default function SponsorsPage() {
           meta={[
             {
               label: "Show Dates",
-              value: "02–04 October 2026",
+              value: "14–16 October 2027",
             },
             {
               label: "Venue",
@@ -200,7 +199,7 @@ export default function SponsorsPage() {
             <SectionHeading
               eyebrow="Partner With the Show"
               heading="Build Your Brand Presence With Us"
-              intro="Interested in becoming a sponsor, strategic partner, media partner or industry associate? Share your requirements with us and our team will connect with you to discuss suitable partnership opportunities for India International Solar Show 2026."
+              intro="Interested in becoming a sponsor, strategic partner, media partner or industry associate? Share your requirements with us and our team will connect with you to discuss suitable partnership opportunities for India International Solar Show 2027."
               align="center"
             />
 

@@ -1,20 +1,10 @@
 "use client";
 
-import {
-  useEffect,
-  useState,
-} from "react";
+import { useEffect, useState } from "react";
 
-import {
-  motion,
-  AnimatePresence,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 
-import {
-  ArrowUpRight,
-  Phone,
-} from "lucide-react";
+import { ArrowUpRight, Phone } from "lucide-react";
 
 import { Button } from "@/components/ui/Button";
 
@@ -22,50 +12,34 @@ import { Button } from "@/components/ui/Button";
    Constants
    ========================================================= */
 
-const STALL_URL =
-  "https://app.warpbay.com/E2yy0Klq";
+const STALL_URL = "https://app.warpbay.com/E2yy0Klq";
 
-const PHONE_URL =
-  "tel:+919871839040";
+const PHONE_URL = "tel:+919871839040";
 
-const EASE =
-  [0.16, 1, 0.3, 1] as const;
+const EASE = [0.16, 1, 0.3, 1] as const;
 
 /* =========================================================
    Component
    ========================================================= */
 
 export function StickyMobileCTA() {
-  const [
-    visible,
-    setVisible,
-  ] = useState(false);
+  const [visible, setVisible] = useState(false);
 
-  const reduceMotion =
-    useReducedMotion();
+  const reduceMotion = useReducedMotion();
 
   useEffect(() => {
     function onScroll() {
-      setVisible(
-        window.scrollY > 420,
-      );
+      setVisible(window.scrollY > 420);
     }
 
     onScroll();
 
-    window.addEventListener(
-      "scroll",
-      onScroll,
-      {
-        passive: true,
-      },
-    );
+    window.addEventListener("scroll", onScroll, {
+      passive: true,
+    });
 
     return () => {
-      window.removeEventListener(
-        "scroll",
-        onScroll,
-      );
+      window.removeEventListener("scroll", onScroll);
     };
   }, []);
 
@@ -99,10 +73,7 @@ export function StickyMobileCTA() {
                 }
           }
           transition={{
-            duration:
-              reduceMotion
-                ? 0.15
-                : 0.42,
+            duration: reduceMotion ? 0.15 : 0.42,
 
             ease: EASE,
           }}
@@ -232,7 +203,7 @@ export function StickyMobileCTA() {
                       opacity-60
                     "
                   >
-                    India Solar Show 2026
+                    India Solar Show 2027
                   </span>
                 </span>
 
@@ -346,7 +317,7 @@ export function StickyMobileCTA() {
                   text-paper/18
                 "
               >
-                Pune 2026
+                Pune 2027
               </span>
             </div>
           </div>

@@ -15,15 +15,9 @@ import {
   Users,
 } from "lucide-react";
 
-import {
-  motion,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
-import {
-  INDIA_MARKET,
-  PUNE_MARKET,
-} from "@/data/siteData";
+import { INDIA_MARKET, PUNE_MARKET } from "@/data/siteData";
 
 import { Container } from "@/components/ui/Container";
 
@@ -193,12 +187,7 @@ function MarketBackground({
               }
         }
       >
-        <circle
-          cx="450"
-          cy="450"
-          r="115"
-          stroke="currentColor"
-        />
+        <circle cx="450" cy="450" r="115" stroke="currentColor" />
 
         <circle
           cx="450"
@@ -208,12 +197,7 @@ function MarketBackground({
           strokeDasharray="3 14"
         />
 
-        <circle
-          cx="450"
-          cy="450"
-          r="320"
-          stroke="currentColor"
-        />
+        <circle cx="450" cy="450" r="320" stroke="currentColor" />
 
         <circle
           cx="450"
@@ -223,41 +207,17 @@ function MarketBackground({
           strokeDasharray="2 22"
         />
 
-        <path
-          d="M450 28V872"
-          stroke="currentColor"
-        />
+        <path d="M450 28V872" stroke="currentColor" />
 
-        <path
-          d="M28 450H872"
-          stroke="currentColor"
-        />
+        <path d="M28 450H872" stroke="currentColor" />
 
-        <path
-          d="M151 151L749 749"
-          stroke="currentColor"
-        />
+        <path d="M151 151L749 749" stroke="currentColor" />
 
-        <path
-          d="M749 151L151 749"
-          stroke="currentColor"
-        />
+        <path d="M749 151L151 749" stroke="currentColor" />
 
-        <circle
-          cx="450"
-          cy="130"
-          r="7"
-          fill="#fbb216"
-          stroke="none"
-        />
+        <circle cx="450" cy="130" r="7" fill="#fbb216" stroke="none" />
 
-        <circle
-          cx="770"
-          cy="450"
-          r="5"
-          fill="currentColor"
-          stroke="none"
-        />
+        <circle cx="770" cy="450" r="5" fill="currentColor" stroke="none" />
       </motion.svg>
 
       {/* Counter orbit */}
@@ -293,12 +253,7 @@ function MarketBackground({
               }
         }
       >
-        <circle
-          cx="250"
-          cy="250"
-          r="105"
-          stroke="currentColor"
-        />
+        <circle cx="250" cy="250" r="105" stroke="currentColor" />
 
         <circle
           cx="250"
@@ -308,22 +263,11 @@ function MarketBackground({
           strokeDasharray="3 15"
         />
 
-        <circle
-          cx="250"
-          cy="250"
-          r="235"
-          stroke="currentColor"
-        />
+        <circle cx="250" cy="250" r="235" stroke="currentColor" />
 
-        <path
-          d="M250 15V485"
-          stroke="currentColor"
-        />
+        <path d="M250 15V485" stroke="currentColor" />
 
-        <path
-          d="M15 250H485"
-          stroke="currentColor"
-        />
+        <path d="M15 250H485" stroke="currentColor" />
       </motion.svg>
     </div>
   );
@@ -366,11 +310,7 @@ function SectionLabel({
 
           sm:text-[11px]
 
-          ${
-            tone === "dark"
-              ? "text-solar"
-              : "text-blue"
-          }
+          ${tone === "dark" ? "text-solar" : "text-blue"}
         `}
       >
         {children}
@@ -403,10 +343,7 @@ export function IndiaMarketSection() {
         text-paper
       "
     >
-      <MarketBackground
-        tone="dark"
-        reduceMotion={reduceMotion}
-      />
+      <MarketBackground tone="dark" reduceMotion={reduceMotion} />
 
       <Container
         className="
@@ -445,9 +382,7 @@ export function IndiaMarketSection() {
           "
         >
           <motion.div variants={revealVariants}>
-            <SectionLabel>
-              Market Opportunity
-            </SectionLabel>
+            <SectionLabel>Market Opportunity</SectionLabel>
 
             <h2
               id="india-market-heading"
@@ -463,9 +398,7 @@ export function IndiaMarketSection() {
               "
             >
               India&apos;s Renewable Energy
-              <span className="block text-solar">
-                Market Opportunity
-              </span>
+              <span className="block text-solar">Market Opportunity</span>
             </h2>
           </motion.div>
 
@@ -486,9 +419,8 @@ export function IndiaMarketSection() {
                 sm:text-[15px]
               "
             >
-              Growth across rooftop solar, C&amp;I projects,
-              utility-scale PV, and battery storage is expanding
-              India&apos;s clean-energy market.
+              Growth across rooftop solar, C&amp;I projects, utility-scale PV,
+              and battery storage is expanding India&apos;s clean-energy market.
             </p>
 
             <div
@@ -540,8 +472,7 @@ export function IndiaMarketSection() {
           "
         >
           {featured.map((item, index) => {
-            const Icon =
-              INDIA_ICONS[index] ?? TrendingUp;
+            const Icon = INDIA_ICONS[index] ?? TrendingUp;
 
             return (
               <motion.article
@@ -742,8 +673,7 @@ export function IndiaMarketSection() {
           {secondary.map((item, itemIndex) => {
             const index = itemIndex + 2;
 
-            const Icon =
-              INDIA_ICONS[index] ?? TrendingUp;
+            const Icon = INDIA_ICONS[index] ?? TrendingUp;
 
             return (
               <motion.article
@@ -906,7 +836,7 @@ export function IndiaMarketSection() {
               text-paper/24
             "
           >
-            India Clean Energy Market · 2026
+            India Clean Energy Market · 2027
           </p>
 
           <div
@@ -948,10 +878,7 @@ export function PuneMarketSection() {
         text-ink
       "
     >
-      <MarketBackground
-        tone="light"
-        reduceMotion={reduceMotion}
-      />
+      <MarketBackground tone="light" reduceMotion={reduceMotion} />
 
       <Container
         className="
@@ -999,9 +926,7 @@ export function PuneMarketSection() {
             "
           >
             <motion.div variants={revealVariants}>
-              <SectionLabel tone="light">
-                Host City Advantage
-              </SectionLabel>
+              <SectionLabel tone="light">Host City Advantage</SectionLabel>
             </motion.div>
 
             <motion.h2
@@ -1019,9 +944,7 @@ export function PuneMarketSection() {
               "
             >
               Pune: Industrial Access for
-              <span className="block text-blue">
-                Clean-Energy Growth
-              </span>
+              <span className="block text-blue">Clean-Energy Growth</span>
             </motion.h2>
 
             <motion.p
@@ -1036,10 +959,9 @@ export function PuneMarketSection() {
                 sm:text-[15px]
               "
             >
-              Pune&apos;s industrial, automotive, and technology
-              ecosystem connects the show with manufacturers,
-              EPC companies, C&amp;I buyers, developers, and
-              clean-energy stakeholders.
+              Pune&apos;s industrial, automotive, and technology ecosystem
+              connects the show with manufacturers, EPC companies, C&amp;I
+              buyers, developers, and clean-energy stakeholders.
             </motion.p>
 
             {/* small technical marker */}
@@ -1054,11 +976,7 @@ export function PuneMarketSection() {
                 gap-y-2
               "
             >
-              {[
-                "Manufacturing",
-                "Mobility",
-                "Technology",
-              ].map((label) => (
+              {["Manufacturing", "Mobility", "Technology"].map((label) => (
                 <div
                   key={label}
                   className="
@@ -1362,8 +1280,7 @@ export function PuneMarketSection() {
             "
           >
             {PUNE_MARKET.map((item, index) => {
-              const Icon =
-                PUNE_ICONS[index] ?? Factory;
+              const Icon = PUNE_ICONS[index] ?? Factory;
 
               return (
                 <motion.article

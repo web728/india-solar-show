@@ -14,10 +14,10 @@ const PAGE_URL = `${SITE_URL}/faq`;
 const SITE_NAME = "India International Solar Show";
 
 const PAGE_TITLE =
-  "Frequently Asked Questions | India International Solar Show 2026";
+  "Frequently Asked Questions | India International Solar Show 2027";
 
 const PAGE_DESCRIPTION =
-  "Find answers to common questions about India International Solar Show 2026, including visitor registration, exhibiting, conference, sponsorship, venue, travel and event participation.";
+  "Find answers to common questions about India International Solar Show 2027, including visitor registration, exhibiting, conference, sponsorship, venue, travel and event participation.";
 
 export const metadata: Metadata = {
   title: {
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 
   keywords: [
     "India International Solar Show FAQ",
-    "India International Solar Show 2026",
+    "India International Solar Show 2027",
     "Solar Expo Pune FAQ",
     "Solar Exhibition Visitor Questions",
     "Solar Expo Exhibitor Information",
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "India International Solar Show 2026 Frequently Asked Questions",
+        alt: "India International Solar Show 2027 Frequently Asked Questions",
       },
     ],
   },
@@ -163,7 +163,7 @@ export default function FAQPage() {
       <PageHero
         eyebrow="FAQ"
         title="Frequently Asked Questions"
-        subtitle="Find answers about visiting, exhibiting, conference participation, sponsorship, venue information and India International Solar Show 2026."
+        subtitle="Find answers about visiting, exhibiting, conference participation, sponsorship, venue information and India International Solar Show 2027."
         breadcrumbs={[
           {
             label: "Home",
@@ -176,7 +176,7 @@ export default function FAQPage() {
         meta={[
           {
             label: "Show Dates",
-            value: "02–04 October 2026",
+            value: "14–16 October 2027",
           },
           {
             label: "Venue",

@@ -13,10 +13,10 @@ const PAGE_URL = `${SITE_URL}/exhibitor`;
 const SITE_NAME = "India International Solar Show";
 
 const PAGE_TITLE =
-  "Exhibit at India International Solar Show 2026 | Solar Expo Pune";
+  "Exhibit at India International Solar Show 2027 | Solar Expo Pune";
 
 const PAGE_DESCRIPTION =
-  "Exhibit at India International Solar Show 2026 in Pune. Showcase solar PV, BESS, energy storage and clean-energy technologies to EPCs, developers, buyers, investors and industry decision-makers.";
+  "Exhibit at India International Solar Show 2027 in Pune. Showcase solar PV, BESS, energy storage and clean-energy technologies to EPCs, developers, buyers, investors and industry decision-makers.";
 
 export const metadata: Metadata = {
   title: {
@@ -27,7 +27,7 @@ export const metadata: Metadata = {
 
   keywords: [
     "Exhibit at India International Solar Show",
-    "India International Solar Show 2026",
+    "India International Solar Show 2027",
     "Solar Expo Pune Exhibitor",
     "Solar Exhibition Stall Booking",
     "Solar Trade Show India",
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
         url: "/og-exhibitor.jpg",
         width: 1200,
         height: 630,
-        alt: "Exhibit at India International Solar Show 2026 in Pune",
+        alt: "Exhibit at India International Solar Show 2027 in Pune",
       },
     ],
   },
@@ -107,7 +107,7 @@ function ExhibitorPageJsonLd() {
     about: {
       "@type": "Event",
       "@id": `${SITE_URL}/#event`,
-      name: "India International Solar Show 2026",
+      name: "India International Solar Show 2027",
       url: SITE_URL,
     },
 
@@ -169,7 +169,7 @@ export default function ExhibitorPage() {
       <div className="overflow-hidden bg-paper text-ink">
         <PageHero
           eyebrow="Exhibit With Us"
-          title="Showcase Your Innovations at India International Solar Show 2026"
+          title="Showcase Your Innovations at India International Solar Show 2027"
           subtitle="Connect with solar developers, EPC companies, industrial buyers, technology partners, investors and clean-energy decision-makers in Pune."
           breadcrumbs={[
             {
@@ -183,7 +183,7 @@ export default function ExhibitorPage() {
           meta={[
             {
               label: "Show Dates",
-              value: "02–04 October 2026",
+              value: "14–16 October 2027",
             },
             {
               label: "Venue",

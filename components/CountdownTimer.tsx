@@ -423,7 +423,7 @@ export function CountdownTimer() {
                 sm:text-[1.35rem]
               "
             >
-              India International Solar Show 2026
+              India International Solar Show 2027
             </p>
           </div>
         </div>
@@ -459,7 +459,7 @@ export function CountdownTimer() {
       }}
       role="timer"
       aria-live="off"
-      aria-label={`Countdown to India International Solar Show 2026, starting ${EVENT.dates.displayLong}`}
+      aria-label={`Countdown to India International Solar Show 2027, starting ${EVENT.dates.displayLong}`}
       className="
         relative
         isolate
@@ -593,7 +593,7 @@ export function CountdownTimer() {
               text-paper/25
             "
           >
-            Pune · 2026
+            Pune · 2027
           </span>
         </div>
       </div>

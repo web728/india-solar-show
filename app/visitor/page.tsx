@@ -12,10 +12,10 @@ const PAGE_URL = `${SITE_URL}/visitor`;
 const SITE_NAME = "India International Solar Show";
 
 const PAGE_TITLE =
-  "Visitor Registration | India International Solar Show 2026 Pune";
+  "Visitor Registration | India International Solar Show 2027 Pune";
 
 const PAGE_DESCRIPTION =
-  "Register to visit India International Solar Show 2026 in Pune. Explore solar PV, BESS, energy storage and clean-energy technologies while meeting manufacturers, EPCs, developers and industry professionals.";
+  "Register to visit India International Solar Show 2027 in Pune. Explore solar PV, BESS, energy storage and clean-energy technologies while meeting manufacturers, EPCs, developers and industry professionals.";
 
 export const metadata: Metadata = {
   title: {
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 
   keywords: [
     "India International Solar Show Visitor Registration",
-    "India International Solar Show 2026",
+    "India International Solar Show 2027",
     "Solar Expo Pune Visitor Pass",
     "Solar Exhibition Pune",
     "Solar Exhibition India",
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
         url: "/og-visitor.jpg",
         width: 1200,
         height: 630,
-        alt: "Visitor Registration for India International Solar Show 2026 Pune",
+        alt: "Visitor Registration for India International Solar Show 2027 Pune",
       },
     ],
   },
@@ -106,7 +106,7 @@ function VisitorPageJsonLd() {
     about: {
       "@type": "Event",
       "@id": `${SITE_URL}/#event`,
-      name: "India International Solar Show 2026",
+      name: "India International Solar Show 2027",
       url: SITE_URL,
     },
 
@@ -168,7 +168,7 @@ export default function VisitorPage() {
       <div className="overflow-hidden bg-paper text-ink">
         <PageHero
           eyebrow="Visitor Registration"
-          title="Visit India International Solar Show 2026"
+          title="Visit India International Solar Show 2027"
           subtitle="Explore solar PV, energy storage, BESS and clean-energy technologies, meet manufacturers and EPC companies, and build valuable industry connections in Pune."
           breadcrumbs={[
             {
@@ -186,7 +186,7 @@ export default function VisitorPage() {
             },
             {
               label: "Show Dates",
-              value: "02–04 October 2026",
+              value: "14–16 October 2027",
             },
             {
               label: "Venue",
