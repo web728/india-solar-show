@@ -10,11 +10,10 @@ const SITE_URL =
 const PAGE_URL = `${SITE_URL}/contact`;
 const SITE_NAME = "India International Solar Show";
 
-const PAGE_TITLE =
-  "Contact India International Solar Show 2026 | Pune";
+const PAGE_TITLE = "Contact India International Solar Show 2027 | Pune";
 
 const PAGE_DESCRIPTION =
-  "Contact the India International Solar Show 2026 team for exhibitor bookings, visitor registration, sponsorship, media partnerships and general event enquiries in Pune.";
+  "Contact the India International Solar Show 2027 team for exhibitor bookings, visitor registration, sponsorship, media partnerships and general event enquiries in Pune.";
 
 export const metadata: Metadata = {
   title: {
@@ -25,7 +24,7 @@ export const metadata: Metadata = {
 
   keywords: [
     "Contact India International Solar Show",
-    "India International Solar Show 2026",
+    "India International Solar Show 2027",
     "Solar Expo Pune Contact",
     "Solar Exhibition Pune Contact",
     "Exhibitor Enquiry Solar Expo",
@@ -52,7 +51,7 @@ export const metadata: Metadata = {
         url: "/images/home/solar-show-hero.webp",
         width: 1200,
         height: 630,
-        alt: "Contact India International Solar Show 2026",
+        alt: "Contact India International Solar Show 2027",
       },
     ],
   },
@@ -102,7 +101,7 @@ function ContactPageJsonLd() {
     about: {
       "@type": "Event",
       "@id": `${SITE_URL}/#event`,
-      name: "India International Solar Show 2026",
+      name: "India International Solar Show 2027",
       url: SITE_URL,
     },
 
@@ -173,7 +172,7 @@ export default function ContactPage() {
           meta={[
             {
               label: "Event",
-              value: "India International Solar Show 2026",
+              value: "India International Solar Show 2027",
             },
             {
               label: "Venue",
@@ -181,7 +180,7 @@ export default function ContactPage() {
             },
             {
               label: "Show Dates",
-              value: "02–04 October 2026",
+              value: "14–16 October 2027",
             },
           ]}
         />

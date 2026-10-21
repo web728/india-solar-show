@@ -776,7 +776,7 @@ export function BrochureDownloadExperience() {
                       text-solar
                     "
                   >
-                    2026
+                    2027
                   </span>
                 </h3>
 
@@ -856,7 +856,7 @@ export function BrochureDownloadExperience() {
                       text-paper/22
                     "
                   >
-                    Pune · October 2026
+                    Pune · October 2027
                   </span>
 
                   <Sparkles

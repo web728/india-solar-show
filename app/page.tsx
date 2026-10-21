@@ -22,10 +22,10 @@ const SITE_URL =
 const SITE_NAME = "India International Solar Show";
 
 const HOME_TITLE =
-  "India International Solar Show 2026 | Solar Expo Pune";
+  "India International Solar Show 2027 | Solar Expo Pune";
 
 const HOME_DESCRIPTION =
-  "India International Solar Show 2026 takes place 2–4 October in Pune, bringing together solar manufacturers, energy storage companies, EPC firms, technology providers, buyers, developers, investors and clean-energy professionals.";
+  "India International Solar Show 2027 takes place 2–4 October in Pune, bringing together solar manufacturers, energy storage companies, EPC firms, technology providers, buyers, developers, investors and clean-energy professionals.";
 
 export const metadata: Metadata = {
   title: HOME_TITLE,
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
 
   keywords: [
     "India International Solar Show",
-    "India International Solar Show 2026",
+    "India International Solar Show 2027",
     "India Solar Show",
     "Solar Expo Pune",
     "Solar Exhibition Pune",
@@ -65,7 +65,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: `${SITE_NAME} 2026 — Solar Expo Pune`,
+        alt: `${SITE_NAME} 2027 — Solar Expo Pune`,
       },
     ],
   },
@@ -91,11 +91,11 @@ function EventJsonLd() {
     "@type": "Event",
     "@id": eventId,
 
-    name: "India International Solar Show 2026",
+    name: "India International Solar Show 2027",
 
     alternateName: [
-      "India Solar Show 2026",
-      "India International Solar Expo 2026",
+      "India Solar Show 2027",
+      "India International Solar Expo 2027",
     ],
 
     description: HOME_DESCRIPTION,

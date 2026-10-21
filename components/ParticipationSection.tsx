@@ -1,16 +1,8 @@
 "use client";
 
-import {
-  ArrowUpRight,
-  Handshake,
-  LayoutGrid,
-  Users,
-} from "lucide-react";
+import { ArrowUpRight, Handshake, LayoutGrid, Users } from "lucide-react";
 
-import {
-  motion,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { Container } from "@/components/ui/Container";
 import { Button } from "@/components/ui/Button";
@@ -164,12 +156,7 @@ function ParticipationBackground({
               }
         }
       >
-        <circle
-          cx="450"
-          cy="450"
-          r="145"
-          stroke="currentColor"
-        />
+        <circle cx="450" cy="450" r="145" stroke="currentColor" />
 
         <circle
           cx="450"
@@ -179,40 +166,17 @@ function ParticipationBackground({
           strokeDasharray="4 16"
         />
 
-        <circle
-          cx="450"
-          cy="450"
-          r="345"
-          stroke="currentColor"
-        />
+        <circle cx="450" cy="450" r="345" stroke="currentColor" />
 
-        <path
-          d="M450 30V870"
-          stroke="currentColor"
-        />
+        <path d="M450 30V870" stroke="currentColor" />
 
-        <path
-          d="M30 450H870"
-          stroke="currentColor"
-        />
+        <path d="M30 450H870" stroke="currentColor" />
 
-        <path
-          d="M153 153L747 747"
-          stroke="currentColor"
-        />
+        <path d="M153 153L747 747" stroke="currentColor" />
 
-        <path
-          d="M747 153L153 747"
-          stroke="currentColor"
-        />
+        <path d="M747 153L153 747" stroke="currentColor" />
 
-        <circle
-          cx="450"
-          cy="450"
-          r="8"
-          fill="#fbb216"
-          stroke="none"
-        />
+        <circle cx="450" cy="450" r="8" fill="#fbb216" stroke="none" />
       </motion.svg>
 
       {/* Secondary ring */}
@@ -248,12 +212,7 @@ function ParticipationBackground({
               }
         }
       >
-        <circle
-          cx="210"
-          cy="210"
-          r="92"
-          stroke="currentColor"
-        />
+        <circle cx="210" cy="210" r="92" stroke="currentColor" />
 
         <circle
           cx="210"
@@ -263,15 +222,9 @@ function ParticipationBackground({
           strokeDasharray="3 13"
         />
 
-        <path
-          d="M210 20V400"
-          stroke="currentColor"
-        />
+        <path d="M210 20V400" stroke="currentColor" />
 
-        <path
-          d="M20 210H400"
-          stroke="currentColor"
-        />
+        <path d="M20 210H400" stroke="currentColor" />
       </motion.svg>
     </div>
   );
@@ -409,8 +362,8 @@ export function ParticipationSection() {
                 sm:text-[15px]
               "
             >
-              Three clear routes to take part in India Solar International
-              Show 2026.
+              Three clear routes to take part in India Solar International Show
+              2027.
             </p>
 
             <p
@@ -423,8 +376,8 @@ export function ParticipationSection() {
                 sm:text-[15px]
               "
             >
-              Showcase technology, source new solutions or build your
-              presence across the solar and energy-storage industry.
+              Showcase technology, source new solutions or build your presence
+              across the solar and energy-storage industry.
             </p>
           </motion.div>
         </motion.div>
@@ -676,9 +629,7 @@ export function ParticipationSection() {
                         hover:text-paper
                       "
                     >
-                      <span>
-                        {item.buttonLabel}
-                      </span>
+                      <span>{item.buttonLabel}</span>
 
                       <ArrowUpRight
                         aria-hidden="true"

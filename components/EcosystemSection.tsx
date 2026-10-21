@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/Button";
 
 const PLATFORMS = [
   {
-    name: "India International Solar Show 2026",
+    name: "India International Solar Show 2027",
     edition: "",
     logo: "/logos/india-solar-logo.png",
     website: "https://indiasolarshow.com/",
@@ -313,7 +313,7 @@ export function EcosystemSection() {
                   sm:text-[11px]
                 "
               >
-                Co-located Clean Energy Ecosystem 2026
+                Co-located Clean Energy Ecosystem 2027
               </span>
             </div>
 
@@ -846,7 +846,7 @@ export function EcosystemSection() {
                 lg:min-w-[240px]
               "
             >
-              Integrated Clean Energy Ecosystem 2026
+              Integrated Clean Energy Ecosystem 2027
             </div>
           </div>
         </motion.div>

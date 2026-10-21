@@ -13,10 +13,10 @@ const PAGE_URL = `${SITE_URL}/venue`;
 const SITE_NAME = "India International Solar Show";
 
 const PAGE_TITLE =
-  "Venue & Directions | India International Solar Show 2026 Pune";
+  "Venue & Directions | India International Solar Show 2027 Pune";
 
 const PAGE_DESCRIPTION =
-  "Find the venue, address and travel information for India International Solar Show 2026 at Auto Cluster Exhibition Centre, Chinchwad, Pune, Maharashtra.";
+  "Find the venue, address and travel information for India International Solar Show 2027 at Auto Cluster Exhibition Centre, Chinchwad, Pune, Maharashtra.";
 
 export const metadata: Metadata = {
   title: {
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
         url: "/og-venue.jpg",
         width: 1200,
         height: 630,
-        alt: "Auto Cluster Exhibition Centre Pune - India International Solar Show 2026 Venue",
+        alt: "Auto Cluster Exhibition Centre Pune - India International Solar Show 2027 Venue",
       },
     ],
   },
@@ -147,7 +147,7 @@ function VenueJsonLd() {
         name: "Auto Cluster Exhibition Centre",
 
         description:
-          "The venue for India International Solar Show 2026 in Chinchwad, Pune, Maharashtra.",
+          "The venue for India International Solar Show 2027 in Chinchwad, Pune, Maharashtra.",
 
         url: PAGE_URL,
 
@@ -172,7 +172,7 @@ function VenueJsonLd() {
         event: {
           "@type": "Event",
           "@id": `${SITE_URL}/#event`,
-          name: "India International Solar Show 2026",
+          name: "India International Solar Show 2027",
           url: SITE_URL,
         },
       },
@@ -230,7 +230,7 @@ export default function VenuePage() {
         <PageHero
           eyebrow="Venue & Directions"
           title="Auto Cluster Exhibition Centre, Pune"
-          subtitle="Plan your visit to India International Solar Show 2026 at Auto Cluster Exhibition Centre in Chinchwad, Pune, with convenient access to major road, rail and regional transport networks."
+          subtitle="Plan your visit to India International Solar Show 2027 at Auto Cluster Exhibition Centre in Chinchwad, Pune, with convenient access to major road, rail and regional transport networks."
           breadcrumbs={[
             {
               label: "Home",
@@ -251,7 +251,7 @@ export default function VenuePage() {
             },
             {
               label: "Show Dates",
-              value: "02–04 October 2026",
+              value: "14–16 October 2027",
             },
           ]}
         />

@@ -3,16 +3,16 @@
 
 export const EVENT = {
   name: "India International Solar Show",
-  nameWithYear: "India International Solar Show 2026",
+  nameWithYear: "India International Solar Show 2027",
   altName: "India International Solar Show",
   tagline: "Connecting Solar Industry",
   positioning:
     "Uniting the Renewable Energy Value Chain to Showcase Cutting-Edge Solar Technologies, Energy Storage Innovations, and Sustainable Power Solutions.",
   dates: {
-    display: "02-03-04 Oct. 2026",
-    displayLong: "02–03–04 October 2026",
-    start: "2026-10-02T00:00:00+05:30",
-    end: "2026-10-04T18:00:00+05:30",
+    display: "14-15-16 Oct. 2027",
+    displayLong: "14–15–16 October 2027",
+    start: "2027-10-14T00:00:00+05:30",
+    end: "2027-10-16T18:00:00+05:30",
   },
   venue: {
     name: "Auto Cluster Exhibition Center",
@@ -128,7 +128,7 @@ export const FAQ_ITEMS = [
   {
     question: "When and where is the event?",
     answer:
-      "The event is scheduled for 02–03–04 October 2026 at the Auto Cluster Exhibition Center, Chinchwad, Pimpri-Chinchwad, Pune, Maharashtra, India.",
+      "The event is scheduled for 14–15–16 October 2027 at the Auto Cluster Exhibition Center, Chinchwad, Pimpri-Chinchwad, Pune, Maharashtra, India.",
   },
   {
     question: "Who should exhibit at the show?",

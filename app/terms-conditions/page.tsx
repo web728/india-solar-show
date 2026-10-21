@@ -19,7 +19,7 @@ const PAGE_URL = `${SITE_URL}/terms`;
    ========================================================= */
 
 export const metadata: Metadata = {
-  title: "Terms & Conditions | India International Solar Show 2026",
+  title: "Terms & Conditions | India International Solar Show 2027",
 
   description: `Terms and conditions for the ${EVENT.nameWithYear} website and event registration. Read about participation rules, cancellation policies, intellectual property, liability and event terms.`,
 
@@ -28,13 +28,13 @@ export const metadata: Metadata = {
   },
 
   openGraph: {
-    title: "Terms & Conditions | India International Solar Show 2026",
+    title: "Terms & Conditions | India International Solar Show 2027",
 
     description: `Terms governing use of the ${EVENT.nameWithYear} website, registration and event participation.`,
 
     url: PAGE_URL,
 
-    siteName: "India International Solar Show 2026",
+    siteName: "India International Solar Show 2027",
 
     locale: "en_IN",
 

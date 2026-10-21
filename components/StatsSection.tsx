@@ -13,8 +13,8 @@ import { Container } from "@/components/ui/Container";
 const STATS = [
   {
     index: "01",
-    value: "02-03-04",
-    suffix: "Oct. 2026",
+    value: "14-15-16",
+    suffix: "Oct. 2027",
     label: "Show Dates",
     icon: CalendarDays,
   },

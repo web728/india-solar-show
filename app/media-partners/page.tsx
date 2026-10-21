@@ -10,7 +10,7 @@ import { MediaPartnerForm } from "@/components/forms/MediaPartnerForm";
 export const metadata: Metadata = {
   title: "Media Partners",
   description:
-    "Become a media partner of the India International Solar Show 2026. Collaborate on content, gain press access, conduct interviews, and co-brand with India's premier solar and renewable energy exhibition.",
+    "Become a media partner of the India International Solar Show 2027. Collaborate on content, gain press access, conduct interviews, and co-brand with India's premier solar and renewable energy exhibition.",
 };
 
 const MEDIA_BENEFITS = [

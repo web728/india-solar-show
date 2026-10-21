@@ -12,11 +12,10 @@ const SITE_URL =
 const PAGE_URL = `${SITE_URL}/visitor-registration`;
 const SITE_NAME = "India International Solar Show";
 
-const PAGE_TITLE =
-  "Visitor Registration | India International Solar Show 2026";
+const PAGE_TITLE = "Visitor Registration | India International Solar Show 2027";
 
 const PAGE_DESCRIPTION =
-  "Register to visit India International Solar Show 2026 in Pune. Submit your details for visitor access and connect with solar, energy storage, EPC and clean-energy companies.";
+  "Register to visit India International Solar Show 2027 in Pune. Submit your details for visitor access and connect with solar, energy storage, EPC and clean-energy companies.";
 
 export const metadata: Metadata = {
   title: {
@@ -27,7 +26,7 @@ export const metadata: Metadata = {
 
   keywords: [
     "India International Solar Show Visitor Registration",
-    "India International Solar Show 2026",
+    "India International Solar Show 2027",
     "Solar Expo Pune Visitor Registration",
     "Solar Exhibition Visitor Pass",
     "Solar Expo Registration Pune",
@@ -54,7 +53,7 @@ export const metadata: Metadata = {
         url: "/og-visitor.jpg",
         width: 1200,
         height: 630,
-        alt: "Visitor Registration for India International Solar Show 2026",
+        alt: "Visitor Registration for India International Solar Show 2027",
       },
     ],
   },
@@ -104,7 +103,7 @@ function VisitorRegistrationJsonLd() {
     about: {
       "@type": "Event",
       "@id": `${SITE_URL}/#event`,
-      name: "India International Solar Show 2026",
+      name: "India International Solar Show 2027",
       url: SITE_URL,
     },
 
@@ -160,7 +159,7 @@ export default function VisitorRegistrationPage() {
 
       <PageHero
         eyebrow="Visitor Registration"
-        title="Register to Visit India International Solar Show 2026"
+        title="Register to Visit India International Solar Show 2027"
         subtitle="Register your interest to attend the show and connect with solar manufacturers, EPC companies, energy-storage providers and clean-energy professionals in Pune."
         breadcrumbs={[
           {
@@ -174,7 +173,7 @@ export default function VisitorRegistrationPage() {
         meta={[
           {
             label: "Show Dates",
-            value: "02–04 October 2026",
+            value: "14–16 October 2027",
           },
           {
             label: "Venue",
@@ -192,7 +191,7 @@ export default function VisitorRegistrationPage() {
           <SectionHeading
             eyebrow="Register Your Visit"
             heading="Visitor Registration"
-            intro="Share your details to register your interest in attending India International Solar Show 2026."
+            intro="Share your details to register your interest in attending India International Solar Show 2027."
             align="center"
           />
 

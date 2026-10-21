@@ -123,7 +123,7 @@ export function ValueChainSection() {
             >
               From solar PV generation and battery energy storage to smart
               grids, E-Mobility, financing, and industrial adoption, each
-              segment connects at India International Solar Show 2026.
+              segment connects at India International Solar Show 2027.
             </p>
           </motion.div>
 

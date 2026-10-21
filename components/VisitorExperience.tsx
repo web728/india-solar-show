@@ -537,7 +537,7 @@ export function VisitorExperience() {
                   text-paper/28
                 "
               >
-                2026
+                2027
               </span>
             </div>
 
@@ -983,7 +983,7 @@ export function VisitorExperience() {
                 text-ink/22
               "
             >
-              India International Solar Show 2026
+              India International Solar Show 2027
             </span>
           </div>
         </motion.div>
@@ -991,4 +991,3 @@ export function VisitorExperience() {
     </section>
   );
 }
-  
