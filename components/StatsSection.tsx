@@ -28,7 +28,7 @@ const STATS = [
   {
     index: "03",
     value: "Futurex",
-    suffix: "Trade Fair & Events",
+    suffix: "Trade Fair & Events Pvt. Ltd.",
     label: "Organised By",
     icon: Building2,
   },
@@ -278,54 +278,7 @@ export function StatsSection() {
                 {/* -----------------------------------------
                     Top
                     ----------------------------------------- */}
-
-                <div
-                  className="
-                    flex
-                    items-center
-                    justify-between
-                    gap-5
-                  "
-                >
-                  <span
-                    className="
-                      font-display
-                      text-[11px]
-                      font-semibold
-                      tracking-[0.16em]
-                      text-paper/25
-                    "
-                  >
-                    {stat.index}
-                  </span>
-
-                  <div
-                    className="
-                      flex
-                      size-10
-                      shrink-0
-                      items-center
-                      justify-center
-                      rounded-full
-                      border
-                      border-paper/10
-                      bg-paper/[0.04]
-                      text-solar
-                      transition-all
-                      duration-500
-
-                      group-hover:border-solar
-                      group-hover:bg-solar
-                      group-hover:text-ink
-                    "
-                  >
-                    <Icon
-                      aria-hidden="true"
-                      className="size-[17px]"
-                      strokeWidth={1.7}
-                    />
-                  </div>
-                </div>
+ 
 
                 {/* -----------------------------------------
                     Stat

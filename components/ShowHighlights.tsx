@@ -264,34 +264,7 @@ function HighlightItem({
         "
       />
 
-      {/* Large background number */}
-      <span
-        aria-hidden="true"
-        className={`
-          pointer-events-none
-          absolute
-          -bottom-3
-          -right-1
-          font-display
-          font-semibold
-          leading-none
-          tracking-[-0.07em]
-          text-paper/[0.025]
-          transition-[opacity,transform]
-          duration-500
-
-          group-hover:-translate-x-1
-          group-hover:text-paper/[0.045]
-
-          ${
-            featured
-              ? "text-[5.2rem]"
-              : "text-[4.3rem]"
-          }
-        `}
-      >
-        {String(index + 1).padStart(2, "0")}
-      </span>
+      
 
       <div
         className="
@@ -340,17 +313,7 @@ function HighlightItem({
             />
           </div>
 
-          <span
-            className="
-              font-display
-              text-[10px]
-              font-semibold
-              tracking-[0.14em]
-              text-paper/20
-            "
-          >
-            {String(index + 1).padStart(2, "0")}
-          </span>
+     
         </div>
 
         {/* Content */}

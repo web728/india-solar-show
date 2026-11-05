@@ -403,17 +403,7 @@ export function EventSnapshot() {
                       "
                     >
                       <div className="min-w-0">
-                        <p
-                          className="
-                            text-[9px]
-                            font-semibold
-                            uppercase
-                            tracking-[0.13em]
-                            text-ink/30
-                          "
-                        >
-                          {String(index + 1).padStart(2, "0")}
-                        </p>
+                     
 
                         <p
                           className="

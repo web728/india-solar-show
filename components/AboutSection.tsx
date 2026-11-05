@@ -499,31 +499,7 @@ export function AboutSection() {
                   "
                 />
 
-                {/* Background number */}
-
-                <span
-                  aria-hidden="true"
-                  className="
-                    pointer-events-none
-                    absolute
-                    -bottom-3
-                    -right-1
-                    font-display
-                    text-[4.5rem]
-                    font-semibold
-                    leading-none
-                    tracking-[-0.06em]
-                    text-ink/[0.035]
-                    transition-[opacity,transform]
-                    duration-500
-
-                    group-hover:-translate-x-1
-                    group-hover:text-ink/[0.055]
-                  "
-                >
-                  {String(index + 1).padStart(2, "0")}
-                </span>
-
+                 
                 <div
                   className="
                     relative
@@ -571,18 +547,7 @@ export function AboutSection() {
                         strokeWidth={1.75}
                       />
                     </div>
-
-                    <span
-                      className="
-                        font-display
-                        text-[10px]
-                        font-semibold
-                        tracking-[0.14em]
-                        text-ink/20
-                      "
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
+ 
                   </div>
 
                   {/* Copy */}

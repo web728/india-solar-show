@@ -586,7 +586,7 @@ export function Header() {
               className="relative z-10 shrink-0"
             >
               <Image
-                src="/logos/india-solar-logo.png"
+                src="/logos/solar.png"
                 alt="India International Solar Show 2027"
                 width={230}
                 height={60}
@@ -597,7 +597,7 @@ export function Header() {
                   max-w-[158px]
                   object-contain
                   sm:max-w-[178px]
-                  lg:max-w-[185px]
+                  lg:max-w-[175px]
                   xl:max-w-[195px]
                 "
               />

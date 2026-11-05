@@ -17,9 +17,9 @@ import { Button } from "@/components/ui/Button";
 
 const PLATFORMS = [
   {
-    name: "India International Solar Show 2027",
-    edition: "",
-    logo: "/logos/india-solar-logo.png",
+    name: "2nd India International Solar Show 2027",
+    edition: "2nd Edition",
+    logo: "/logos/solar.png",
     website: "https://indiasolarshow.com/",
     blurb:
       "India's premier B2B solar exhibition in Pune focusing on solar PV manufacturing, rooftop solar systems, utility-scale projects, and hybrid renewable energy solutions.",
@@ -428,7 +428,7 @@ export function EcosystemSection() {
                 className="
                   group
                   relative
-                  min-h-[360px]
+                  min-h-[320px]
                   overflow-hidden
                   rounded-2xl
                   border
@@ -601,7 +601,7 @@ export function EcosystemSection() {
                       {platform.name}
                     </h3>
 
-                    <p
+                    {/* <p
                       className="
                         mt-3
                         max-w-sm
@@ -611,7 +611,7 @@ export function EcosystemSection() {
                       "
                     >
                       {platform.blurb}
-                    </p>
+                    </p> */}
                   </div>
 
                   {/* Website */}
@@ -683,173 +683,7 @@ export function EcosystemSection() {
           </div>
         </motion.div>
 
-        {/* =================================================
-            Ecosystem Equation
-            ================================================= */}
-
-        <motion.div
-          initial={
-            reduceMotion
-              ? false
-              : {
-                  opacity: 0,
-                  y: 16,
-                }
-          }
-          whileInView={{
-            opacity: 1,
-            y: 0,
-          }}
-          viewport={{
-            once: true,
-            amount: 0.18,
-            margin: "-30px",
-          }}
-          transition={{
-            duration: 0.56,
-            ease: EASE,
-          }}
-          className="
-            mt-10
-            overflow-hidden
-            rounded-2xl
-            border
-            border-paper/10
-            bg-paper/[0.03]
-            px-5
-            py-6
-            backdrop-blur-sm
-
-            sm:px-6
-            sm:py-7
-
-            lg:mt-12
-          "
-        >
-          <div
-            className="
-              flex
-              flex-col
-              items-center
-              justify-center
-              gap-3
-
-              lg:flex-row
-              lg:flex-wrap
-              lg:gap-3
-            "
-          >
-            {ECOSYSTEM_ITEMS.map((label, index) => (
-              <div
-                key={label}
-                className="
-                  flex
-                  w-full
-                  flex-col
-                  items-center
-                  gap-3
-
-                  lg:w-auto
-                  lg:flex-row
-                "
-              >
-                <div
-                  className="
-                    flex
-                    min-h-[48px]
-                    w-full
-                    items-center
-                    justify-center
-                    rounded-xl
-                    border
-                    border-paper/10
-                    bg-paper/[0.035]
-                    px-4
-                    py-2.5
-                    text-center
-                    text-[12px]
-                    font-medium
-                    leading-5
-                    text-paper/70
-
-                    lg:w-auto
-                    lg:min-w-[190px]
-                  "
-                >
-                  {label}
-                </div>
-
-                {index < ECOSYSTEM_ITEMS.length - 1 ? (
-                  <div
-                    className="
-                      flex
-                      size-7
-                      shrink-0
-                      items-center
-                      justify-center
-                      rounded-full
-                      border
-                      border-solar/25
-                      bg-solar/[0.06]
-                      text-solar
-                    "
-                  >
-                    <Plus
-                      aria-hidden="true"
-                      className="size-3.5"
-                      strokeWidth={1.8}
-                    />
-                  </div>
-                ) : null}
-              </div>
-            ))}
-
-            <div
-              className="
-                flex
-                size-7
-                shrink-0
-                items-center
-                justify-center
-                rounded-full
-                border
-                border-solar/25
-                bg-solar/[0.06]
-                text-solar
-              "
-            >
-              <Equal
-                aria-hidden="true"
-                className="size-3.5"
-                strokeWidth={1.8}
-              />
-            </div>
-
-            <div
-              className="
-                flex
-                min-h-[48px]
-                w-full
-                items-center
-                justify-center
-                rounded-xl
-                bg-solar
-                px-5
-                py-2.5
-                text-center
-                text-[12px]
-                font-semibold
-                leading-5
-                text-ink
-
-                lg:w-auto
-                lg:min-w-[240px]
-              "
-            >
-              Integrated Clean Energy Ecosystem 2027
-            </div>
-          </div>
-        </motion.div>
+        
 
         {/* =================================================
             CTA

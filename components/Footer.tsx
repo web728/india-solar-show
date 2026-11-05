@@ -473,7 +473,7 @@ export function Footer() {
               className="
                 inline-flex
                 rounded-xl
-                bg-paper
+               
                 px-3
                 py-2.5
                 shadow-[0_8px_28px_rgba(0,0,0,0.12)]
@@ -485,7 +485,7 @@ export function Footer() {
               "
             >
               <Image
-                src="/logos/india-solar-logo.png"
+                src="/logos/solar-white.png"
                 alt="India International Solar Show 2027"
                 width={230}
                 height={60}
@@ -500,20 +500,7 @@ export function Footer() {
               />
             </Link>
 
-            <p
-              className="
-                mt-5
-                max-w-[340px]
-                text-[10px]
-                font-semibold
-                uppercase
-                tracking-[0.15em]
-                text-solar
-              "
-            >
-              {EVENT.tagline}
-            </p>
-
+         
             <p
               className="
                 mt-3
