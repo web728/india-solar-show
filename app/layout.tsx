@@ -286,7 +286,7 @@ export default function RootLayout({
         <GlobalJsonLd />
 
         <MotionProvider>
-          <Preloader />
+          {/* <Preloader /> */}
           <ScrollProgress />
           <Header />
 

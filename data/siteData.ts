@@ -25,7 +25,7 @@ export const EVENT = {
       "https://www.google.com/maps/search/?api=1&query=Auto+Cluster+Exhibition+Center+Chinchwad+Pune",
   },
   organizer: {
-    name: "Futurex",
+    name: "Futurex Group",
     fullName: "Futurex Trade Fair & Events Pvt. Ltd.",
   },
   website: "https://indiasolarshow.com",
@@ -34,17 +34,17 @@ export const EVENT = {
 
 export const CO_LOCATED = [
   {
-    name: "India Battery International Show",
-    edition: "",
-    logo: "/logos/india-battery-logo.png",
+    name: "2nd India International Battery Show 2027",
+    edition: "2nd Edition",
+    logo: "/logos/battery.png",
     website: "https://www.indiabatteryshow.com/",
     blurb:
       "Battery manufacturing, energy storage, LFP, lithium-ion, lead-acid, ESS integration.",
   },
   {
-    name: "India EV International Show",
-    edition: "8th Edition",
-    logo: "/logos/india-ev-logo.png",
+    name: "9th India International EV Show 2027",
+    edition: "9th Edition",
+    logo: "/logos/ev.png",
     website: "https://iievshow.com/",
     blurb:
       "EV technology, charging infrastructure, mobility ecosystem, e-mobility innovation.",

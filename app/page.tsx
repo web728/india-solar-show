@@ -184,13 +184,13 @@ export default function HomePage() {
       <EventSnapshot />
       <AboutSection />
       <ShowHighlights />
-      <CoLocatedShows />
+      {/* <CoLocatedShows /> */}
       <EcosystemSection />
-      <ParticipationSection />
-      <WhyParticipate />
-      <VenueSection />
-      <BrochureCTA />
-      <FinalCTA />
+      {/* <ParticipationSection q/> */}
+      {/* <WhyParticipate /> */}
+      {/* <VenueSection /> */}
+      {/* <BrochureCTA /> */}
+      {/* <FinalCTA /> */}
     </>
   );
 }

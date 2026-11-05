@@ -569,15 +569,7 @@ export function HeroSection() {
                     Powering the future of clean energy.
                   </p> */}
 
-                  <div className="mt-4 flex items-center gap-3 text-paper/65">
-                    <CalendarDays
-                      className="size-4 text-solar"
-                      strokeWidth={1.7}
-                    />
-                    <span className="text-[10.5px] font-medium tracking-[0.01em]">
-                      14–16 October 2027
-                    </span>
-                  </div>
+                
                 </div>
               </div>
             </motion.div>
