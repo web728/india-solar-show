@@ -34,51 +34,52 @@ export default function DownloadsPage() {
         subtitle="Access official event materials for India International Solar Show 2027."
       />
 
-      <section className="bg-white py-12 sm:py-14 lg:py-16">
-        <Container>
-          <SectionHeading
-            eyebrow="Resources"
-            heading="Available Downloads"
-            intro="Download event materials directly or request additional documents from our team."
-            align="center"
-          />
+   <section className="bg-white py-12 sm:py-14 lg:py-16">
+  <Container>
+    <SectionHeading
+      eyebrow="Event Report"
+      heading="India International Solar Show 2026 – Post Show Report"
+      intro="Explore the highlights, key achievements, industry participation, and success stories of India International Solar Show 2026. Download the official Post Show Report."
+      align="center"
+    />
 
-          <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-4">
-            {DOWNLOADS.map((item, i) => (
-              <AnimatedCard
-                key={item.title}
-                delay={i * 0.08}
-                tilt={false}
-                className="flex flex-col gap-4 p-5 sm:flex-row sm:items-center"
-              >
-                <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-solar/10 text-solar">
-                  <item.icon size={21} aria-hidden="true" />
-                </span>
+    <div className="mx-auto mt-8 max-w-3xl">
+      <AnimatedCard
+        delay={0.08}
+        tilt={false}
+        className="flex flex-col gap-5 p-6 sm:flex-row sm:items-center sm:p-7"
+      >
+        <span className="flex size-14 shrink-0 items-center justify-center rounded-xl bg-solar/10 text-solar">
+          <FileDown size={26} aria-hidden="true" />
+        </span>
 
-                <div className="min-w-0 flex-1">
-                  <h3 className="font-display text-[15px] font-semibold leading-tight text-ink">
-                    {item.title}
-                  </h3>
+        <div className="min-w-0 flex-1">
+          <h3 className="font-display text-base font-semibold leading-tight text-ink">
+            Post Show Report – 2026
+          </h3>
 
-                  <p className="mt-1.5 text-[12px] leading-5 text-ink/50">
-                    {item.desc}
-                  </p>
-                </div>
+          <p className="mt-2 text-[13px] leading-6 text-ink/50">
+            Official event report featuring exhibition highlights,
+            industry insights, participation, and key event achievements.
+          </p>
+          <span className="mt-2 inline-block text-xs font-medium text-solar">
+            PDF Document
+          </span>
+        </div>
 
-                <Button
-                  href={item.href}
-                  external
-                  size="sm"
-                  className="shrink-0 gap-2 shadow-[0_8px_24px_rgba(251,178,22,0.18)]"
-                >
-                  <FileDown size={15} aria-hidden="true" />
-                  Download
-                </Button>
-              </AnimatedCard>
-            ))}
-          </div>
-        </Container>
-      </section>
+        <Button
+          href="/downloads/India_International_Solar_Show_2026_Post_Show_Report.pdf"
+          download="India_International_Solar_Show_2026_Post_Show_Report.pdf"
+          size="sm"
+          className="shrink-0 gap-2 shadow-[0_8px_24px_rgba(251,178,22,0.18)]"
+        >
+          <FileDown size={15} aria-hidden="true" />
+          Download Report
+        </Button>
+      </AnimatedCard>
+    </div>
+  </Container>
+</section>
 
       <section className="bg-paper py-12 sm:py-14 lg:py-16">
         <Container>

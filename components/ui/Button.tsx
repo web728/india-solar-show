@@ -36,6 +36,7 @@ interface ButtonAsLink
   extends BaseProps {
   href: string;
   external?: boolean;
+  download?: string | boolean;
   onClick?: () => void;
   type?: never;
   disabled?: never;
