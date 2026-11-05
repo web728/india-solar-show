@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { getRecaptcha, loadRecaptcha } from "@/lib/recaptcha";
 
-const BROCHURE_URL = "/India-Solar-International-Show-Brochure.pdf";
+const BROCHURE_URL = "/downloads/2nd_India_International_Solar_Show_2027_Brochure.pdf";
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "";
 const EASE = [0.16, 1, 0.3, 1] as const;
 

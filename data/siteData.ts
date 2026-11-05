@@ -29,7 +29,7 @@ export const EVENT = {
     fullName: "Futurex Trade Fair & Events Pvt. Ltd.",
   },
   website: "https://indiasolarshow.com",
-  brochurePath: "/India-Solar-International-Show-Brochure.pdf",
+  brochurePath: "/downloads/2nd_India_International_Solar_Show_2027_Brochure.pdf",
 } as const;
 
 export const CO_LOCATED = [

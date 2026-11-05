@@ -25,6 +25,7 @@ import {
   Menu,
   Presentation,
   UserCheck,
+  FileText,
   X,
 } from "lucide-react";
 
@@ -159,6 +160,12 @@ const HEADER_NAV: NavItem[] = [
         icon: Download,
         description: "Access the official event brochure and downloads.",
       },
+   {
+  label: "Post Show Report",
+  href: "/downloads/India_International_Solar_Show_2026_Post_Show_Report.pdf",
+  icon: FileText,
+  description: "Access the official event Post Show Report.",
+},
     ],
   },
 
