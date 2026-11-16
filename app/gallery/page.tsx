@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import fs from "node:fs";
+import { promises as fs } from "node:fs";
 import path from "node:path";
 
 import { ArrowLeft, ImageIcon } from "lucide-react";
@@ -14,6 +14,9 @@ export const metadata: Metadata = {
   description:
     "Explore photos and highlights from the India International Solar Show, including exhibitions, industry interactions, technology showcases and event moments.",
 };
+
+// Page build time pe ek baar generate hoga, har request pe folder scan nahi hoga.
+export const dynamic = "force-static";
 
 export interface GalleryImage {
   src: string;
@@ -30,6 +33,8 @@ const IMAGE_EXTENSIONS = new Set([
   ".svg",
   ".bmp",
 ]);
+
+const FALLBACK_ALT = "India International Solar Show gallery image";
 
 function formatAlt(value: string) {
   return value
@@ -49,52 +54,60 @@ function createPublicUrl(relativePath: string) {
   );
 }
 
-function collectImages(
+// Async + parallel scan (pehle sync fs calls the, jo server ko block karte the).
+async function collectImages(
   directory: string,
   publicRoot: string,
-): GalleryImage[] {
-  if (!fs.existsSync(directory)) return [];
-
-  const entries = fs.readdirSync(directory, { withFileTypes: true });
-  const images: GalleryImage[] = [];
-
-  for (const entry of entries) {
-    if (entry.name.startsWith(".")) continue;
-
-    const absolutePath = path.join(directory, entry.name);
-
-    if (entry.isDirectory()) {
-      images.push(...collectImages(absolutePath, publicRoot));
-      continue;
-    }
-
-    const extension = path.extname(entry.name).toLowerCase();
-    if (!IMAGE_EXTENSIONS.has(extension)) continue;
-
-    const relativePath = path.relative(publicRoot, absolutePath);
-
-    images.push({
-      src: createPublicUrl(relativePath),
-      alt:
-        formatAlt(entry.name) ||
-        "India International Solar Show gallery image",
-    });
+): Promise<GalleryImage[]> {
+  let entries;
+  try {
+    entries = await fs.readdir(directory, { withFileTypes: true });
+  } catch {
+    return [];
   }
 
-  return images;
+  const nested = await Promise.all(
+    entries.map(async (entry): Promise<GalleryImage[]> => {
+      if (entry.name.startsWith(".")) return [];
+
+      const absolutePath = path.join(directory, entry.name);
+
+      if (entry.isDirectory()) {
+        return collectImages(absolutePath, publicRoot);
+      }
+
+      const extension = path.extname(entry.name).toLowerCase();
+      if (!IMAGE_EXTENSIONS.has(extension)) return [];
+
+      return [
+        {
+          src: createPublicUrl(path.relative(publicRoot, absolutePath)),
+          alt: formatAlt(entry.name) || FALLBACK_ALT,
+        },
+      ];
+    }),
+  );
+
+  return nested.flat();
 }
+
+// Module-level cache: process me ek hi baar scan hota hai.
+let imagesPromise: Promise<GalleryImage[]> | null = null;
 
 function getGalleryImages() {
-  const publicRoot = path.join(process.cwd(), "public");
-  const imagesDirectory = path.join(publicRoot, "images");
+  if (!imagesPromise) {
+    const publicRoot = path.join(process.cwd(), "public");
+    const imagesDirectory = path.join(publicRoot, "images");
 
-  return collectImages(imagesDirectory, publicRoot).sort((a, b) =>
-    a.src.localeCompare(b.src),
-  );
+    imagesPromise = collectImages(imagesDirectory, publicRoot).then((list) =>
+      list.sort((a, b) => (a.src < b.src ? -1 : a.src > b.src ? 1 : 0)),
+    );
+  }
+  return imagesPromise;
 }
 
-export default function GalleryPage() {
-  const images = getGalleryImages();
+export default async function GalleryPage() {
+  const images = await getGalleryImages();
 
   return (
     <>
@@ -109,13 +122,14 @@ export default function GalleryPage() {
       />
 
       <section className="relative overflow-hidden bg-paper py-12 sm:py-16 lg:py-[72px]">
+        {/* blur-[150px] filters bahut heavy hote hain, gradient same look deta hai bina paint cost ke */}
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-52 top-10 h-[500px] w-[500px] rounded-full bg-solar/[0.035] blur-[150px]"
+          className="pointer-events-none absolute -right-52 top-10 h-[500px] w-[500px] rounded-full bg-[radial-gradient(closest-side,rgba(245,166,35,0.07),transparent)]"
         />
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -left-56 top-[42%] h-[520px] w-[520px] rounded-full bg-blue/[0.03] blur-[160px]"
+          className="pointer-events-none absolute -left-56 top-[42%] h-[520px] w-[520px] rounded-full bg-[radial-gradient(closest-side,rgba(30,90,200,0.06),transparent)]"
         />
 
         <Container className="relative">
@@ -141,15 +155,6 @@ export default function GalleryPage() {
             <GalleryLightbox images={images} />
           ) : (
             <div className="relative mx-auto max-w-[680px] overflow-hidden rounded-[26px] border border-ink/[0.08] bg-white px-6 py-14 text-center shadow-[0_20px_60px_rgba(25,25,25,0.06)] sm:px-10 sm:py-16">
-              <div
-                aria-hidden="true"
-                className="absolute -right-24 -top-24 h-64 w-64 rounded-full bg-solar/[0.07] blur-[90px]"
-              />
-              <div
-                aria-hidden="true"
-                className="absolute -bottom-24 -left-24 h-64 w-64 rounded-full bg-blue/[0.05] blur-[90px]"
-              />
-
               <div className="relative mx-auto flex h-12 w-12 items-center justify-center rounded-full border border-ink/[0.08] bg-blue/[0.04] text-blue">
                 <ImageIcon aria-hidden="true" className="h-5 w-5" strokeWidth={1.7} />
               </div>
