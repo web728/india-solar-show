@@ -1,8 +1,7 @@
 import { ImageResponse } from "next/og";
 import { EVENT } from "@/data/siteData";
 
-export const runtime = "edge";
-
+export const runtime = "nodejs";
 export const alt =
   "India International Solar Show 2027 — Solar, Energy Storage & Clean Energy Expo in Pune";
 
