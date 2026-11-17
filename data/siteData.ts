@@ -29,7 +29,8 @@ export const EVENT = {
     fullName: "Futurex Trade Fair & Events Pvt. Ltd.",
   },
   website: "https://indiasolarshow.com",
-  brochurePath: "/downloads/2nd_India_International_Solar_Show_2027_Brochure.pdf",
+  brochurePath:
+    "/downloads/2nd_India_International_Solar_Show_2027_Brochure.pdf",
 } as const;
 
 export const CO_LOCATED = [
@@ -78,7 +79,7 @@ export const NAV_ITEMS = [
       { label: "Exhibitor Profile", href: "/exhibitor" },
       {
         label: "Exhibitor Registration",
-        href: "https://app.warpbay.com/E2yy0Klq",
+        href: "/exhibitor-registration",
       },
     ],
   },
@@ -89,7 +90,7 @@ export const NAV_ITEMS = [
       { label: "Visitor Profile", href: "/visitor" },
       {
         label: "Visitor Registration",
-        href: "https://app.warpbay.com/qPMIy6ii",
+        href: "/visitor-registration",
       },
     ],
   },
@@ -103,9 +104,9 @@ export const FOOTER_LINKS = [
   { label: "Home", href: "/" },
   { label: "About", href: "/about" },
   { label: "Exhibitor", href: "/exhibitor" },
-  { label: "Exhibitor Registration", href: "https://app.warpbay.com/E2yy0Klq" },
+  { label: "Exhibitor Registration", href: "/exhibitor-registration" },
   { label: "Visitor", href: "/visitor" },
-  { label: "Visitor Registration", href: "https://app.warpbay.com/qPMIy6ii" },
+  { label: "Visitor Registration", href: "/visitor-registration" },
   { label: "Sponsors", href: "/sponsors" },
   { label: "Media Partners", href: "/media-partners" },
   { label: "Venue", href: "/venue" },

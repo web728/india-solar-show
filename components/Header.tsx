@@ -54,8 +54,8 @@ type NavItem = {
    URLs
    ========================================================= */
 
-const STALL_URL = "https://app.warpbay.com/E2yy0Klq";
-const VISITOR_URL = "https://app.warpbay.com/qPMIy6ii";
+const STALL_URL = "/exhibitor-registration";
+const VISITOR_URL = "/visitor-registration";
 
 /* =========================================================
    Main Navigation
@@ -99,7 +99,7 @@ const HEADER_NAV: NavItem[] = [
       },
       {
         label: "Exhibitor Registration",
-        href: "https://app.warpbay.com/E2yy0Klq",
+        href: "/exhibitor-registration",
         icon: ClipboardCheck,
         description:
           "Register your interest and request stall options and pricing.",
@@ -119,7 +119,7 @@ const HEADER_NAV: NavItem[] = [
       },
       {
         label: "Visitor Registration",
-        href: "https://app.warpbay.com/qPMIy6ii",
+        href: "/visitor-registration",
         icon: UserCheck,
         description:
           "Register as a visitor for India International Solar Show 2027.",
@@ -160,12 +160,12 @@ const HEADER_NAV: NavItem[] = [
         icon: Download,
         description: "Access the official event brochure and downloads.",
       },
-   {
-  label: "Post Show Report",
-  href: "/downloads/India_International_Solar_Show_2026_Post_Show_Report.pdf",
-  icon: FileText,
-  description: "Access the official event Post Show Report.",
-},
+      {
+        label: "Post Show Report",
+        href: "/downloads/India_International_Solar_Show_2026_Post_Show_Report.pdf",
+        icon: FileText,
+        description: "Access the official event Post Show Report.",
+      },
     ],
   },
 

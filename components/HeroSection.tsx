@@ -434,7 +434,7 @@ export function HeroSection() {
               className="mt-6 flex flex-wrap gap-2.5"
             >
               <Button
-                href="https://app.warpbay.com/E2yy0Klq"
+                href="/exhibitor-registration"
                 external
                 size="md"
                 className="group gap-5 shadow-[0_12px_28px_rgba(0,0,0,0.06)] sm:min-w-[176px] sm:justify-between"
@@ -448,7 +448,7 @@ export function HeroSection() {
               </Button>
 
               <Button
-                href="https://app.warpbay.com/qPMIy6ii"
+                href="/visitor-registration"
                 external
                 size="md"
                 variant="outline"
@@ -568,8 +568,6 @@ export function HeroSection() {
                   {/* <p className="max-w-[470px] font-display text-[clamp(1.8rem,3vw,2.8rem)] font-semibold leading-[0.98] tracking-[-0.04em] text-paper">
                     Powering the future of clean energy.
                   </p> */}
-
-                
                 </div>
               </div>
             </motion.div>

@@ -10,10 +10,7 @@ import {
   Presentation,
 } from "lucide-react";
 
-import {
-  motion,
-  useReducedMotion,
-} from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 
 import { SHOW_HIGHLIGHTS } from "@/data/siteData";
 
@@ -143,12 +140,7 @@ function HighlightsBackground({
               }
         }
       >
-        <circle
-          cx="450"
-          cy="450"
-          r="155"
-          stroke="currentColor"
-        />
+        <circle cx="450" cy="450" r="155" stroke="currentColor" />
 
         <circle
           cx="450"
@@ -158,39 +150,17 @@ function HighlightsBackground({
           strokeDasharray="4 15"
         />
 
-        <circle
-          cx="450"
-          cy="450"
-          r="350"
-          stroke="currentColor"
-        />
+        <circle cx="450" cy="450" r="350" stroke="currentColor" />
 
-        <path
-          d="M450 30V870"
-          stroke="currentColor"
-        />
+        <path d="M450 30V870" stroke="currentColor" />
 
-        <path
-          d="M30 450H870"
-          stroke="currentColor"
-        />
+        <path d="M30 450H870" stroke="currentColor" />
 
-        <path
-          d="M153 153L747 747"
-          stroke="currentColor"
-        />
+        <path d="M153 153L747 747" stroke="currentColor" />
 
-        <path
-          d="M747 153L153 747"
-          stroke="currentColor"
-        />
+        <path d="M747 153L153 747" stroke="currentColor" />
 
-        <circle
-          cx="450"
-          cy="450"
-          r="8"
-          fill="#fbb216"
-        />
+        <circle cx="450" cy="450" r="8" fill="#fbb216" />
       </motion.svg>
     </div>
   );
@@ -224,11 +194,7 @@ function HighlightItem({
         bg-paper/[0.035]
         backdrop-blur-sm
 
-        ${
-          featured
-            ? "p-6 sm:p-7 lg:p-8"
-            : "p-5 sm:p-6"
-        }
+        ${featured ? "p-6 sm:p-7 lg:p-8" : "p-5 sm:p-6"}
       `}
     >
       {/* Hover wash */}
@@ -263,8 +229,6 @@ function HighlightItem({
           group-hover:h-full
         "
       />
-
-      
 
       <div
         className="
@@ -306,23 +270,13 @@ function HighlightItem({
               group-hover:text-ink
             "
           >
-            <Icon
-              aria-hidden="true"
-              className="size-4"
-              strokeWidth={1.75}
-            />
+            <Icon aria-hidden="true" className="size-4" strokeWidth={1.75} />
           </div>
-
-     
         </div>
 
         {/* Content */}
         <div
-          className={
-            featured
-              ? "mt-10 max-w-[420px]"
-              : "mt-7 max-w-[300px]"
-          }
+          className={featured ? "mt-10 max-w-[420px]" : "mt-7 max-w-[300px]"}
         >
           <h3
             className={
@@ -530,12 +484,9 @@ export function ShowHighlights() {
                 sm:text-[15px]
               "
             >
-              Solar technologies, energy storage, microgrids,
-              technical workshops, B2B matchmaking, innovation,
-              and policy participation.
+              Solar technologies, energy storage, microgrids, technical
+              workshops, B2B matchmaking, innovation, and policy participation.
             </p>
-
-        
           </motion.div>
         </motion.div>
 
@@ -597,11 +548,7 @@ export function ShowHighlights() {
             const realIndex = itemIndex + 2;
 
             return (
-              <HighlightItem
-                key={item.title}
-                item={item}
-                index={realIndex}
-              />
+              <HighlightItem key={item.title} item={item} index={realIndex} />
             );
           })}
         </motion.div>
@@ -653,15 +600,11 @@ export function ShowHighlights() {
               text-paper/35
             "
           >
-            Explore participation opportunities across India&apos;s
-            growing solar, storage and clean-energy ecosystem.
+            Explore participation opportunities across India&apos;s growing
+            solar, storage and clean-energy ecosystem.
           </p>
 
-          <Button
-            href="https://app.warpbay.com/E2yy0Klq"
-            external
-            size="lg"
-          >
+          <Button href="/exhibitor-registration" external size="lg">
             Explore Participation Opportunities
           </Button>
         </motion.div>

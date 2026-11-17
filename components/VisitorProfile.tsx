@@ -14,7 +14,7 @@ import { Button } from "@/components/ui/Button";
    Constants
    ========================================================= */
 
-const VISITOR_URL = "https://app.warpbay.com/qPMIy6ii";
+const VISITOR_URL = "/visitor-registration";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 

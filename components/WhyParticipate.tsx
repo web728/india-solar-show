@@ -806,7 +806,7 @@ export function WhyParticipate() {
               {/* Primary */}
 
               <Button
-                href="https://app.warpbay.com/E2yy0Klq"
+                href="/exhibitor-registration"
                 external
                 size="lg"
                 className="

@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/Button";
    Constants
    ========================================================= */
 
-const STALL_URL = "https://app.warpbay.com/E2yy0Klq";
+const STALL_URL = "/exhibitor-registration";
 
 const EASE = [0.16, 1, 0.3, 1] as const;
 
