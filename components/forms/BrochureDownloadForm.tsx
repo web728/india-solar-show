@@ -23,7 +23,8 @@ import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
 import { getRecaptcha, loadRecaptcha } from "@/lib/recaptcha";
 
-const BROCHURE_URL = "/downloads/2nd_India_International_Solar_Show_2027_Brochure.pdf";
+const BROCHURE_URL =
+  "/downloads/2nd_India_International_Solar_Show_2027_Brochure.pdf";
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? "";
 const EASE = [0.16, 1, 0.3, 1] as const;
 
@@ -84,7 +85,8 @@ function SuccessModal({
             </h3>
 
             <p className="mx-auto mt-4 max-w-[410px] text-[12px] leading-6 text-ink/48 sm:text-[13px]">
-              Your details have been submitted successfully. Download the official India International Solar Show brochure below.
+              Your details have been submitted successfully. Download the
+              official 2nd India International Solar Show brochure below.
             </p>
 
             <a
@@ -104,7 +106,9 @@ function SuccessModal({
 }
 
 export function BrochureDownloadForm() {
-  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [status, setStatus] = useState<
+    "idle" | "loading" | "success" | "error"
+  >("idle");
   const [apiError, setApiError] = useState("");
   const [captchaToken, setCaptchaToken] = useState("");
   const [captchaError, setCaptchaError] = useState("");
@@ -131,7 +135,11 @@ export function BrochureDownloadForm() {
   });
 
   useEffect(() => {
-    if (!RECAPTCHA_SITE_KEY || !captchaRef.current || captchaWidgetId.current !== null) {
+    if (
+      !RECAPTCHA_SITE_KEY ||
+      !captchaRef.current ||
+      captchaWidgetId.current !== null
+    ) {
       setCaptchaLoading(false);
       return;
     }
@@ -234,8 +242,7 @@ export function BrochureDownloadForm() {
 
       if (!response.ok || !data.success) {
         throw new Error(
-          data.message ||
-            "Something went wrong while processing your request.",
+          data.message || "Something went wrong while processing your request.",
         );
       }
 
@@ -291,7 +298,8 @@ export function BrochureDownloadForm() {
               </h2>
 
               <p className="mt-3 max-w-[650px] text-[11px] leading-5 text-paper/48 sm:text-[12px]">
-                Share your details to access the official India International Solar Show brochure and event information.
+                Share your details to access the official 2nd India
+                International Solar Show brochure and event information.
               </p>
             </div>
           </div>
@@ -445,10 +453,7 @@ export function BrochureDownloadForm() {
                   </div>
                 )}
 
-                <div
-                  ref={captchaRef}
-                  className="min-h-[78px] min-w-[304px]"
-                />
+                <div ref={captchaRef} className="min-h-[78px] min-w-[304px]" />
               </div>
             )}
           </div>
@@ -484,7 +489,8 @@ export function BrochureDownloadForm() {
             <div className="flex max-w-[420px] items-start gap-2.5">
               <Sparkles className="mt-0.5 size-4 shrink-0 text-solar" />
               <p className="text-[9px] leading-4 text-ink/35 sm:text-[10px]">
-                Submit your details once to unlock the official event brochure PDF.
+                Submit your details once to unlock the official event brochure
+                PDF.
               </p>
             </div>
 

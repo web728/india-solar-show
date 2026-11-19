@@ -521,8 +521,8 @@ export function HeroSection() {
             >
               <div className="group relative aspect-[16/10] overflow-hidden rounded-[1.25rem] bg-ink lg:h-[clamp(315px,44vh,430px)] lg:aspect-auto">
                 <Image
-                  src="/images/hero.webp"
-                  alt="India International Solar Show 2027 exhibition"
+                  src="/images/optimized/DSC01798.JPG.webp"
+                  alt="2nd India International Solar Show 2027 exhibition"
                   fill
                   priority
                   fetchPriority="high"

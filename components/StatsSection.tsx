@@ -84,7 +84,7 @@ export function StatsSection() {
 
   return (
     <section
-      aria-label="India International Solar Show event highlights"
+      aria-label="2nd India International Solar Show event highlights"
       className="
         relative
         isolate
@@ -278,7 +278,6 @@ export function StatsSection() {
                 {/* -----------------------------------------
                     Top
                     ----------------------------------------- */}
- 
 
                 {/* -----------------------------------------
                     Stat

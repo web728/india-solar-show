@@ -2,9 +2,9 @@
 // Do not hardcode event facts, contacts, or repeated card copy inside components.
 
 export const EVENT = {
-  name: "India International Solar Show",
-  nameWithYear: "India International Solar Show 2027",
-  altName: "India International Solar Show",
+  name: "2nd India International Solar Show",
+  nameWithYear: "2nd India International Solar Show 2027",
+  altName: "2nd India International Solar Show",
   tagline: "Connecting Solar Industry",
   positioning:
     "Uniting the Renewable Energy Value Chain to Showcase Cutting-Edge Solar Technologies, Energy Storage Innovations, and Sustainable Power Solutions.",
@@ -122,9 +122,9 @@ export const FOOTER_LINKS = [
 
 export const FAQ_ITEMS = [
   {
-    question: "What is the India International Solar Show?",
+    question: "What is the 2nd India International Solar Show?",
     answer:
-      "The India International Solar Show is a premier B2B exhibition and conference connecting the renewable energy value chain — solar, energy storage, microgrids, EV charging infrastructure, and more. It brings together manufacturers, developers, investors, policymakers, and buyers.",
+      "The 2nd India International Solar Show is a premier B2B exhibition and conference connecting the renewable energy value chain — solar, energy storage, microgrids, EV charging infrastructure, and more. It brings together manufacturers, developers, investors, policymakers, and buyers.",
   },
   {
     question: "When and where is the event?",
@@ -164,7 +164,7 @@ export const FAQ_ITEMS = [
   {
     question: "What are the co-located shows?",
     answer:
-      "The India International Solar Show is co-located with the India Battery International Show (8th Edition) and the India EV International Show (8th Edition), creating an integrated clean-energy marketplace.",
+      "The 2nd India International Solar Show is co-located with the India Battery International Show (8th Edition) and the India EV International Show (8th Edition), creating an integrated clean-energy marketplace.",
   },
   {
     question: "Where can I download the event brochure?",

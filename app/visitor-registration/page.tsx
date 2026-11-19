@@ -10,12 +10,13 @@ const SITE_URL =
   "https://www.indiasolarshow.com";
 
 const PAGE_URL = `${SITE_URL}/visitor-registration`;
-const SITE_NAME = "India International Solar Show";
+const SITE_NAME = "2nd India International Solar Show";
 
-const PAGE_TITLE = "Visitor Registration | India International Solar Show 2027";
+const PAGE_TITLE =
+  "Visitor Registration | 2nd India International Solar Show 2027";
 
 const PAGE_DESCRIPTION =
-  "Register to visit India International Solar Show 2027 in Pune. Submit your details for visitor access and connect with solar, energy storage, EPC and clean-energy companies.";
+  "Register to visit 2nd India International Solar Show 2027 in Pune. Submit your details for visitor access and connect with solar, energy storage, EPC and clean-energy companies.";
 
 export const metadata: Metadata = {
   title: {
@@ -25,8 +26,8 @@ export const metadata: Metadata = {
   description: PAGE_DESCRIPTION,
 
   keywords: [
-    "India International Solar Show Visitor Registration",
-    "India International Solar Show 2027",
+    "2nd India International Solar Show Visitor Registration",
+    "2nd India International Solar Show 2027",
     "Solar Expo Pune Visitor Registration",
     "Solar Exhibition Visitor Pass",
     "Solar Expo Registration Pune",
@@ -53,7 +54,7 @@ export const metadata: Metadata = {
         url: "/og-visitor.jpg",
         width: 1200,
         height: 630,
-        alt: "Visitor Registration for India International Solar Show 2027",
+        alt: "Visitor Registration for 2nd India International Solar Show 2027",
       },
     ],
   },
@@ -103,7 +104,7 @@ function VisitorRegistrationJsonLd() {
     about: {
       "@type": "Event",
       "@id": `${SITE_URL}/#event`,
-      name: "India International Solar Show 2027",
+      name: "2nd India International Solar Show 2027",
       url: SITE_URL,
     },
 
@@ -159,7 +160,7 @@ export default function VisitorRegistrationPage() {
 
       <PageHero
         eyebrow="Visitor Registration"
-        title="Register to Visit India International Solar Show 2027"
+        title="Register to Visit 2nd India International Solar Show 2027"
         subtitle="Register your interest to attend the show and connect with solar manufacturers, EPC companies, energy-storage providers and clean-energy professionals in Pune."
         breadcrumbs={[
           {
@@ -191,7 +192,7 @@ export default function VisitorRegistrationPage() {
           <SectionHeading
             eyebrow="Register Your Visit"
             heading="Visitor Registration"
-            intro="Share your details to register your interest in attending India International Solar Show 2027."
+            intro="Share your details to register your interest in attending 2nd India International Solar Show 2027."
             align="center"
           />
 

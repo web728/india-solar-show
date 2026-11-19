@@ -15,13 +15,13 @@ const SITE_URL =
 
 const PAGE_URL = `${SITE_URL}/about`;
 
-const SITE_NAME = "India International Solar Show";
+const SITE_NAME = "2nd India International Solar Show";
 
 const PAGE_TITLE =
-  "About India International Solar Show 2027 | Solar Expo Pune";
+  "About 2nd India International Solar Show 2027 | Solar Expo Pune";
 
 const PAGE_DESCRIPTION =
-  "Learn about India International Solar Show 2027 in Pune, a B2B exhibition connecting solar PV, energy storage, EPC, clean-tech, renewable energy manufacturers, buyers, developers and industry professionals.";
+  "Learn about 2nd India International Solar Show 2027 in Pune, a B2B exhibition connecting solar PV, energy storage, EPC, clean-tech, renewable energy manufacturers, buyers, developers and industry professionals.";
 
 export const metadata: Metadata = {
   title: {
@@ -31,8 +31,8 @@ export const metadata: Metadata = {
   description: PAGE_DESCRIPTION,
 
   keywords: [
-    "About India International Solar Show",
-    "India International Solar Show 2027",
+    "About 2nd India International Solar Show",
+    "2nd India International Solar Show 2027",
     "India Solar Show 2027",
     "Solar Expo Pune",
     "Solar Exhibition Pune",
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
         url: "/images/home/solar-show-hero.webp",
         width: 1200,
         height: 630,
-        alt: "India International Solar Show 2027 in Pune",
+        alt: "2nd India International Solar Show 2027 in Pune",
       },
     ],
   },
@@ -115,7 +115,7 @@ function AboutJsonLd() {
     about: {
       "@type": "Event",
       "@id": `${SITE_URL}/#event`,
-      name: "India International Solar Show 2027",
+      name: "2nd India International Solar Show 2027",
       url: SITE_URL,
     },
 
@@ -173,7 +173,7 @@ export default function AboutPage() {
       <div className="relative overflow-hidden bg-paper">
         <PageHero
           eyebrow="About the Show"
-          title="India International Solar Show 2027"
+          title="2nd India International Solar Show 2027"
           subtitle="Discover India's B2B platform connecting solar technologies, energy storage, EPC, clean mobility and the wider renewable-energy ecosystem in Pune."
           breadcrumbs={[
             {

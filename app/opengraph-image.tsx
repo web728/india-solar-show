@@ -3,7 +3,7 @@ import { EVENT } from "@/data/siteData";
 
 export const runtime = "nodejs";
 export const alt =
-  "India International Solar Show 2027 — Solar, Energy Storage & Clean Energy Expo in Pune";
+  "2nd India International Solar Show 2027 — Solar, Energy Storage & Clean Energy Expo in Pune";
 
 export const size = {
   width: 1200,

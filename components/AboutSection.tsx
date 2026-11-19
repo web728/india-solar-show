@@ -377,7 +377,7 @@ export function AboutSection() {
                 sm:text-[15px]
               "
             >
-              The 1st Edition of India International Solar Show 2027 is the
+              The 1st Edition of 2nd India International Solar Show 2027 is the
               leading solar trade fair in Pune, connecting the entire solar
               energy, PV manufacturing, and energy storage value chain.
             </p>
@@ -499,7 +499,6 @@ export function AboutSection() {
                   "
                 />
 
-                 
                 <div
                   className="
                     relative
@@ -547,7 +546,6 @@ export function AboutSection() {
                         strokeWidth={1.75}
                       />
                     </div>
- 
                   </div>
 
                   {/* Copy */}

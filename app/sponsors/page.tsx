@@ -11,12 +11,13 @@ const SITE_URL =
   "https://www.indiasolarshow.com";
 
 const PAGE_URL = `${SITE_URL}/sponsors`;
-const SITE_NAME = "India International Solar Show";
+const SITE_NAME = "2nd India International Solar Show";
 
-const PAGE_TITLE = "Sponsors & Partners | India International Solar Show 2027";
+const PAGE_TITLE =
+  "Sponsors & Partners | 2nd India International Solar Show 2027";
 
 const PAGE_DESCRIPTION =
-  "Explore the sponsors, industry partners, associations, knowledge partners and media partners supporting India International Solar Show 2027 in Pune, and enquire about partnership opportunities.";
+  "Explore the sponsors, industry partners, associations, knowledge partners and media partners supporting 2nd India International Solar Show 2027 in Pune, and enquire about partnership opportunities.";
 
 export const metadata: Metadata = {
   title: {
@@ -26,9 +27,9 @@ export const metadata: Metadata = {
   description: PAGE_DESCRIPTION,
 
   keywords: [
-    "India International Solar Show Sponsors",
-    "India International Solar Show Partners",
-    "India International Solar Show 2027",
+    "2nd India International Solar Show Sponsors",
+    "2nd India International Solar Show Partners",
+    "2nd India International Solar Show 2027",
     "Solar Exhibition Sponsorship India",
     "Solar Expo Partnership Pune",
     "Solar Industry Partners India",
@@ -55,7 +56,7 @@ export const metadata: Metadata = {
         url: "/opengraph-image.png",
         width: 1200,
         height: 630,
-        alt: "Sponsors and Partners of India International Solar Show 2027",
+        alt: "Sponsors and Partners of 2nd India International Solar Show 2027",
       },
     ],
   },
@@ -105,7 +106,7 @@ function SponsorsPageJsonLd() {
     about: {
       "@type": "Event",
       "@id": `${SITE_URL}/#event`,
-      name: "India International Solar Show 2027",
+      name: "2nd India International Solar Show 2027",
       url: SITE_URL,
     },
 
@@ -163,7 +164,7 @@ export default function SponsorsPage() {
         <PageHero
           eyebrow="Sponsors & Partners"
           title="Our Event Partners & Industry Ecosystem"
-          subtitle="Meet the organizations, associations, institutions and media platforms supporting India International Solar Show 2027."
+          subtitle="Meet the organizations, associations, institutions and media platforms supporting 2nd India International Solar Show 2027."
           breadcrumbs={[
             {
               label: "Home",
@@ -199,7 +200,7 @@ export default function SponsorsPage() {
             <SectionHeading
               eyebrow="Partner With the Show"
               heading="Build Your Brand Presence With Us"
-              intro="Interested in becoming a sponsor, strategic partner, media partner or industry associate? Share your requirements with us and our team will connect with you to discuss suitable partnership opportunities for India International Solar Show 2027."
+              intro="Interested in becoming a sponsor, strategic partner, media partner or industry associate? Share your requirements with us and our team will connect with you to discuss suitable partnership opportunities for 2nd India International Solar Show 2027."
               align="center"
             />
 

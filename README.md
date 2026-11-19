@@ -1,6 +1,6 @@
-# India International Solar Show 2027 — Website
+# 2nd India International Solar Show 2027 — Website
 
-A single-page, animated marketing site for the **India International Solar Show 2027**
+A single-page, animated marketing site for the **2nd India International Solar Show 2027**
 (02–04 Oct 2027, Auto Cluster Exhibition Center, Pune). Built with Next.js (App
 Router), React, TypeScript, Tailwind CSS v4, and Framer Motion.
 
@@ -127,5 +127,5 @@ public/              Logos, brochure PDF, static assets
   media query at the bottom of `app/globals.css`).
 - No fake/placeholder statistics are used anywhere on the site by design —
   if you add new stat-style content, keep that policy.
-- Event name is used consistently as **India International Solar Show**;
-  "India International Solar Show" only appears as an SEO keyword variant.
+- Event name is used consistently as **2nd India International Solar Show**;
+  "2nd India International Solar Show" only appears as an SEO keyword variant.

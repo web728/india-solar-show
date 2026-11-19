@@ -983,7 +983,7 @@ export function VisitorExperience() {
                 text-ink/22
               "
             >
-              India International Solar Show 2027
+              2nd India International Solar Show 2027
             </span>
           </div>
         </motion.div>

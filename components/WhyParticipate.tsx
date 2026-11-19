@@ -721,7 +721,7 @@ export function WhyParticipate() {
           text-paper
         "
               >
-                Book Exhibition Stall at India International Solar Show 2027
+                Book Exhibition Stall at 2nd India International Solar Show 2027
               </h3>
 
               <p

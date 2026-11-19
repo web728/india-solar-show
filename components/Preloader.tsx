@@ -949,7 +949,7 @@ export function Preloader() {
           key="site-preloader"
           role="status"
           aria-live="polite"
-          aria-label="Loading India International Solar Show 2027"
+          aria-label="Loading 2nd India International Solar Show 2027"
           initial={{
             opacity: 1,
           }}
@@ -1131,7 +1131,7 @@ export function Preloader() {
                 duration: 1.25,
                 ease: EASE,
               }}
-              aria-label="India International Solar Show"
+              aria-label="2nd India International Solar Show"
               className="
                 relative
 

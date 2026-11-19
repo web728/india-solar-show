@@ -75,7 +75,7 @@ const HEADER_NAV: NavItem[] = [
         label: "About the Show",
         href: "/about",
         icon: BookOpen,
-        description: "Discover India International Solar Show 2027.",
+        description: "Discover 2nd India International Solar Show 2027.",
       },
       {
         label: "Venue",
@@ -122,7 +122,7 @@ const HEADER_NAV: NavItem[] = [
         href: "/visitor-registration",
         icon: UserCheck,
         description:
-          "Register as a visitor for India International Solar Show 2027.",
+          "Register as a visitor for 2nd India International Solar Show 2027.",
       },
     ],
   },
@@ -180,7 +180,7 @@ const HEADER_NAV: NavItem[] = [
    ========================================================= */
 
 const TICKER = [
-  "India International Solar Show 2027",
+  "2nd India International Solar Show 2027",
   "14–16 October 2027",
   "Auto Cluster, Pune",
   "3-Day B2B Expo",
@@ -589,12 +589,12 @@ export function Header() {
 
             <Link
               href="/"
-              aria-label="India International Solar Show home"
+              aria-label="2nd India International Solar Show home"
               className="relative z-10 shrink-0"
             >
               <Image
                 src="/logos/solar.png"
-                alt="India International Solar Show 2027"
+                alt="2nd India International Solar Show 2027"
                 width={230}
                 height={60}
                 priority

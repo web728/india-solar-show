@@ -5,10 +5,7 @@
 export interface FormSubmissionData {
   formType: string;
 
-  data: Record<
-    string,
-    unknown
-  >;
+  data: Record<string, unknown>;
 }
 
 export interface FormSubmissionResult {
@@ -31,7 +28,7 @@ export interface EmailConfig {
    * "New Exhibitor Registration"
    *
    * formService.ts automatically prefixes:
-   * "India International Solar Show Website | ..."
+   * "2nd India International Solar Show Website | ..."
    */
   subject: string;
 
@@ -61,10 +58,7 @@ export interface EmailConfig {
    GOOGLE SHEETS
 ========================================================= */
 
-export type SheetCellValue =
-  | string
-  | number
-  | boolean;
+export type SheetCellValue = string | number | boolean;
 
 export interface SheetConfig {
   /**

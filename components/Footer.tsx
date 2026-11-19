@@ -469,7 +469,7 @@ export function Footer() {
           >
             <Link
               href="/"
-              aria-label="India International Solar Show 2027 home"
+              aria-label="2nd India International Solar Show 2027 home"
               className="
                 inline-flex
                 rounded-xl
@@ -486,7 +486,7 @@ export function Footer() {
             >
               <Image
                 src="/logos/solar-white.png"
-                alt="India International Solar Show 2027"
+                alt="2nd India International Solar Show 2027"
                 width={230}
                 height={60}
                 className="
@@ -500,7 +500,6 @@ export function Footer() {
               />
             </Link>
 
-         
             <p
               className="
                 mt-3

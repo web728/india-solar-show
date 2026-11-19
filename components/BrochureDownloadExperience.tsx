@@ -754,7 +754,7 @@ export function BrochureDownloadExperience() {
                     text-solar
                   "
                 >
-                  India International Solar Show
+                  2nd India International Solar Show
                 </span>
 
                 <h3

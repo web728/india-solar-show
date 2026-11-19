@@ -312,7 +312,7 @@ export function MediaPartnerForm() {
                 Partner With the Show
               </h2>
               <p className="mt-3 max-w-[650px] text-[11px] leading-5 text-paper/48 sm:text-[12px]">
-                Join India International Solar Show as a media partner and
+                Join 2nd India International Solar Show as a media partner and
                 connect your publication or platform with the solar and
                 clean-energy ecosystem.
               </p>

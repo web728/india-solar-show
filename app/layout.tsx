@@ -40,17 +40,15 @@ const SITE_URL =
 
 const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
-const SITE_NAME = "India International Solar Show";
+const SITE_NAME = "2nd India International Solar Show";
 
-const SITE_TITLE =
-  "India International Solar Show 2027 | Solar Expo Pune";
+const SITE_TITLE = "2nd India International Solar Show 2027 | Solar Expo Pune";
 
 const SITE_DESCRIPTION =
-  "India International Solar Show 2027 in Pune brings together solar manufacturers, energy storage companies, clean-energy technology providers, buyers, developers, investors and industry leaders.";
+  "2nd India International Solar Show 2027 in Pune brings together solar manufacturers, energy storage companies, clean-energy technology providers, buyers, developers, investors and industry leaders.";
 
 const ORGANIZER_NAME =
-  EVENT.organizer?.fullName ||
-  "India International Solar Show";
+  EVENT.organizer?.fullName || "2nd India International Solar Show";
 
 /* =========================================================
    VIEWPORT
@@ -91,8 +89,8 @@ export const metadata: Metadata = {
   description: SITE_DESCRIPTION,
 
   keywords: [
-    "India International Solar Show",
-    "India International Solar Show 2027",
+    "2nd India International Solar Show",
+    "2nd India International Solar Show 2027",
     "India Solar Show",
     "Solar Expo Pune",
     "Solar Exhibition India",
@@ -240,7 +238,7 @@ function GlobalJsonLd() {
 
         alternateName: [
           "India Solar Show",
-          "India International Solar Show 2027",
+          "2nd India International Solar Show 2027",
         ],
 
         description: SITE_DESCRIPTION,
@@ -290,10 +288,7 @@ export default function RootLayout({
           <ScrollProgress />
           <Header />
 
-          <main
-            id="main-content"
-            className="min-h-[60vh] pt-24 lg:pt-28"
-          >
+          <main id="main-content" className="min-h-[60vh] pt-24 lg:pt-28">
             {children}
           </main>
 
@@ -301,9 +296,7 @@ export default function RootLayout({
           <StickyMobileCTA />
         </MotionProvider>
 
-        {GTM_ID ? (
-          <GoogleTagManager gtmId={GTM_ID} />
-        ) : null}
+        {GTM_ID ? <GoogleTagManager gtmId={GTM_ID} /> : null}
       </body>
     </html>
   );

@@ -1,61 +1,42 @@
 import { connectDB } from "@/lib/db";
 
-import {
-  transporter,
-  DEFAULT_ADMIN_EMAILS,
-} from "@/lib/email";
+import { transporter, DEFAULT_ADMIN_EMAILS } from "@/lib/email";
 
-import {
-  appendToExcel,
-} from "@/lib/excelSheet";
+import { appendToExcel } from "@/lib/excelSheet";
 
-import type {
-  EmailConfig,
-  SheetConfig,
-} from "@/lib/types";
+import type { EmailConfig, SheetConfig } from "@/lib/types";
 
 /* =========================================================
    CONFIG
 ========================================================= */
 
-const SPREADSHEET_ID =
-  process.env.GOOGLE_SHEET_ID ?? "";
+const SPREADSHEET_ID = process.env.GOOGLE_SHEET_ID ?? "";
 
-const WEBSITE_NAME =
-  "India International Solar Show";
+const WEBSITE_NAME = "2nd India International Solar Show";
 
-const WEBSITE_SOURCE =
-  "India International Solar Show Website";
+const WEBSITE_SOURCE = "2nd India International Solar Show Website";
 
 /* =========================================================
    TYPES
 ========================================================= */
 
-type FormDocument<T> =
-  T & {
-    createdAt: Date;
+type FormDocument<T> = T & {
+  createdAt: Date;
 
-    _id?: {
-      toString(): string;
-    };
+  _id?: {
+    toString(): string;
   };
+};
 
-export interface SubmitFormResult<
-  T,
-> {
+export interface SubmitFormResult<T> {
   doc: FormDocument<T>;
 
   integrations: {
     mongo: true;
 
-    email:
-      | "success"
-      | "failed";
+    email: "success" | "failed";
 
-    sheet:
-      | "success"
-      | "failed"
-      | "skipped";
+    sheet: "success" | "failed" | "skipped";
   };
 }
 
@@ -63,129 +44,58 @@ export interface SubmitFormResult<
    HTML ESCAPE
 ========================================================= */
 
-function escapeHtml(
-  value: unknown,
-): string {
-  return String(
-    value ?? "",
-  )
-    .replaceAll(
-      "&",
-      "&amp;",
-    )
-    .replaceAll(
-      "<",
-      "&lt;",
-    )
-    .replaceAll(
-      ">",
-      "&gt;",
-    )
-    .replaceAll(
-      '"',
-      "&quot;",
-    )
-    .replaceAll(
-      "'",
-      "&#039;",
-    );
+function escapeHtml(value: unknown): string {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
 
 /* =========================================================
    FIELD LABEL
 ========================================================= */
 
-function formatFieldLabel(
-  key: string,
-): string {
+function formatFieldLabel(key: string): string {
   return key
-    .replace(
-      /([a-z0-9])([A-Z])/g,
-      "$1 $2",
-    )
-    .replace(
-      /[_-]+/g,
-      " ",
-    )
-    .replace(
-      /\s+/g,
-      " ",
-    )
+    .replace(/([a-z0-9])([A-Z])/g, "$1 $2")
+    .replace(/[_-]+/g, " ")
+    .replace(/\s+/g, " ")
     .trim()
-    .replace(
-      /\b\w/g,
-      (char) =>
-        char.toUpperCase(),
-    );
+    .replace(/\b\w/g, (char) => char.toUpperCase());
 }
 
 /* =========================================================
    FIELD VALUE
 ========================================================= */
 
-function formatFieldValue(
-  value: unknown,
-): string {
-  if (
-    value === null ||
-    value === undefined ||
-    value === ""
-  ) {
+function formatFieldValue(value: unknown): string {
+  if (value === null || value === undefined || value === "") {
     return "—";
   }
 
-  if (
-    typeof value ===
-    "boolean"
-  ) {
-    return value
-      ? "Yes"
-      : "No";
+  if (typeof value === "boolean") {
+    return value ? "Yes" : "No";
   }
 
-  if (
-    value instanceof Date
-  ) {
-    return formatDate(
-      value,
-    );
+  if (value instanceof Date) {
+    return formatDate(value);
   }
 
-  if (
-    Array.isArray(value)
-  ) {
-    if (
-      value.length === 0
-    ) {
+  if (Array.isArray(value)) {
+    if (value.length === 0) {
       return "—";
     }
 
-    return value
-      .map(
-        (
-          item,
-        ) =>
-          formatFieldValue(
-            item,
-          ),
-      )
-      .join(", ");
+    return value.map((item) => formatFieldValue(item)).join(", ");
   }
 
-  if (
-    typeof value ===
-    "object"
-  ) {
+  if (typeof value === "object") {
     try {
-      return JSON.stringify(
-        value,
-        null,
-        2,
-      );
+      return JSON.stringify(value, null, 2);
     } catch {
-      return String(
-        value,
-      );
+      return String(value);
     }
   }
 
@@ -198,12 +108,7 @@ function formatFieldValue(
    These fields should never appear in admin emails.
 ========================================================= */
 
-const INTERNAL_FIELDS =
-  new Set([
-    "recaptchaToken",
-    "captchaToken",
-    "__v",
-  ]);
+const INTERNAL_FIELDS = new Set(["recaptchaToken", "captchaToken", "__v"]);
 
 /* =========================================================
    BUILD EVERY FORM FIELD
@@ -213,59 +118,27 @@ const INTERNAL_FIELDS =
    every email template.
 ========================================================= */
 
-function buildAllFormFields(
-  data: Record<
-    string,
-    unknown
-  >,
-): Array<{
+function buildAllFormFields(data: Record<string, unknown>): Array<{
   label: string;
   value: string;
 }> {
-  return Object.entries(
-    data,
-  )
-    .filter(
-      ([key]) =>
-        !INTERNAL_FIELDS.has(
-          key,
-        ),
-    )
-    .map(
-      ([
-        key,
-        value,
-      ]) => ({
-        label:
-          formatFieldLabel(
-            key,
-          ),
+  return Object.entries(data)
+    .filter(([key]) => !INTERNAL_FIELDS.has(key))
+    .map(([key, value]) => ({
+      label: formatFieldLabel(key),
 
-        value:
-          formatFieldValue(
-            value,
-          ),
-      }),
-    );
+      value: formatFieldValue(value),
+    }));
 }
 
 /* =========================================================
    EMAIL SUBJECT
 ========================================================= */
 
-function buildEmailSubject(
-  subject: string,
-): string {
-  const cleanSubject =
-    subject.trim();
+function buildEmailSubject(subject: string): string {
+  const cleanSubject = subject.trim();
 
-  if (
-    cleanSubject
-      .toLowerCase()
-      .includes(
-        WEBSITE_NAME.toLowerCase(),
-      )
-  ) {
+  if (cleanSubject.toLowerCase().includes(WEBSITE_NAME.toLowerCase())) {
     return cleanSubject;
   }
 
@@ -276,29 +149,21 @@ function buildEmailSubject(
    SUBMIT FORM
 ========================================================= */
 
-export async function submitForm<
-  T extends Record<string, unknown>,
->({
+export async function submitForm<T extends Record<string, unknown>>({
   model,
   data,
   emailConfig,
   sheetConfig,
 }: {
   model: {
-    create: (
-      data: T,
-    ) => Promise<unknown>;
+    create: (data: T) => Promise<unknown>;
   };
 
   data: T;
 
-  emailConfig: (
-    doc: FormDocument<T>,
-  ) => EmailConfig;
+  emailConfig: (doc: FormDocument<T>) => EmailConfig;
 
-  sheetConfig: (
-    doc: FormDocument<T>,
-  ) => SheetConfig;
+  sheetConfig: (doc: FormDocument<T>) => SheetConfig;
 }): Promise<SubmitFormResult<T>> {
   /* =======================================================
      01. DATABASE
@@ -306,66 +171,41 @@ export async function submitForm<
 
   await connectDB();
 
-  const doc =
-    (await model.create(
-      data,
-    )) as FormDocument<T>;
+  const doc = (await model.create(data)) as FormDocument<T>;
 
   /* =======================================================
      02. PREPARE EMAIL
   ======================================================= */
 
-  const email =
-    emailConfig(doc);
+  const email = emailConfig(doc);
 
-  const submittedFields =
-    buildAllFormFields(
-      data,
-    );
+  const submittedFields = buildAllFormFields(data);
 
-  const submittedAt =
-    formatDate(
-      doc.createdAt ??
-        new Date(),
-    );
+  const submittedAt = formatDate(doc.createdAt ?? new Date());
 
-  const emailHtml =
-    buildEmailHtml({
-      title:
-        email.subject,
+  const emailHtml = buildEmailHtml({
+    title: email.subject,
 
-      subtitle:
-        "A new form submission has been received through the website.",
+    subtitle: "A new form submission has been received through the website.",
 
-      fields:
-        submittedFields,
+    fields: submittedFields,
 
-      source:
-        WEBSITE_SOURCE,
+    source: WEBSITE_SOURCE,
 
-      date:
-        submittedAt,
-    });
+    date: submittedAt,
+  });
 
   /* =======================================================
      03. PREPARE GOOGLE SHEET
   ======================================================= */
 
-  let sheet:
-    | SheetConfig
-    | null = null;
+  let sheet: SheetConfig | null = null;
 
   if (SPREADSHEET_ID) {
     try {
-      sheet =
-        sheetConfig(
-          doc,
-        );
+      sheet = sheetConfig(doc);
     } catch (error) {
-      console.error(
-        "[Form] Failed to build Google Sheet row:",
-        error,
-      );
+      console.error("[Form] Failed to build Google Sheet row:", error);
     }
   }
 
@@ -373,139 +213,77 @@ export async function submitForm<
      04. EMAIL + SHEET IN PARALLEL
   ======================================================= */
 
-  const emailPromise =
-    transporter.sendMail({
-      from:
-        `"${WEBSITE_NAME}" <${process.env.EMAIL_USER}>`,
+  const emailPromise = transporter.sendMail({
+    from: `"${WEBSITE_NAME}" <${process.env.EMAIL_USER}>`,
 
-      to:
-        email
-          .toAddresses
-          ?.length
-          ? email.toAddresses
-          : DEFAULT_ADMIN_EMAILS,
+    to: email.toAddresses?.length ? email.toAddresses : DEFAULT_ADMIN_EMAILS,
 
-      replyTo:
-        email.replyTo ||
-        undefined,
+    replyTo: email.replyTo || undefined,
 
-      subject:
-        buildEmailSubject(
-          email.subject,
-        ),
+    subject: buildEmailSubject(email.subject),
 
-      html:
-        emailHtml,
-    });
+    html: emailHtml,
+  });
 
-  const sheetPromise:
-    Promise<boolean> =
-    SPREADSHEET_ID &&
-    sheet
+  const sheetPromise: Promise<boolean> =
+    SPREADSHEET_ID && sheet
       ? appendToExcel(
           SPREADSHEET_ID,
           sheet.sheetName,
           sheet.headers,
           sheet.rowData,
         )
-      : Promise.resolve(
-          false,
-        );
+      : Promise.resolve(false);
 
-  const [
-    emailResult,
-    sheetResult,
-  ] =
-    await Promise.allSettled([
-      emailPromise,
-      sheetPromise,
-    ]);
+  const [emailResult, sheetResult] = await Promise.allSettled([
+    emailPromise,
+    sheetPromise,
+  ]);
 
   /* =======================================================
      05. EMAIL STATUS
   ======================================================= */
 
-  const emailStatus:
-    | "success"
-    | "failed" =
-    emailResult.status ===
-    "fulfilled"
-      ? "success"
-      : "failed";
+  const emailStatus: "success" | "failed" =
+    emailResult.status === "fulfilled" ? "success" : "failed";
 
-  if (
-    emailResult.status ===
-    "rejected"
-  ) {
-    console.error(
-      "[Form] Email delivery failed:",
-      emailResult.reason,
-    );
+  if (emailResult.status === "rejected") {
+    console.error("[Form] Email delivery failed:", emailResult.reason);
   }
 
   /* =======================================================
      06. SHEET STATUS
   ======================================================= */
 
-  let sheetStatus:
-    | "success"
-    | "failed"
-    | "skipped";
+  let sheetStatus: "success" | "failed" | "skipped";
 
-  if (
-    !SPREADSHEET_ID ||
-    !sheet
-  ) {
-    sheetStatus =
-      "skipped";
-  } else if (
-    sheetResult.status ===
-      "fulfilled" &&
-    sheetResult.value ===
-      true
-  ) {
-    sheetStatus =
-      "success";
+  if (!SPREADSHEET_ID || !sheet) {
+    sheetStatus = "skipped";
+  } else if (sheetResult.status === "fulfilled" && sheetResult.value === true) {
+    sheetStatus = "success";
   } else {
-    sheetStatus =
-      "failed";
+    sheetStatus = "failed";
   }
 
-  if (
-    sheetResult.status ===
-    "rejected"
-  ) {
-    console.error(
-      "[Form] Google Sheet save failed:",
-      sheetResult.reason,
-    );
+  if (sheetResult.status === "rejected") {
+    console.error("[Form] Google Sheet save failed:", sheetResult.reason);
   }
 
   /* =======================================================
      07. LOG
   ======================================================= */
 
-  console.log(
-    "[Form] Submission processed:",
-    {
-      id:
-        doc._id
-          ?.toString?.() ??
-        "unknown",
+  console.log("[Form] Submission processed:", {
+    id: doc._id?.toString?.() ?? "unknown",
 
-      form:
-        email.subject,
+    form: email.subject,
 
-      mongo:
-        "success",
+    mongo: "success",
 
-      email:
-        emailStatus,
+    email: emailStatus,
 
-      sheet:
-        sheetStatus,
-    },
-  );
+    sheet: sheetStatus,
+  });
 
   /* =======================================================
      08. RETURN
@@ -515,56 +293,37 @@ export async function submitForm<
     doc,
 
     integrations: {
-      mongo:
-        true,
+      mongo: true,
 
-      email:
-        emailStatus,
+      email: emailStatus,
 
-      sheet:
-        sheetStatus,
+      sheet: sheetStatus,
     },
   };
 }
-
 
 /* =========================================================
    DATE FORMAT
 ========================================================= */
 
-export function formatDate(
-  date: Date,
-): string {
-  return new Date(
-    date,
-  ).toLocaleString(
-    "en-IN",
-    {
-      timeZone:
-        "Asia/Kolkata",
+export function formatDate(date: Date): string {
+  return new Date(date).toLocaleString("en-IN", {
+    timeZone: "Asia/Kolkata",
 
-      day:
-        "2-digit",
+    day: "2-digit",
 
-      month:
-        "short",
+    month: "short",
 
-      year:
-        "numeric",
+    year: "numeric",
 
-      hour:
-        "2-digit",
+    hour: "2-digit",
 
-      minute:
-        "2-digit",
+    minute: "2-digit",
 
-      second:
-        "2-digit",
+    second: "2-digit",
 
-      hour12:
-        true,
-    },
-  );
+    hour12: true,
+  });
 }
 
 /* =========================================================
@@ -591,26 +350,13 @@ export function buildEmailHtml({
 
   date: string;
 }): string {
-  const rows =
-    fields
-      .map(
-        (
-          field,
-        ) => {
-          const value =
-            field.value
-              ?.trim() ||
-            "—";
+  const rows = fields
+    .map((field) => {
+      const value = field.value?.trim() || "—";
 
-          const formattedValue =
-            escapeHtml(
-              value,
-            ).replace(
-              /\n/g,
-              "<br />",
-            );
+      const formattedValue = escapeHtml(value).replace(/\n/g, "<br />");
 
-          return `
+      return `
             <tr>
               <td
                 style="
@@ -636,9 +382,7 @@ export function buildEmailHtml({
                     1.55;
                 "
               >
-                ${escapeHtml(
-                  field.label,
-                )}
+                ${escapeHtml(field.label)}
               </td>
 
               <td
@@ -672,9 +416,8 @@ export function buildEmailHtml({
               </td>
             </tr>
           `;
-        },
-      )
-      .join("");
+    })
+    .join("");
 
   return `
     <!doctype html>
@@ -817,9 +560,7 @@ export function buildEmailHtml({
                           uppercase;
                       "
                     >
-                      ${escapeHtml(
-                        WEBSITE_NAME,
-                      )}
+                      ${escapeHtml(WEBSITE_NAME)}
                     </div>
 
                     <h1
@@ -843,9 +584,7 @@ export function buildEmailHtml({
                           -0.5px;
                       "
                     >
-                      ${escapeHtml(
-                        title,
-                      )}
+                      ${escapeHtml(title)}
                     </h1>
 
                     <p
@@ -868,9 +607,7 @@ export function buildEmailHtml({
                           1.7;
                       "
                     >
-                      ${escapeHtml(
-                        subtitle,
-                      )}
+                      ${escapeHtml(subtitle)}
                     </p>
                   </td>
                 </tr>
@@ -941,9 +678,7 @@ export function buildEmailHtml({
                                 1.5;
                             "
                           >
-                            ${escapeHtml(
-                              source,
-                            )}
+                            ${escapeHtml(source)}
                           </div>
                         </td>
 
@@ -990,9 +725,7 @@ export function buildEmailHtml({
                                 1.5;
                             "
                           >
-                            ${escapeHtml(
-                              date,
-                            )}
+                            ${escapeHtml(date)}
                           </div>
                         </td>
                       </tr>
@@ -1081,9 +814,7 @@ export function buildEmailHtml({
                     "
                   >
                     This submission was received through the
-                    ${escapeHtml(
-                      WEBSITE_NAME,
-                    )} website.
+                    ${escapeHtml(WEBSITE_NAME)} website.
                   </td>
                 </tr>
               </table>
@@ -1106,9 +837,7 @@ export function buildEmailHtml({
                     center;
                 "
               >
-                ${escapeHtml(
-                  WEBSITE_NAME,
-                )}
+                ${escapeHtml(WEBSITE_NAME)}
                 &nbsp;•&nbsp;
                 Website Form Notification
               </div>
@@ -1228,11 +957,9 @@ export function buildSheetRow({
   date: string;
 }): SheetConfig {
   return {
-    sheetName:
-      "Website Enquiries",
+    sheetName: "Website Enquiries",
 
-    headers:
-      SHEET_HEADERS,
+    headers: SHEET_HEADERS,
 
     rowData: [
       // A
@@ -1245,48 +972,37 @@ export function buildSheetRow({
       formType,
 
       // D
-      productProfile ??
-        "",
+      productProfile ?? "",
 
       // E
-      company ??
-        "",
+      company ?? "",
 
       // F
-      fullName ??
-        "",
+      fullName ?? "",
 
       // G
-      designation ??
-        "",
+      designation ?? "",
 
       // H
-      email ??
-        "",
+      email ?? "",
 
       // I
-      phone ??
-        "",
+      phone ?? "",
 
       // J
-      website ??
-        "",
+      website ?? "",
 
       // K
-      address ??
-        "",
+      address ?? "",
 
       // L
-      country ??
-        "",
+      country ?? "",
 
       // M
-      interestFor ??
-        "",
+      interestFor ?? "",
 
       // N
-      message ??
-        "",
+      message ?? "",
 
       // O — CORRECTION
       "",

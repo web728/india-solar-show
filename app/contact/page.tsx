@@ -8,12 +8,12 @@ const SITE_URL =
   "https://www.indiasolarshow.com";
 
 const PAGE_URL = `${SITE_URL}/contact`;
-const SITE_NAME = "India International Solar Show";
+const SITE_NAME = "2nd India International Solar Show";
 
-const PAGE_TITLE = "Contact India International Solar Show 2027 | Pune";
+const PAGE_TITLE = "Contact 2nd India International Solar Show 2027 | Pune";
 
 const PAGE_DESCRIPTION =
-  "Contact the India International Solar Show 2027 team for exhibitor bookings, visitor registration, sponsorship, media partnerships and general event enquiries in Pune.";
+  "Contact the 2nd India International Solar Show 2027 team for exhibitor bookings, visitor registration, sponsorship, media partnerships and general event enquiries in Pune.";
 
 export const metadata: Metadata = {
   title: {
@@ -23,8 +23,8 @@ export const metadata: Metadata = {
   description: PAGE_DESCRIPTION,
 
   keywords: [
-    "Contact India International Solar Show",
-    "India International Solar Show 2027",
+    "Contact 2nd India International Solar Show",
+    "2nd India International Solar Show 2027",
     "Solar Expo Pune Contact",
     "Solar Exhibition Pune Contact",
     "Exhibitor Enquiry Solar Expo",
@@ -51,7 +51,7 @@ export const metadata: Metadata = {
         url: "/images/home/solar-show-hero.webp",
         width: 1200,
         height: 630,
-        alt: "Contact India International Solar Show 2027",
+        alt: "Contact 2nd India International Solar Show 2027",
       },
     ],
   },
@@ -101,7 +101,7 @@ function ContactPageJsonLd() {
     about: {
       "@type": "Event",
       "@id": `${SITE_URL}/#event`,
-      name: "India International Solar Show 2027",
+      name: "2nd India International Solar Show 2027",
       url: SITE_URL,
     },
 
@@ -158,7 +158,7 @@ export default function ContactPage() {
       <div className="overflow-hidden bg-paper text-ink">
         <PageHero
           eyebrow="Contact Us"
-          title="Connect with the India International Solar Show Team"
+          title="Connect with the 2nd India International Solar Show Team"
           subtitle="Get in touch for exhibitor bookings, visitor registration, sponsorship, media partnerships and general event enquiries."
           breadcrumbs={[
             {
@@ -172,7 +172,7 @@ export default function ContactPage() {
           meta={[
             {
               label: "Event",
-              value: "India International Solar Show 2027",
+              value: "2nd India International Solar Show 2027",
             },
             {
               label: "Venue",

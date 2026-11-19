@@ -10,13 +10,13 @@ const SITE_URL =
   "https://www.indiasolarshow.com";
 
 const PAGE_URL = `${SITE_URL}/exhibitor-registration`;
-const SITE_NAME = "India International Solar Show";
+const SITE_NAME = "2nd India International Solar Show";
 
 const PAGE_TITLE =
-  "Exhibitor Registration | India International Solar Show 2027";
+  "Exhibitor Registration | 2nd India International Solar Show 2027";
 
 const PAGE_DESCRIPTION =
-  "Register to exhibit at India International Solar Show 2027 in Pune. Submit your company details and stall requirements to receive availability, pricing and floor plan options.";
+  "Register to exhibit at 2nd India International Solar Show 2027 in Pune. Submit your company details and stall requirements to receive availability, pricing and floor plan options.";
 
 export const metadata: Metadata = {
   title: {
@@ -26,8 +26,8 @@ export const metadata: Metadata = {
   description: PAGE_DESCRIPTION,
 
   keywords: [
-    "Exhibitor Registration India International Solar Show",
-    "India International Solar Show 2027",
+    "Exhibitor Registration 2nd India International Solar Show",
+    "2nd India International Solar Show 2027",
     "Solar Expo Pune Exhibitor Registration",
     "Solar Exhibition Stall Booking",
     "Solar Expo Stall Booking Pune",
@@ -55,7 +55,7 @@ export const metadata: Metadata = {
         url: "/og-exhibitor.jpg",
         width: 1200,
         height: 630,
-        alt: "Exhibitor Registration for India International Solar Show 2027",
+        alt: "Exhibitor Registration for 2nd India International Solar Show 2027",
       },
     ],
   },
@@ -105,7 +105,7 @@ function ExhibitorRegistrationJsonLd() {
     about: {
       "@type": "Event",
       "@id": `${SITE_URL}/#event`,
-      name: "India International Solar Show 2027",
+      name: "2nd India International Solar Show 2027",
       url: SITE_URL,
     },
 
@@ -168,7 +168,7 @@ export default function ExhibitorRegistrationPage() {
       <PageHero
         eyebrow="Exhibitor Registration"
         title="Reserve Your Exhibition Space"
-        subtitle="Register your interest to exhibit at India International Solar Show 2027 and receive stall availability, pricing and floor plan options from our team."
+        subtitle="Register your interest to exhibit at 2nd India International Solar Show 2027 and receive stall availability, pricing and floor plan options from our team."
         breadcrumbs={[
           {
             label: "Home",

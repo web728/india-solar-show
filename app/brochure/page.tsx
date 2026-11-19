@@ -18,24 +18,24 @@ const PAGE_URL = `${SITE_URL}/brochure`;
    ========================================================= */
 
 export const metadata: Metadata = {
-  title: "Download Brochure | India International Solar Show 2027",
+  title: "Download Brochure | 2nd India International Solar Show 2027",
 
   description:
-    "Download the India International Solar Show 2027 brochure for event highlights, exhibitor opportunities, visitor information, market focus and participation details.",
+    "Download the 2nd India International Solar Show 2027 brochure for event highlights, exhibitor opportunities, visitor information, market focus and participation details.",
 
   alternates: {
     canonical: PAGE_URL,
   },
 
   openGraph: {
-    title: "Download India International Solar Show 2027 Brochure",
+    title: "Download 2nd India International Solar Show 2027 Brochure",
 
     description:
-      "Get the official India International Solar Show 2027 brochure with event highlights, participation information and clean-energy opportunities.",
+      "Get the official 2nd India International Solar Show 2027 brochure with event highlights, participation information and clean-energy opportunities.",
 
     url: PAGE_URL,
 
-    siteName: "India International Solar Show 2027",
+    siteName: "2nd India International Solar Show 2027",
 
     locale: "en_IN",
 
@@ -101,7 +101,7 @@ export default function BrochurePage() {
       >
         <PageHero
           eyebrow="Event Brochure"
-          title="Download the India International Solar Show 2027 Brochure"
+          title="Download the 2nd India International Solar Show 2027 Brochure"
           subtitle="Get a concise overview of the show, industry focus, participation opportunities and the clean-energy ecosystem coming together in Pune."
           breadcrumbs={[
             {

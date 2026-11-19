@@ -17,7 +17,7 @@ import { Button } from "@/components/ui/Button";
 
 const PLATFORMS = [
   {
-    name: "2nd India International Solar Show 2027",
+    name: "2nd 2nd India International Solar Show 2027",
     edition: "2nd Edition",
     logo: "/logos/solar.png",
     website: "https://indiasolarshow.com/",
@@ -682,8 +682,6 @@ export function EcosystemSection() {
             ))}
           </div>
         </motion.div>
-
-        
 
         {/* =================================================
             CTA

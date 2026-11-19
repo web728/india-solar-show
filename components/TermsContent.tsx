@@ -1274,7 +1274,7 @@ export function TermsContent() {
               text-ink/30
             "
           >
-            India International Solar Show · Terms &amp; Conditions · Last
+            2nd India International Solar Show · Terms &amp; Conditions · Last
             updated July 2025
           </p>
 
